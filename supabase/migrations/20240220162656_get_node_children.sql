@@ -1,9 +1,8 @@
-
-DROP FUNCTION IF EXISTS elwood.get_node_children(uuid, text[]);
-CREATE OR REPLACE FUNCTION elwood.get_node_children(
-    p_prefix text[]
-) RETURNS jsonb[] LANGUAGE PLPGSQL
-AS $$
+drop function if exists elwood.get_node_children(uuid, text[]);
+create or replace function elwood.get_node_children(p_prefix text[])
+returns jsonb[]
+language PLPGSQL
+as $$
 DECLARE 
     _bucket_row storage.buckets;
     _search_row public.elwood_storage_search_result;    
@@ -29,7 +28,7 @@ BEGIN
             _object_row.prefix := p_prefix;
             _object_row.name := _bucket_row.name;
             _object_row.mime_type := 'inode/directory';
-            _object_row.size := (SELECT SUM(COALESCE((_object_row.metadata->>'size')::int, 0)) FROM storage.objects as o WHERE o.bucket_id = _bucket_row.id);
+            _object_row.size := (SELECT SUM(COALESCE((o.metadata->>'size')::int, 0)) FROM storage.objects as o WHERE o.bucket_id = _bucket_row.id);
             _nodes := _nodes || ARRAY[to_jsonb(_object_row)];
         END LOOP;
     END IF;
@@ -43,27 +42,31 @@ BEGIN
         _depth := 1;
     END IF;
 
+    RAISE WARNING 'get_node_children: p_prefix %, _bucket_id: %, _path: %, _depth: %', p_prefix, _bucket_id, _path, _depth;
+
     FOR _search_row IN
         SELECT * FROM storage.search(_path, _bucket_id, 100, _depth)
     LOOP
+    RAISE WARNING 'get_node_children: _search_row %', _search_row.name;
+
         IF _search_row.id IS NULL THEN
             _object_row.type := 'TREE';                
         ELSE 
             _object_row.type := 'BLOB';
         END IF;
 
-        IF _object_row.name != '.emptyFolderPlaceholder' THEN
-
-            _object_row.id := elwood.create_node_id(_node_type, p_prefix, _object_row.name);
+        IF _search_row.name != '.emptyFolderPlaceholder' THEN
+            _object_row.id := elwood.create_node_id(_node_type, p_prefix, _search_row.name);
             _object_row.prefix := p_prefix;
-            _object_row.name := _object_row.name;
-            _object_row.mime_type := _object_row.metadata->>'mimetype';
-            _object_row.size := COALESCE((_object_row.metadata->>'size')::int, 0);
-            _nodes := _nodes || ARRAY[to_jsonb(_object_row)];
+            _object_row.name := _search_row.name;
+            _object_row.mime_type := _search_row.metadata->>'mimetype';
+            _object_row.size := COALESCE((_search_row.metadata->>'size')::int, 0);
+            _nodes := _nodes || to_jsonb(_object_row);
         END IF;
     END LOOP;
+
+    RAISE WARNING 'get_node_children: length _depth: %', array_length(_nodes, 1);
 
     return _nodes;
 END;
 $$;
-

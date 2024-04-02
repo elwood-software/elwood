@@ -33,7 +33,8 @@ DROP TYPE IF EXISTS public.elwood_get_node_result CASCADE;
 CREATE TYPE public.elwood_get_node_result AS  (
   "node" public.elwood_node,
   "parent" public.elwood_node,
-  "children" public.elwood_node[]
+  "children" public.elwood_node[],
+  "key_children" text[]
 );
 
 
