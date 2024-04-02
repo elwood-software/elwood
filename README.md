@@ -2,7 +2,7 @@
 <small>
 <a href="https://elwood.software">elwood.software</a> &#8226; 
 <a href="mailto:mailto:hello@elwood.software">Email Us</a> &#8226;
-<a href="https://discord.gg/ZxWKPeABNG">Discord</a>
+<a href="https://discord.gg/mkhKk5db">Discord</a>
 </small>
 </p>
 
@@ -15,7 +15,7 @@
 ## :raised_hand: Support
 
 - [Community Forum](https://github.com/orgs/elwood-software/discussions): Good for developer discussion, help debugging, ask questions. **Not sure, start here**
-- [Discord](https://discord.gg/ZxWKPeABNG): Join our Discord Server
+- [Discord](https://discord.gg/mkhKk5db): Join our Discord Server
 - [GitHub Issues](https://github.com/elwood-software/elwood/issues): Good for bugs and errors in running Elwood locally
 - [Email Support](mailto:support@elwood.Software): Good for saying hi
 
