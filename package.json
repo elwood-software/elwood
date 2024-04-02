@@ -1,0 +1,32 @@
+{
+  "name": "elwood",
+  "description": "The open source Dropbox alternative",
+  "author": "Elwood Studio, Inc.",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "dev": "turbo run dev",
+    "dev:pkg": "turbo run dev --filter=./packages/*",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "reset": "pnpm -s dlx rimraf -g **/.turbo **/dist **/node_modules ./node_modules **/tsconfig.tsbuildinfo **/*.zip **/*.log **/.DS_Store **/.next",
+    "gen-db-types": "supabase gen types typescript --local > packages/common/src/types/database.d.ts"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-sql-cst": "^0.11.5",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.9.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elwood-studio/elwood.git"
+  }
+}
