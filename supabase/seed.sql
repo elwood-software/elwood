@@ -104,6 +104,64 @@ BEGIN
   -- create member
   user_id_three := local_only.create_user('fe636a7f-e263-4392-9366-5a86e9b75846', 'member@elwood.local', 'member', '');
   INSERT INTO elwood.member ("user_id", "username", "display_name") VALUES (user_id_three, 'member', 'Basic Member');
+
 END $$;
 
 
+
+-- @@
+-- BUCKETS
+----------------
+
+DROP POLICY IF EXISTS "select_for_buckets" on "storage"."buckets";
+CREATE POLICY "select_for_buckets"
+ON storage.buckets
+FOR SELECT
+USING (
+  auth.role() = 'authenticated'
+  );
+
+DROP POLICY IF EXISTS "insert_for_buckets" on "storage"."buckets";
+CREATE POLICY "insert_for_buckets"
+ON storage.buckets
+FOR INSERT
+WITH CHECK (
+  auth.role() = 'authenticated'
+);
+
+DROP POLICY IF EXISTS "update_for_buckets" on "storage"."buckets";
+CREATE POLICY "update_for_buckets"
+ON storage.buckets
+FOR UPDATE
+WITH CHECK (
+  auth.role() = 'authenticated'
+);
+
+DROP POLICY IF EXISTS "delete_for_buckets" on "storage"."buckets";
+CREATE POLICY "delete_for_buckets"
+ON storage.buckets
+FOR DELETE
+USING (
+  auth.role() = 'authenticated'
+);
+
+
+-- @@
+-- OBJECTS
+----------------
+
+DROP POLICY IF EXISTS "select_for_objects" on "storage"."objects";
+CREATE POLICY "select_for_objects"
+ON storage.objects
+FOR SELECT
+USING (
+  auth.role() = 'authenticated'
+);
+
+DROP POLICY IF EXISTS "insert_for_objects" on "storage"."objects";
+CREATE POLICY "insert_for_objects"
+ON storage.objects
+FOR INSERT
+WITH CHECK (
+  auth.role() = 'authenticated'
+);

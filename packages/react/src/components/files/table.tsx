@@ -26,7 +26,7 @@ export function FilesTable(props: FilesTableProps): JSX.Element {
               <div className="px-3 py-2">
                 <Link
                   className="text-muted-foreground"
-                  href={`/files/${parent.bucketId}/tree/${parent.path}`}>
+                  href={`/tree/${parent.bucketId}/${parent.path}`}>
                   ...
                 </Link>
               </div>
@@ -39,7 +39,7 @@ export function FilesTable(props: FilesTableProps): JSX.Element {
             <tr key={`FilesTable-row-${row.id}`}>
               <td className="w-4">
                 <div className="py-2 pl-6 text-muted-foreground">
-                  <FileIcon nodeType={row.type} size={16} />
+                  <FileIcon nodeType={row.type ?? 'BLOB'} size={16} />
                 </div>
               </td>
               <td>

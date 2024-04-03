@@ -1,5 +1,4 @@
 import {clsx} from 'clsx';
-import {toArray} from '@elwood/common';
 import {
   Breadcrumb,
   BreadcrumbSeparator,
@@ -7,6 +6,7 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
 } from '@elwood/ui';
+import {Fragment} from 'react/jsx-runtime';
 import {Link, createNodeLink} from '../link';
 import {FileIcon} from './icon';
 
@@ -56,10 +56,8 @@ export function FileBreadcrumbs(props: FilesBreadcrumbsProps): JSX.Element {
           );
 
           return (
-            <>
-              <BreadcrumbItem
-                className="flex items-center"
-                key={`Breadcrumbs-${item.id}`}>
+            <Fragment key={`Breadcrumbs-${item.id}`}>
+              <BreadcrumbItem className="flex items-center">
                 <BreadcrumbLink asChild>
                   <Link className={cn} href={item.href}>
                     {item.name}
@@ -69,7 +67,7 @@ export function FileBreadcrumbs(props: FilesBreadcrumbsProps): JSX.Element {
               {showSeparator ? (
                 <BreadcrumbSeparator>/</BreadcrumbSeparator>
               ) : null}
-            </>
+            </Fragment>
           );
         })}
       </BreadcrumbList>

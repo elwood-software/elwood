@@ -1,29 +1,25 @@
-
-DROP FUNCTION IF EXISTS public.elwood_get_node_tree(text[]);
-CREATE OR REPLACE FUNCTION public.elwood_get_node_tree(
-  p_path text[]
-) RETURNS jsonb
-AS $$
+drop function if exists public.elwood_get_node_tree(text[]);
+create or replace function public.elwood_get_node_tree(p_path text[])
+returns jsonb
+as $$
 DECLARE 
   _id text;
-  _for_user_id uuid;
   _bucket_id text;
   _path text;
   _part text;
   _result jsonb[];
-  _row public.elwood_node;
+  _row jsonb;
   _row_path text[];
   _node_type public.elwood_node_type;
   _expanded_ids text[]; 
   _path_id text;
 BEGIN
-  _for_user_id := (auth.jwt()->>'sub')::uuid;
 
   IF array_length(p_path, 1) IS NULL THEN    
     _id := 'root';
 
     FOR _row IN
-      SELECT * FROM elwood.get_node_children(_for_user_id, p_path)
+      SELECT * FROM elwood.get_node_children(p_path)
     LOOP
       _result := _result || jsonb_build_object(
         'id', _row.id,
@@ -48,12 +44,11 @@ BEGIN
       _expanded_ids := _expanded_ids || _path_id;
     END IF;
 
-    FOR _row IN
-      SELECT * FROM elwood.get_node_children(_for_user_id, _row_path)
+    FOREACH _row IN ARRAY elwood.get_node_children(_row_path)
     LOOP
       _result := _result || jsonb_build_object(
-        'id', _row.id,
-        'node', to_jsonb(_row),
+        'id', _row->>'id',
+        'node', _row,
         'parent', _path_id
       );
     END LOOP;
@@ -67,5 +62,5 @@ BEGIN
   );
 
 END;
-$$ language plpgsql;
-
+$$
+language plpgsql;

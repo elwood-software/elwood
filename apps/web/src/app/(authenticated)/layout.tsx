@@ -1,6 +1,6 @@
 import {type PropsWithChildren} from 'react';
 import {createClient} from '@/utils/supabase/server';
-import AuthPage from '@/app/auth/page';
+import AuthPage from '@/app/(unauthenticated)/auth/page';
 
 export default async function AuthenticatedLayout(
   props: PropsWithChildren,

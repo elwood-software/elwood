@@ -10,7 +10,6 @@ import {useUploadButton} from '@/hooks/ui/use-upload-button';
 import {useGetNode} from '@/data/node/use-get-node';
 import {useProviderContext} from '@/hooks/use-provider-context';
 import {useCreateFolderButton} from '@/hooks/ui/use-create-folder-button';
-import {useShareButton} from '@/hooks/ui/use-share-button';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesTreeRoute(): JSX.Element {
@@ -50,11 +49,6 @@ export default function FilesTreeRoute(): JSX.Element {
 
   const tree = toArray(treeQuery.data?.children);
 
-  const shareButton = useShareButton({
-    node: treeQuery.data?.node,
-    variant: 'secondary',
-    size: 'sm',
-  });
   const createFolderButton = useCreateFolderButton({
     prefix,
     variant: 'secondary',
@@ -71,7 +65,6 @@ export default function FilesTreeRoute(): JSX.Element {
     <div className="flex items-center justify-center space-x-2">
       {createFolderButton}
       {uploadButton}
-      {shareButton}
     </div>
   );
 

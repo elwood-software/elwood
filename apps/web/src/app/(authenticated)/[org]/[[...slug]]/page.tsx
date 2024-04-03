@@ -12,7 +12,7 @@ import {toArray} from '@elwood/common';
 import {useOrgs} from '@/hooks/use-orgs';
 import {createClient} from '@/utils/supabase/client';
 import {RootLayout} from '@/components/layout';
-import {Placeholder} from '../../placeholder';
+import {Placeholder} from '@/components/placeholder';
 
 export interface PageProps {
   params: {

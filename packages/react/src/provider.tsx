@@ -49,9 +49,8 @@ export function ElwoodProvider(
     );
 
     props.client.auth
-      .getUser()
-      .then(async (): Promise<void> => {
-        const {data} = await props.client.auth.getSession();
+      .getSession()
+      .then(({data}) => {
         invariant(data.session?.access_token);
         setAccessToken(data.session.access_token);
       })

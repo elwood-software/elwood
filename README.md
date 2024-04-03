@@ -1,9 +1,10 @@
 <p align="center">
-<small>
-<a href="https://elwood.software">elwood.software</a> &#8226; 
-<a href="mailto:mailto:hello@elwood.software">Email Us</a> &#8226;
-<a href="https://discord.gg/mkhKk5db">Discord</a>
-</small>
+  <img src="https://avatars.githubusercontent.com/u/165726427?s=200&v=4" alt="elwood">
+  <br/>
+  <small>
+    <a href="mailto:mailto:hello@elwood.software">Email Us</a> &#8226;
+    <a href="https://discord.gg/mkhKk5db">Discord</a>
+  </small>
 </p>
 
 # What is Elwood
@@ -17,7 +18,7 @@
 - [Community Forum](https://github.com/orgs/elwood-software/discussions): Good for developer discussion, help debugging, ask questions. **Not sure, start here**
 - [Discord](https://discord.gg/mkhKk5db): Join our Discord Server
 - [GitHub Issues](https://github.com/elwood-software/elwood/issues): Good for bugs and errors in running Elwood locally
-- [Email Support](mailto:support@elwood.Software): Good for saying hi
+- [Email Support](mailto:support@elwood.software): Good for saying hi
 
 ## 🏛️ License
 
@@ -25,4 +26,4 @@ Distributed under the Apache-2.0 license. See [LICENSE](LICENSE) for more inform
 
 ## 📧 Contact
 
-Elwood - [support@elwood.Software](mailto:support@elwood.studio)
+Elwood - [support@elwood.software](mailto:support@elwood.software)

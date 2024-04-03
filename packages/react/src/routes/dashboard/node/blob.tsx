@@ -5,7 +5,6 @@ import {PageLayout} from '@/components/layouts/page';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
 import {useGetNode} from '@/data/node/use-get-node';
-import {useShareButton} from '@/hooks/ui/use-share-button';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesBlobRoute(): JSX.Element {
@@ -22,12 +21,6 @@ export default function FilesBlobRoute(): JSX.Element {
   const query = useGetNode({path: prefix});
   const node = query.data?.node;
 
-  const shareButton = useShareButton({
-    node: query.data?.node,
-    variant: 'secondary',
-    size: 'sm',
-  });
-
   if (query.isLoading) {
     return <PageLayout />;
   }
@@ -37,11 +30,15 @@ export default function FilesBlobRoute(): JSX.Element {
   }
 
   const headerLeft = <FileBreadcrumbs prefix={prefix} />;
-  const headerRight = shareButton;
+  const rail = (
+    <>
+      <div className="">access</div>
+      <div className="mt-6 flex-grow">chat</div>
+    </>
+  );
 
-  //
   return (
-    <PageLayout headerLeft={headerLeft} headerRight={headerRight}>
+    <PageLayout headerLeft={headerLeft} rail={rail}>
       <div className="border rounded-lg">
         <div className="border-b px-3 py-2 flex items-center justify-between">
           <div className="font-mono text-xs text-muted-foreground">

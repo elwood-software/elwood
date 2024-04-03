@@ -11,8 +11,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "@elwood/js": "workspace:*",
     "@elwood/common": "workspace:*",
+    "@elwood/js": "workspace:*",
     "@elwood/react": "workspace:*",
     "@elwood/ui": "workspace:*",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
@@ -32,7 +32,7 @@
     "@elwood/typescript-config": "workspace:*",
     "@next/eslint-plugin-next": "^14.1.4",
     "@types/node": "^20.12.2",
-    "@types/react": "^18.2.73",
+    "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.23",
     "typescript": "^5.4.3"
   }
