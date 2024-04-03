@@ -6,6 +6,8 @@ import {ElwoodThemeProvider} from '@elwood/ui';
 import './global.css';
 import '@elwood/ui/style.css';
 
+import {ThemeManager} from './theme-manager';
+
 export const metadata: Metadata = {
   title: 'Elwood',
 };
@@ -19,9 +21,10 @@ export default function RootLayout(props: PropsWithChildren): JSX.Element {
     <html lang="en" suppressHydrationWarning>
       <body
         className={`bg-background text-foreground ${themeClassName}`}
-        data-color-mode="dark"
+        data-color-mode={themeClassName}
         data-color-server-theme={theme}>
         <ElwoodThemeProvider>{props.children}</ElwoodThemeProvider>
+        <ThemeManager />
       </body>
     </html>
   );
