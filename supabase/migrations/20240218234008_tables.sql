@@ -40,11 +40,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS elwood_idx_settings_name ON elwood.settings("i
 CREATE TABLE elwood.activity (
   "instance_id" uuid NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
   "user_id" uuid NOT NULL,
+  "asset" text NOT NULL,
+  "asset_type" TEXT NOT NULL,
+  "type" elwood.activity_type NOT NULL,
   "text" text NOT NULL,  
   "attachments" jsonb NOT NULL DEFAULT '{}'::jsonb,
   "created_at" timestamptz default now(),
   "updated_at" timestamptz default now()
 );
 
--- only one name per instance
-CREATE UNIQUE INDEX IF NOT EXISTS elwood_idx_settings_name ON elwood.settings("instance_id", "name");

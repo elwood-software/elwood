@@ -71,16 +71,17 @@ CREATE TYPE public.elwood_member AS  (
 -- @@ NAMESPACE: ELWOOD
 --
 
--- NODE
 DROP TYPE IF EXISTS elwood.get_node_leaf_result CASCADE;
 CREATE TYPE elwood.get_node_leaf_result AS (
   "node" public.elwood_node
 );
 
-DROP TYPE IF EXISTS elwood.activity_type CASCADE;
-CREATE TYPE elwood.activity_type AS ENUM (
-  "COMMENT",
-  "REACTION",
-  "LIKE",
-  "BOOKMARK"
-);
+
+-- DROP TYPE IF EXISTS elwood.activity_type CASCADE;
+-- CREATE TYPE elwood.activity_type AS ENUM (
+--   "COMMENT",
+--   "REACTION",
+--   "LIKE",
+--   "SAVE",
+--   "NOTE"
+-- );
