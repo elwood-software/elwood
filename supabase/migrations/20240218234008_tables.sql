@@ -36,8 +36,8 @@ CREATE TABLE elwood.settings (
 CREATE UNIQUE INDEX IF NOT EXISTS elwood_idx_settings_name ON elwood.settings("instance_id", "name");
 
 
--- MESSAGES
-CREATE TABLE elwood.message (
+-- ACTIVITY
+CREATE TABLE elwood.activity (
   "instance_id" uuid NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
   "user_id" uuid NOT NULL,
   "text" text NOT NULL,  
