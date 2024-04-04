@@ -7,9 +7,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "files": ["dist/**"],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --external react",
     "clean": "rm -rf dist",
@@ -66,7 +64,7 @@
     "storybook-dark-mode": "^4.0.1",
     "tsup": "^8.0.2",
     "typescript": "^5.4.3",
-    "vite": "^5.2.7",
+    "vite": "^5.2.8",
     "vite-tsconfig-paths": "^4.3.2"
   }
 }

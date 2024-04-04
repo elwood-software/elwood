@@ -1,7 +1,7 @@
 'use client';
 
 import {useState, useEffect} from 'react';
-import {cookies} from 'next/headers';
+import {useCookie} from 'react-use';
 
 const storage =
   typeof localStorage === 'undefined'
@@ -12,6 +12,7 @@ const storage =
     : localStorage;
 
 export function ThemeManager(): null {
+  const [_, setThemeCookie] = useCookie('theme');
   const [theme, setTheme] = useState<string | null>(
     storage.getItem('theme') ?? null,
   );
@@ -50,15 +51,16 @@ export function ThemeManager(): null {
     if (theme && body) {
       if (theme !== storage.getItem('theme')) {
         storage.setItem('theme', theme);
-        cookies().set('theme', theme);
-      } else if (theme !== body.getAttribute('data-color-server-theme')) {
-        cookies().set('theme', theme);
       }
+
+      setThemeCookie(theme, {
+        path: '/',
+      });
 
       body.classList.remove('light', 'dark');
       body.classList.add(theme);
     }
-  }, [theme]);
+  }, [theme, setThemeCookie]);
 
   return null;
 }

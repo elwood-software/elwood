@@ -2,7 +2,7 @@
 
 import {redirect} from 'next/navigation';
 import {useOrgs} from '@/hooks/use-orgs';
-import {Placeholder} from '../../components/placeholder';
+import {Placeholder} from '@/components/placeholder';
 
 export default function Index(): JSX.Element {
   const {data: orgs = [], error, isLoading} = useOrgs();
