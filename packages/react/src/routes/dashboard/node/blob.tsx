@@ -1,6 +1,15 @@
 import {useParams} from 'react-router-dom';
-import {Icons, Button} from '@elwood/ui';
+import {
+  Icons,
+  Button,
+  ClipboardCopyIcon,
+  LinkIcon,
+  Tooltip,
+  useSonner,
+} from '@elwood/ui';
 import {invariant, toArray} from '@elwood/common';
+import {useCopyToClipboard} from 'react-use';
+import {useEffect} from 'react';
 import {PageLayout} from '@/components/layouts/page';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
@@ -11,6 +20,22 @@ import type {FilesRouteParams} from '../types';
 export default function FilesBlobRoute(): JSX.Element {
   const params = useParams<FilesRouteParams>();
   const path = params['*'];
+  const [copyState, copyToClipboard] = useCopyToClipboard();
+  const toast = useSonner();
+
+  useEffect(() => {
+    if (copyState.value) {
+      toast('Copied to clipboard', {type: 'success'});
+    }
+  }, [copyState.value, toast]);
+
+  useEffect(() => {
+    console.log(copyState);
+
+    if (copyState.error) {
+      toast('Error copying to clipboard', {type: 'error'});
+    }
+  }, [copyState.error, toast]);
 
   // this is mostly for type checking
   // the router should handle making sure we have
@@ -37,17 +62,46 @@ export default function FilesBlobRoute(): JSX.Element {
   const headerLeft = <FileBreadcrumbs prefix={prefix} />;
   const rail = <> {chat}</>;
 
+  function onCopyToClipboard(e: MouseEvent, type: 'content' | 'link'): void {
+    e.preventDefault();
+    copyToClipboard('pooper');
+  }
+
   return (
     <PageLayout headerLeft={headerLeft} rail={rail}>
       <div className="border rounded-lg">
-        <div className="border-b px-3 py-2 flex items-center justify-between">
+        <div className="border-b px-3 py-1 flex items-center justify-between">
           <div className="font-mono text-xs text-muted-foreground">
             {node.size} Bytes &middot; {node.mime_type}
           </div>
           <div className="flex items-center justify-center space-x-2">
-            <Button size="sm" type="button" variant="ghost" outline>
-              <Icons.Download className="w-[1.5em] h-[1.5em]" />
-            </Button>
+            <Tooltip label="Download content">
+              <Button size="icon-sm" type="button" variant="ghost">
+                <Icons.Download className="w-[1em] h-[1em]" />
+              </Button>
+            </Tooltip>
+            <Tooltip label="Copy content to clipboard">
+              <Button
+                size="icon-sm"
+                type="button"
+                variant="ghost"
+                onClick={e => {
+                  onCopyToClipboard(e, 'content');
+                }}>
+                <ClipboardCopyIcon className="w-[1em] h-[1em]" />
+              </Button>
+            </Tooltip>
+            <Tooltip label="Copy API Link to clipboard">
+              <Button
+                size="icon-sm"
+                type="button"
+                variant="ghost"
+                onClick={e => {
+                  onCopyToClipboard(e, 'link');
+                }}>
+                <LinkIcon className="w-[1em] h-[1em]" />
+              </Button>
+            </Tooltip>
           </div>
         </div>
         <div className="p-6">{blob}</div>

@@ -10,11 +10,11 @@ export function ChatFooter(props: ChatFooterProps): JSX.Element {
   return (
     <form
       onSubmit={props.onSubmit}
-      className="flex items-center border rounded">
-      <div className="flex-grow">{props.textarea}</div>
-      <Button type="submit" variant="ghost" size="sm">
+      className="flex items-center border rounded p-3">
+      {props.textarea}
+      <button type="submit" className="text-sm font-bold border-l pl-3 ml-3">
         Send
-      </Button>
+      </button>
     </form>
   );
 }

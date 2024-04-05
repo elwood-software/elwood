@@ -1,5 +1,3 @@
-export {ElwoodThemeProvider} from './provider';
-
 export * from './components/button/button';
 export * from './components/avatar/avatar';
 export * from './components/tooltip/tooltip';
@@ -18,6 +16,11 @@ export * from './components/form/input';
 export * from './components/breadcrumb/breadcrumb';
 export * from './components/hover-card/hover-card';
 export * from './components/form/textarea';
+export * from './components/table/table';
 
 export * from './svg/logo';
 export * from './svg/icons';
+
+export {useSonner} from './hooks/use-sonner';
+export {cn} from './lib/utils';
+export {ElwoodThemeProvider} from './provider';

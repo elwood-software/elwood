@@ -4,11 +4,15 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import Uppy from '@uppy/core';
 import Tus from '@uppy/tus';
 import {invariant} from '@elwood/common';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
 import {ProviderContext, type ProviderContextValue} from '@/context';
 
 export type ElwoodProviderProps = Omit<ProviderContextValue, 'uploadManager'>;
 
 const queryClient = new QueryClient();
+
+TimeAgo.addDefaultLocale(en);
 
 export function ElwoodProvider(
   props: PropsWithChildren<ElwoodProviderProps>,

@@ -13,9 +13,12 @@ import {FileIcon} from './icon';
 export interface FilesBreadcrumbsProps {
   className?: string;
   prefix: string[];
+  variant?: 'default' | 'compact';
 }
 
 export function FileBreadcrumbs(props: FilesBreadcrumbsProps): JSX.Element {
+  const {variant = 'default'} = props;
+
   const breadcrumbs = [];
   const prefix: string[] = [];
 
@@ -42,9 +45,14 @@ export function FileBreadcrumbs(props: FilesBreadcrumbsProps): JSX.Element {
         props.className,
         'flex items-center leading-none text-sm',
       )}>
-      <div className="flex mr-2 items-center justify-center">
-        <FileIcon className="w-4 h-4 text-muted-foreground" nodeType="BUCKET" />
-      </div>
+      {variant !== 'compact' && (
+        <div className="flex mr-2 items-center justify-center">
+          <FileIcon
+            className="w-4 h-4 text-muted-foreground"
+            nodeType="BUCKET"
+          />
+        </div>
+      )}
       <BreadcrumbList>
         {breadcrumbs.map((item, idx) => {
           const isLast =
@@ -52,7 +60,7 @@ export function FileBreadcrumbs(props: FilesBreadcrumbsProps): JSX.Element {
           const showSeparator = idx < breadcrumbs.length - 1;
           const cn = clsx(
             !isLast && ['text-muted-foreground'],
-            isLast && ['font-bold text-foreground'],
+            isLast && variant !== 'compact' && ['font-bold text-foreground'],
           );
 
           return (

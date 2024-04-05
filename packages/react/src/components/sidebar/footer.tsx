@@ -1,8 +1,13 @@
-import {type MouseEvent} from 'react';
+import {type MouseEvent, type ReactNode} from 'react';
 import {CircleUserRound, BellIcon, LogOutIcon, AlertDialog} from '@elwood/ui';
 import {Button} from '@/components/button';
 
-export function SidebarFooter(): JSX.Element {
+export interface SidebarFooterProps {
+  userDisplayName: string;
+  uploadStatus: ReactNode;
+}
+
+export function SidebarFooter(props: SidebarFooterProps): JSX.Element {
   function onLogoutClick(e: MouseEvent): void {
     e.preventDefault();
     window.location.href = '/auth/logout';
@@ -10,10 +15,12 @@ export function SidebarFooter(): JSX.Element {
 
   return (
     <footer>
+      <div className="mb-3">{props.uploadStatus}</div>
+
       <div className="flex justify-between items-center">
         <div className="text-muted-foreground text-sm flex items-center">
           <CircleUserRound className="size-5 mr-1" />
-          poop@poop.com
+          {props.userDisplayName}
         </div>
         <div className="flex items-center space-x-1">
           <Button href="/notifications" size="icon-sm" variant="ghost">

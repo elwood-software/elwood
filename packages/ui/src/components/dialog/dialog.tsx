@@ -9,8 +9,7 @@ export interface DialogPropsFnArgs {
   open: () => void;
 }
 
-export interface DialogProps {
-  defaultOpen?: boolean;
+export interface DialogProps extends Omit<Primitive.DialogProps, 'children'> {
   title?: string;
   description?: string;
   content: JSX.Element | ((args: DialogPropsFnArgs) => JSX.Element);
@@ -20,7 +19,6 @@ export interface DialogProps {
 
 export function Dialog(props: DialogProps): JSX.Element {
   const [open, setOpen] = useState<boolean>(Boolean(props.defaultOpen));
-
   const contentClassName = clsx(
     props.className,
     !props.className?.includes('max-w') && 'max-w-[450px]',
@@ -33,6 +31,11 @@ export function Dialog(props: DialogProps): JSX.Element {
     ],
   );
 
+  function onChange(value: boolean): void {
+    setOpen(value);
+    props.onOpenChange && props.onOpenChange(value);
+  }
+
   const fnArgs: DialogPropsFnArgs = {
     isOpen: open,
     close: () => {
@@ -44,7 +47,7 @@ export function Dialog(props: DialogProps): JSX.Element {
   };
 
   return (
-    <Primitive.Root open={open} onOpenChange={setOpen}>
+    <Primitive.Root open={open} onOpenChange={onChange}>
       {props.children && typeof props.children !== 'function' ? (
         <Primitive.Trigger asChild>{props.children}</Primitive.Trigger>
       ) : null}

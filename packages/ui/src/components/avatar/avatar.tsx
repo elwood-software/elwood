@@ -31,7 +31,7 @@ export function Avatar(props: AvatarProps): JSX.Element {
     <AvatarBase className={clsx(roundClass, props.className)}>
       <AvatarBaseImage src={props.src} />
       <AvatarBaseFallback className={clsx(roundClass)}>
-        {fallback}
+        {fallback.toLocaleUpperCase()}
       </AvatarBaseFallback>
     </AvatarBase>
   );

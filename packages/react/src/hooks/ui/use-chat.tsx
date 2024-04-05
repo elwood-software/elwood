@@ -1,6 +1,11 @@
 import {Textarea, Button} from '@elwood/ui';
 import {invariant, toArray} from '@elwood/common';
-import {type ChangeEvent, useState, type FormEvent} from 'react';
+import {
+  type ChangeEvent,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from 'react';
 import {Chat, type ChatFeedItem} from '@/components/activity/chat';
 import {ChatFooter} from '@/components/activity/chat-footer';
 import {useActivity} from '@/data/activity/use-activity';
@@ -29,7 +34,7 @@ export function useChat(input: UseChatInput): JSX.Element {
       id: item.id,
       type: 'message',
       content: item.text,
-      timestamp: item.created_at,
+      timestamp: new Date(item.created_at ?? ''),
       author: 'poop',
       children: [],
       likes: 0,
@@ -46,7 +51,7 @@ export function useChat(input: UseChatInput): JSX.Element {
       .mutateAsync({
         assetId: input.assetId,
         assetType: input.assetType,
-        text: value,
+        text: value.trim(),
         type: 'COMMENT',
       })
       .then(() => {
@@ -64,15 +69,29 @@ export function useChat(input: UseChatInput): JSX.Element {
     setValue(e.target.value);
   }
 
+  function onKeyDown(e: KeyboardEvent): void {
+    if (
+      e.key === 'Enter' &&
+      !e.altKey &&
+      !e.shiftKey &&
+      !e.ctrlKey &&
+      !e.metaKey
+    ) {
+      onSubmit(e);
+    }
+  }
+
   const footer = (
     <ChatFooter
       onSubmit={onSubmit}
       textarea={
-        <textarea
+        <Textarea
           placeholder="Add a comment"
-          className="bg-transparent min-h-12 size-full border-none resize-none focus:resize-y outline-none ring-transparent"
+          ring={false}
           onChange={onChange}
           value={value}
+          className="ring-none outline-none focus-visible:ring-0 resize-none p-0 pl-0.5"
+          onKeyDown={onKeyDown}
         />
       }
     />

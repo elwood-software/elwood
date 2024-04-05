@@ -31,6 +31,7 @@ export {
   GanttChartSquareIcon,
   LogOutIcon,
   ArrowLeft,
+  ArrowUp,
   UploadCloudIcon,
   LockIcon,
   UnlockIcon,
@@ -48,6 +49,8 @@ export {
   ChevronUpIcon,
   CheckIcon,
   CircleUserRound,
+  ClipboardCopyIcon,
+  LinkIcon,
 } from 'lucide-react';
 
 export const Icons: Record<string, LucideIcon> = {

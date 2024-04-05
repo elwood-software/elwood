@@ -34,9 +34,11 @@
     "@uppy/react": "^3.3.0",
     "@uppy/tus": "^3.5.4",
     "clsx": "^2.1.0",
+    "javascript-time-ago": "^2.5.9",
     "react-accessible-treeview": "^2.8.3",
     "react-dropzone": "^14.2.3",
     "react-router-dom": "^6.22.3",
+    "react-time-ago": "^7.3.1",
     "react-use": "^17.5.0"
   },
   "devDependencies": {
