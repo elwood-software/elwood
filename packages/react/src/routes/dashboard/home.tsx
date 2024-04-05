@@ -6,11 +6,13 @@ import {FilesTable} from '@/components/files/table';
 import {MainLayout} from '@/components/layouts/main';
 import {PageLayout} from '@/components/layouts/page';
 import {useProviderContext} from '@/hooks/use-provider-context';
+import {useSidebarFooter} from '@/hooks/ui/use-sidebar-footer';
 
 export default function FilesHome(): JSX.Element {
   const {workspaceName} = useProviderContext();
   const query = useGetNode({path: []});
   const buckets = toArray(query.data?.children);
+  const sidebarFooter = useSidebarFooter();
 
   const treeQuery = useGetNode({
     path: [],
@@ -34,7 +36,10 @@ export default function FilesHome(): JSX.Element {
   );
 
   return (
-    <MainLayout title={workspaceName} sidebar={sidebar}>
+    <MainLayout
+      title={workspaceName}
+      sidebar={sidebar}
+      sidebarFooter={sidebarFooter}>
       <PageLayout>
         <div className="border rounded">
           <FilesTable nodes={tree} prefix={[]} />

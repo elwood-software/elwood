@@ -34,7 +34,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      elwood_activity: {
+        Row: {
+          asset: string
+          asset_type: string
+          attachments: Json
+          created_at: string | null
+          instance_id: string
+          text: string
+          type: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          asset: string
+          asset_type: string
+          attachments?: Json
+          created_at?: string | null
+          instance_id?: string
+          text: string
+          type: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          asset?: string
+          asset_type?: string
+          attachments?: Json
+          created_at?: string | null
+          instance_id?: string
+          text?: string
+          type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -64,6 +99,7 @@ export type Database = {
         node: Database["public"]["CompositeTypes"]["elwood_node"] | null
         parent: Database["public"]["CompositeTypes"]["elwood_node"] | null
         children: Database["public"]["CompositeTypes"]["elwood_node"][] | null
+        key_children: string[] | null
       }
       elwood_get_node_tree_result: {
         rootNodeId: string | null
@@ -77,6 +113,7 @@ export type Database = {
       }
       elwood_node: {
         id: string | null
+        object_id: string | null
         type: Database["public"]["Enums"]["elwood_node_type"] | null
         prefix: string[] | null
         name: string | null

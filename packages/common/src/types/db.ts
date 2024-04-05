@@ -1,13 +1,13 @@
-import {Database} from './database';
+import {type Database} from './database';
 
 export type NodeType = Database['public']['Enums']['elwood_node_type'];
 
-export type GetNodeResult = {
+export interface GetNodeResult {
   id: string;
   node: NodeRecord;
   children: NodeRecord[] | null;
   key_children: NodeRecord[] | null;
-};
+}
 
 export type NodeRecord = Database['public']['CompositeTypes']['elwood_node'] & {
   prefix: string[];
@@ -26,3 +26,9 @@ export type GetNodeTreeResult =
 export type Member = Database['public']['CompositeTypes']['elwood_member'];
 
 export type SearchMembersResult = Member[];
+
+export type ActivityType =
+  Database['public']['Tables']['elwood_activity']['Row']['type'];
+
+export type ActivityRecord =
+  Database['public']['Tables']['elwood_activity']['Row'];

@@ -5,6 +5,7 @@ import {PageLayout} from '@/components/layouts/page';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
 import {useGetNode} from '@/data/node/use-get-node';
+import {useChat} from '@/hooks/ui/use-chat';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesBlobRoute(): JSX.Element {
@@ -20,6 +21,10 @@ export default function FilesBlobRoute(): JSX.Element {
   const [blob] = useRenderedBlob({prefix});
   const query = useGetNode({path: prefix});
   const node = query.data?.node;
+  const chat = useChat({
+    assetId: node?.id ?? '',
+    assetType: 'NODE',
+  });
 
   if (query.isLoading) {
     return <PageLayout />;
@@ -30,12 +35,7 @@ export default function FilesBlobRoute(): JSX.Element {
   }
 
   const headerLeft = <FileBreadcrumbs prefix={prefix} />;
-  const rail = (
-    <>
-      <div className="">access</div>
-      <div className="mt-6 flex-grow">chat</div>
-    </>
-  );
+  const rail = <> {chat}</>;
 
   return (
     <PageLayout headerLeft={headerLeft} rail={rail}>

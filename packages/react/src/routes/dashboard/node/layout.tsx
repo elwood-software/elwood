@@ -11,6 +11,7 @@ import {useNodeTree} from '@/hooks/ui/use-node-tree';
 import {Link, NodeLink, createNodeLink} from '@/components/link';
 import {useGetNode} from '@/data/node/use-get-node';
 import {MainLayout} from '@/components/layouts/main';
+import {useSidebarFooter} from '@/hooks/ui/use-sidebar-footer';
 import type {FilesRouteParams} from '../types';
 
 export default function NodeLayout(): JSX.Element {
@@ -21,6 +22,7 @@ export default function NodeLayout(): JSX.Element {
   const prefix = toArray(path?.split('/')).filter(Boolean);
   const tree = useNodeTree(prefix);
   const query = useGetNode({path: []});
+  const sidebarFooter = useSidebarFooter();
 
   const items: DropdownMenuItem[] = toArray(query.data?.children).map(item => {
     return {
@@ -65,7 +67,11 @@ export default function NodeLayout(): JSX.Element {
   );
 
   return (
-    <MainLayout title={title} titleActions={titleActions} sidebar={sidebar}>
+    <MainLayout
+      title={title}
+      titleActions={titleActions}
+      sidebar={sidebar}
+      sidebarFooter={sidebarFooter}>
       <Outlet />
     </MainLayout>
   );

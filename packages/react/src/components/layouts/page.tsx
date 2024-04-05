@@ -36,7 +36,7 @@ export function PageLayout(
       </div>
 
       {props.rail ? (
-        <div className="m-6 ml-0 w-1/4 flex flex-col border rounded">
+        <div className="m-6 ml-0 w-1/4 min-w-[300px] flex flex-col border rounded">
           {props.rail}
         </div>
       ) : null}

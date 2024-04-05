@@ -59,6 +59,7 @@ BEGIN
       
     IF _object_row.id IS NOT NULL THEN
       _node.id = elwood.create_node_id('BLOB', _prefix, _name);
+      _node.object_id := _object_row.id;
       _node.type = 'BLOB';
       _node.prefix = _prefix;
       _node.name = _name;

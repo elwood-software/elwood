@@ -20,7 +20,7 @@ export default function RootLayout(props: PropsWithChildren): JSX.Element {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`bg-background text-foreground ${themeClassName}`}
+        className={`overflow-hidden w-screen h-screen text-foreground bg-background ${themeClassName}`}
         data-color-mode={themeClassName}
         data-color-server-theme={theme}>
         <ElwoodThemeProvider>{props.children}</ElwoodThemeProvider>

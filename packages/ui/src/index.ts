@@ -17,6 +17,7 @@ export * from './components/form/select';
 export * from './components/form/input';
 export * from './components/breadcrumb/breadcrumb';
 export * from './components/hover-card/hover-card';
+export * from './components/form/textarea';
 
 export * from './svg/logo';
 export * from './svg/icons';

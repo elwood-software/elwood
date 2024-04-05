@@ -11,6 +11,7 @@ CREATE TYPE public.elwood_node_type AS ENUM (
 DROP TYPE IF EXISTS public.elwood_node CASCADE;
 CREATE TYPE public.elwood_node AS  (
     "id" text,
+    "object_id" uuid,
     "type" public.elwood_node_type, 
     "prefix" text[],
     "name" text,
