@@ -77,11 +77,10 @@ CREATE TYPE elwood.get_node_leaf_result AS (
 );
 
 
--- DROP TYPE IF EXISTS elwood.activity_type CASCADE;
--- CREATE TYPE elwood.activity_type AS ENUM (
---   "COMMENT",
---   "REACTION",
---   "LIKE",
---   "SAVE",
---   "NOTE"
--- );
+DROP TYPE IF EXISTS elwood.activity_type CASCADE;
+CREATE TYPE elwood.activity_type AS ENUM (
+    'COMMENT',
+    'REACTION',
+    'LIKE',
+    'SAVE'
+);
