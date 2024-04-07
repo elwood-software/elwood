@@ -1,16 +1,39 @@
-import {type PropsWithChildren} from 'react';
-import {createClient} from '@/utils/supabase/server';
+'use client';
+
+import {useEffect, type PropsWithChildren, useState} from 'react';
+import {type User} from '@elwood/js';
+import {invariant} from '@elwood/common';
+import {Spinner} from '@elwood/ui';
 import AuthPage from '@/app/(unauthenticated)/auth/page';
+import {useClient} from '@/app/client-provider';
 
-export default async function AuthenticatedLayout(
+export default function AuthenticatedLayout(
   props: PropsWithChildren,
-): Promise<JSX.Element> {
-  const client = createClient();
-  const {data} = await client.auth.getUser();
+): JSX.Element {
+  const client = useClient();
+  const [user, setUser] = useState<User | null | false>(null);
 
-  if (!data.user) {
+  useEffect(() => {
+    client.auth
+      .getUser()
+      .then(({data}) => {
+        invariant(data.user, 'User is required');
+        setUser(data.user);
+      })
+      .catch(() => {
+        setUser(false);
+      });
+  }, [client]);
+
+  if (user === null) {
+    return <Spinner full />;
+  }
+
+  if (!user) {
     return <AuthPage />;
   }
 
-  return <>{props.children}</>;
+  return (
+    <div className="flex flex-row w-screen h-screen">{props.children}</div>
+  );
 }

@@ -30,8 +30,6 @@ export default function FilesBlobRoute(): JSX.Element {
   }, [copyState.value, toast]);
 
   useEffect(() => {
-    console.log(copyState);
-
     if (copyState.error) {
       toast('Error copying to clipboard', {type: 'error'});
     }

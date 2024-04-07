@@ -1,5 +1,16 @@
-import {useEffect, useState} from 'react';
-import {Dialog, useSonner} from '@elwood/ui';
+import {useEffect, useState, type MouseEvent} from 'react';
+import {
+  useSonner,
+  useTheme,
+  Dialog,
+  DropdownMenu,
+  Button,
+  CircleUserRound,
+  LogOutIcon,
+  AlertDialog,
+  SunMoonIcon,
+  type DropdownMenuItem,
+} from '@elwood/ui';
 import {SidebarFooter} from '@/components/sidebar/footer';
 import {UploadStatus} from '@/components/upload/status';
 import {UploadModal} from '@/components/upload/modal';
@@ -22,6 +33,8 @@ interface UploadState {
 export function useSidebarFooter(): JSX.Element {
   const {uploadManager} = useProviderContext();
   const toast = useSonner();
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const theme = useTheme();
 
   const [uploadIds, setUploadIds] = useState<string[]>([]);
   const [uploadErrorIds, setUploadErrorIds] = useState<string[]>([]);
@@ -108,22 +121,93 @@ export function useSidebarFooter(): JSX.Element {
     }
   }, [uploadManager, toast, uploadErrorIds]);
 
+  function onLogoutClick(e: MouseEvent): void {
+    e.preventDefault();
+    window.location.href = '/auth/logout';
+  }
+
+  const userMenuItems: DropdownMenuItem[] = [
+    {
+      id: 'mode',
+      type: 'label',
+      icon: SunMoonIcon,
+      children: 'Theme',
+    },
+    {
+      id: 'separator-mode',
+      type: 'separator',
+    },
+    {
+      id: 'mode',
+      type: 'radio',
+      value: theme.value,
+      onValueChange(nextValue) {
+        theme.change(nextValue as 'light' | 'dark' | 'system');
+      },
+      items: [
+        {
+          value: 'light',
+          children: 'Light',
+        },
+        {
+          value: 'dark',
+          children: 'Dark',
+        },
+        {
+          value: 'system',
+          children: 'System',
+        },
+      ],
+    },
+    {
+      id: 'separator',
+      type: 'separator',
+    },
+    {
+      id: 'logout',
+      children: 'Logout',
+      icon: LogOutIcon,
+      onSelect: () => {
+        setIsLogoutOpen(true);
+      },
+    },
+  ];
+
+  const userMenu = (
+    <DropdownMenu items={userMenuItems} contentClassName="ml-3">
+      <Button
+        type="button"
+        variant="ghost"
+        icon={<CircleUserRound className="size-5" />}
+        className="text-muted-foreground">
+        hihi
+      </Button>
+    </DropdownMenu>
+  );
+
   return (
-    <Dialog
-      className="max-w-[50vw]"
-      title="Uploads"
-      description={`You've uploaded ${String(uploadState.totalUploads)} files. Awesome!`}
-      content={<UploadModal files={uploadState.files} />}>
-      {({open}) => {
-        return (
-          <SidebarFooter
-            uploadStatus={
+    <>
+      <SidebarFooter
+        userMenu={userMenu}
+        uploadStatus={
+          <Dialog
+            className="max-w-[50vw]"
+            title="Uploads"
+            description={`You've uploaded ${String(uploadState.totalUploads)} files. Awesome!`}
+            content={<UploadModal files={uploadState.files} />}>
+            {({open}) => (
               <UploadStatus onUploadsClick={open} {...uploadState} />
-            }
-            userDisplayName="jo"
-          />
-        );
-      }}
-    </Dialog>
+            )}
+          </Dialog>
+        }
+      />
+      <AlertDialog
+        open={isLogoutOpen}
+        onOpenChange={setIsLogoutOpen}
+        onClick={onLogoutClick}
+        title="Are you sure you want to logout"
+        description="You will have to login again, and that might be annoying"
+      />
+    </>
   );
 }

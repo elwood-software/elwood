@@ -21,7 +21,6 @@ export function ElwoodProvider(
 
   const [uploadManager, setUploadManager] = useState<Uppy | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-
   const getHeaders = useCallback(() => {
     return {
       authorization: accessToken ? `Bearer ${accessToken}` : undefined,

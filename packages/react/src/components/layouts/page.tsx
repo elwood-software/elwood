@@ -16,15 +16,15 @@ export function PageLayout(
     <>
       <div className="flex flex-col min-h-0 h-screen w-full">
         {props.headerLeft ?? props.headerRight ? (
-          <header className="flex items-center justify-between px-8 pt-3">
+          <header className="flex items-center justify-between px-8 pt-4">
             <div>{props.headerLeft}</div>
             <div>{props.headerRight}</div>
           </header>
         ) : null}
-        <div className="flex-grow flex flex-row flex-nowrap min-h-0">
+        <div className="flex-grow flex flex-row flex-nowrap min-h-0 px-8 pt-4">
           <div
             {...props.mainProps}
-            className="flex-grow flex-nowrap overflow-y-auto overflow-x-hidden min-h-0 mt-6 px-8">
+            className="flex-grow flex-nowrap overflow-y-auto overflow-x-hidden min-h-0">
             {props.children}
             {props.loading ? (
               <div className="w-full h-full flex items-center justify-center">
@@ -36,7 +36,7 @@ export function PageLayout(
       </div>
 
       {props.rail ? (
-        <div className="m-6 ml-0 w-1/4 min-w-[300px] flex flex-col border rounded">
+        <div className="ml-0 w-1/4 min-w-[300px] flex flex-col border rounded m-4">
           {props.rail}
         </div>
       ) : null}

@@ -2,11 +2,11 @@
 
 import {useEffect} from 'react';
 import {useRouter} from 'next/navigation';
-import {createClient} from '@/utils/supabase/client';
+import {useClient} from '@/app/client-provider';
 
 export function Logout(): JSX.Element {
   const router = useRouter();
-  const client = createClient();
+  const client = useClient();
 
   useEffect(() => {
     client.auth

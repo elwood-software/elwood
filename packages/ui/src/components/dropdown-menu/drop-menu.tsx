@@ -12,6 +12,8 @@ import {
   DropdownMenuBaseSeparator,
   DropdownMenuBaseItem,
   DropdownMenuBaseLabel,
+  DropdownMenuBaseRadioGroup,
+  DropdownMenuBaseRadioItem,
 } from './dropdown-menu-base';
 
 export interface DropdownMenuItemSeparator {
@@ -22,6 +24,7 @@ export interface DropdownMenuItemSeparator {
 export interface DropdownMenuItemLabel {
   id: string;
   type: 'label';
+  icon?: LucideIcon;
   children: ReactNode;
 }
 
@@ -34,10 +37,18 @@ export interface DropdownMenuItemItem
   icon?: LucideIcon;
 }
 
+export interface DropdownMenuItemRadio
+  extends ComponentPropsWithoutRef<typeof DropdownMenuBaseRadioGroup> {
+  id: string;
+  type: 'radio';
+  items: ComponentPropsWithoutRef<typeof DropdownMenuBaseRadioItem>[];
+}
+
 export type DropdownMenuItem =
   | DropdownMenuItemSeparator
   | DropdownMenuItemItem
-  | DropdownMenuItemLabel;
+  | DropdownMenuItemLabel
+  | DropdownMenuItemRadio;
 
 export interface DropdownMenuProps
   extends ComponentPropsWithoutRef<typeof DropdownMenuBase> {
@@ -64,9 +75,32 @@ export function DropdownMenu(
 
             if (item.type === 'label') {
               return (
-                <DropdownMenuBaseLabel key={`label-${item.id}`}>
+                <DropdownMenuBaseLabel
+                  key={`label-${item.id}`}
+                  className="flex items-center">
+                  {item.icon ? <item.icon className="w-4 h-4 mr-2" /> : null}
                   {item.children}
                 </DropdownMenuBaseLabel>
+              );
+            }
+
+            if (item.type === 'radio') {
+              const i = item;
+
+              return (
+                <DropdownMenuBaseRadioGroup
+                  key={`radio-${i.id}`}
+                  value={i.value}
+                  onValueChange={i.onValueChange}>
+                  {item.items.map(radioItem => {
+                    return (
+                      <DropdownMenuBaseRadioItem
+                        key={`radio-${i.id}-${radioItem.value}`}
+                        {...radioItem}
+                      />
+                    );
+                  })}
+                </DropdownMenuBaseRadioGroup>
               );
             }
 

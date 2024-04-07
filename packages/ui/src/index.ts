@@ -21,6 +21,7 @@ export * from './components/table/table';
 export * from './svg/logo';
 export * from './svg/icons';
 
+export {useTheme} from './hooks/use-theme';
 export {useSonner} from './hooks/use-sonner';
 export {cn} from './lib/utils';
 export {ElwoodThemeProvider} from './provider';

@@ -1,12 +1,9 @@
 'use client';
-
-// eslint-disable-next-line import/named -- intentional
-import {useFormState} from 'react-dom';
+import {useState} from 'react';
 import {AuthForm} from '@elwood/react';
 import {revalidatePath} from 'next/cache';
-import {redirect, RedirectType} from 'next/navigation';
-import {useFormActionLoading} from '@/hooks/use-action-loading';
-import {login, type LoginActionState} from './actions';
+import {redirect, RedirectType, useRouter} from 'next/navigation';
+import {useClient} from '@/app/client-provider';
 
 export interface AuthPageProps {
   hideEmail?: boolean;
@@ -15,19 +12,35 @@ export interface AuthPageProps {
 }
 
 export default function AuthPage(props: AuthPageProps): JSX.Element {
-  const [loginIsLoading, action] =
-    useFormActionLoading<LoginActionState>(login);
+  const client = useClient();
+  const [loginIsLoading, setLoginIsLoading] = useState(false);
+  const [loginErrors, setLoginErrors] = useState<string[]>([]);
+  const router = useRouter();
 
-  const [state, loginAction] = useFormState<LoginActionState>(action, {
-    status: 'waiting',
-  });
+  async function onSubmit(formData: FormData): Promise<void> {
+    setLoginIsLoading(true);
 
-  if (state.status === 'success') {
-    if (props.redirectUri) {
-      redirect(props.redirectUri, RedirectType.replace);
+    try {
+      const {error} = await client.auth.signInWithPassword({
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+      });
+
+      if (error) {
+        setLoginErrors([error.message]);
+        return;
+      }
+
+      console.log('poop');
+
+      router.refresh();
+    } catch (error) {
+      // eslint-disable-next-line no-console -- intentional
+      console.error('login error', error);
+      setLoginErrors(['An unexpected error occurred']);
+    } finally {
+      setLoginIsLoading(false);
     }
-
-    revalidatePath('/');
   }
 
   return (
@@ -35,9 +48,9 @@ export default function AuthPage(props: AuthPageProps): JSX.Element {
       <AuthForm
         hideEmail={props.hideEmail}
         email={props.email}
-        errors={state.message ?? []}
+        errors={loginErrors}
         loading={loginIsLoading}
-        loginAction={loginAction}
+        loginAction={onSubmit}
       />
     </div>
   );

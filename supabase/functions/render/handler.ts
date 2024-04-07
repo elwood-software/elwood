@@ -4,7 +4,7 @@ import {parseMediaType} from 'https://deno.land/std@0.217.0/media_types/parse_me
 import {extname} from 'https://deno.land/std@0.217.0/path/extname.ts';
 import {encodeBase64} from 'https://deno.land/std@0.217.0/encoding/base64.ts';
 
-const CAN_RENDER = ['text/markdown'];
+const CAN_RENDER = ['text/markdown', 'text/plain'];
 
 export type HandlerInput = {
   bucket: string;

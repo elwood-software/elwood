@@ -51,6 +51,8 @@ export {
   CircleUserRound,
   ClipboardCopyIcon,
   LinkIcon,
+  BookMarkedIcon,
+  SunMoonIcon,
 } from 'lucide-react';
 
 export const Icons: Record<string, LucideIcon> = {
