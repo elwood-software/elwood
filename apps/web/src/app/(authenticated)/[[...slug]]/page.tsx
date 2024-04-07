@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Router,
   ElwoodProvider,
@@ -11,6 +11,7 @@ import {
 import {createClient} from '@/utils/supabase/client';
 
 export default function Page(): JSX.Element {
+  const client = useRef(createClient());
   const [router, setRouter] = useState<RouterProps['router'] | null>(null);
 
   useEffect(() => {
@@ -25,10 +26,8 @@ export default function Page(): JSX.Element {
     return <div />;
   }
 
-  const client = createClient();
-
   return (
-    <ElwoodProvider workspaceName="Hello" client={client}>
+    <ElwoodProvider workspaceName="Hello" client={client.current}>
       <Router router={router} />
     </ElwoodProvider>
   );

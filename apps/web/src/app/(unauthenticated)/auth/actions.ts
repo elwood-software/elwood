@@ -1,7 +1,7 @@
 'use server';
 
 import {z} from 'zod';
-import {type ElwoodClient} from '@elwood/js';
+import {createClient} from '@/utils/supabase/server';
 
 const schema = z.object({
   email: z.string({
@@ -18,15 +18,10 @@ export interface LoginActionState {
 }
 
 export async function login(
-  client: ElwoodClient,
+  state: LoginActionState | null,
   formData?: FormData,
 ): Promise<LoginActionState> {
-  console.log();
-
-  return {
-    status: 'error',
-    message: ['Invalid form data'],
-  };
+  const client = createClient();
 
   if (!formData) {
     return {
@@ -48,10 +43,12 @@ export async function login(
     };
   }
 
-  const {error} = await client.auth.signInWithPassword({
+  const {data, error} = await client.auth.signInWithPassword({
     email: validatedFields.data.email,
     password: validatedFields.data.password,
   });
+
+  console.log('aaxxxxx', data, error);
 
   if (error) {
     return {

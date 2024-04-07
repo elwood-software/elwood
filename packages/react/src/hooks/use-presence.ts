@@ -1,5 +1,5 @@
 import {useEffect, useReducer, type Dispatch} from 'react';
-import type {SupabaseClient, RealtimeChannel} from '@supabase/supabase-js';
+import type {SupabaseClient, RealtimeChannel} from '@elwood/js';
 import {invariant} from '@elwood/common';
 import {useSupabase} from './use-client';
 

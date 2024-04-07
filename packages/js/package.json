@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@elwood/common": "workspace:*",
+    "@supabase/postgrest-js": "^1.15.0",
     "@supabase/supabase-js": "^2.42.0"
   },
   "devDependencies": {

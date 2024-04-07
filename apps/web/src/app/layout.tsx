@@ -2,7 +2,6 @@ import type {PropsWithChildren} from 'react';
 import {type Metadata} from 'next';
 import {cookies} from 'next/headers';
 import {ElwoodThemeProvider} from '@elwood/ui';
-import {ClientProvider} from './client-provider';
 
 import './global.css';
 import '@elwood/ui/style.css';
@@ -22,9 +21,7 @@ export default function RootLayout(props: PropsWithChildren): JSX.Element {
         className={`overflow-hidden w-screen h-screen text-foreground bg-background ${themeClassName}`}
         data-color-mode={themeClassName}
         data-color-server-theme={theme}>
-        <ElwoodThemeProvider>
-          <ClientProvider>{props.children}</ClientProvider>
-        </ElwoodThemeProvider>
+        <ElwoodThemeProvider>{props.children}</ElwoodThemeProvider>
       </body>
     </html>
   );

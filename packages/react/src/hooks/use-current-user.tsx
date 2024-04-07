@@ -1,6 +1,6 @@
 import type {UseQueryOptions, UseQueryResult} from '@tanstack/react-query';
 import {useQuery} from '@tanstack/react-query';
-import {type User} from '@supabase/supabase-js';
+import {type User} from '@elwood/js';
 import {useSupabase} from '@/hooks/use-client';
 
 export type UseCurrenUserResult = User | null;

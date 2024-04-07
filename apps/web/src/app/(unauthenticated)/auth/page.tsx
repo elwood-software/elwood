@@ -1,9 +1,11 @@
 'use client';
-import {useState} from 'react';
+
+// eslint-disable-next-line import/named -- intentional
+import {useFormState} from 'react-dom';
 import {AuthForm} from '@elwood/react';
-import {revalidatePath} from 'next/cache';
-import {redirect, RedirectType, useRouter} from 'next/navigation';
-import {useClient} from '@/app/client-provider';
+import {redirect, RedirectType} from 'next/navigation';
+import {useFormActionLoading} from '@/hooks/use-action-loading';
+import {login, type LoginActionState} from './actions';
 
 export interface AuthPageProps {
   hideEmail?: boolean;
@@ -12,35 +14,22 @@ export interface AuthPageProps {
 }
 
 export default function AuthPage(props: AuthPageProps): JSX.Element {
-  const client = useClient();
-  const [loginIsLoading, setLoginIsLoading] = useState(false);
-  const [loginErrors, setLoginErrors] = useState<string[]>([]);
-  const router = useRouter();
+  const [loginIsLoading, action] =
+    useFormActionLoading<LoginActionState>(login);
 
-  async function onSubmit(formData: FormData): Promise<void> {
-    setLoginIsLoading(true);
+  const [state, loginAction] = useFormState<LoginActionState>(action, {
+    status: 'waiting',
+  });
 
-    try {
-      const {error} = await client.auth.signInWithPassword({
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
-      });
+  if (state.status === 'success') {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams({
+      redirect_uri: url.searchParams.get('redirect_uri') ?? url.pathname,
+    });
 
-      if (error) {
-        setLoginErrors([error.message]);
-        return;
-      }
+    console.log(state, url, params);
 
-      console.log('poop');
-
-      router.refresh();
-    } catch (error) {
-      // eslint-disable-next-line no-console -- intentional
-      console.error('login error', error);
-      setLoginErrors(['An unexpected error occurred']);
-    } finally {
-      setLoginIsLoading(false);
-    }
+    redirect(`/auth/complete?${params.toString()}`, RedirectType.replace);
   }
 
   return (
@@ -48,9 +37,9 @@ export default function AuthPage(props: AuthPageProps): JSX.Element {
       <AuthForm
         hideEmail={props.hideEmail}
         email={props.email}
-        errors={loginErrors}
+        errors={state.message ?? []}
         loading={loginIsLoading}
-        loginAction={onSubmit}
+        loginAction={loginAction}
       />
     </div>
   );

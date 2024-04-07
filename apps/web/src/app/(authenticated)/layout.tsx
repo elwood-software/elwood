@@ -1,33 +1,14 @@
-'use client';
-
-import {useEffect, type PropsWithChildren, useState} from 'react';
-import {type User} from '@elwood/js';
-import {invariant} from '@elwood/common';
-import {Spinner} from '@elwood/ui';
+import {type PropsWithChildren} from 'react';
 import AuthPage from '@/app/(unauthenticated)/auth/page';
-import {useClient} from '@/app/client-provider';
+import {createClient} from '@/utils/supabase/server';
 
-export default function AuthenticatedLayout(
+export default async function AuthenticatedLayout(
   props: PropsWithChildren,
-): JSX.Element {
-  const client = useClient();
-  const [user, setUser] = useState<User | null | false>(null);
-
-  useEffect(() => {
-    client.auth
-      .getUser()
-      .then(({data}) => {
-        invariant(data.user, 'User is required');
-        setUser(data.user);
-      })
-      .catch(() => {
-        setUser(false);
-      });
-  }, [client]);
-
-  if (user === null) {
-    return <Spinner full />;
-  }
+): Promise<JSX.Element> {
+  const client = createClient();
+  const {
+    data: {user},
+  } = await client.auth.getUser();
 
   if (!user) {
     return <AuthPage />;

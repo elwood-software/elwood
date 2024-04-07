@@ -1,3 +1,4 @@
+import {createBrowserClient} from '@supabase/ssr';
 import {
   createClient as createElwoodClient,
   type ElwoodClient,
@@ -5,5 +6,7 @@ import {
 import {getSupabaseEnv} from './get-supabase-env';
 
 export function createClient(): ElwoodClient {
-  return createElwoodClient(...getSupabaseEnv());
+  const [url, key] = getSupabaseEnv();
+
+  return createElwoodClient(url, key, {}, createBrowserClient(url, key));
 }
