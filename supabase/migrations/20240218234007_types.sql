@@ -56,8 +56,7 @@ CREATE TYPE public.elwood_get_node_tree_result AS  (
 DROP TYPE IF EXISTS public.elwood_member_type CASCADE;
 CREATE TYPE public.elwood_member_type AS ENUM (
   'USER',
-  'TEAM',
-  'GUEST'
+  'TEAM'
 );
 
 DROP TYPE IF EXISTS public.elwood_member CASCADE;
@@ -77,6 +76,12 @@ CREATE TYPE elwood.get_node_leaf_result AS (
   "node" public.elwood_node
 );
 
+DROP TYPE IF EXISTS elwood.elwood_member_role CASCADE;
+CREATE TYPE elwood.elwood_member_role AS ENUM (
+  'ADMIN',
+  'MANAGER',
+  'MEMBER'
+);
 
 DROP TYPE IF EXISTS elwood.activity_type CASCADE;
 CREATE TYPE elwood.activity_type AS ENUM (

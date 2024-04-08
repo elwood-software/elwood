@@ -8,6 +8,7 @@ CREATE TABLE elwood.member (
   "username" text NULL,
   "display_name" text NULL,
   "added_by_user_id" uuid NULL,
+  "role" elwood.elwood_member_role NOT NULL DEFAULT 'MEMBER',
   
   "created_at" timestamptz default now(),
   "updated_at" timestamptz default now(),
@@ -43,3 +44,9 @@ create policy "Members can view all members."
 on elwood.member for select
 to authenticated
 using (elwood.is_a_member());
+
+create policy "Member can update their own member row."
+on elwood.member for update
+to authenticated           
+using ( auth.uid() = user_id )
+with check ( auth.uid() = user_id ); 
