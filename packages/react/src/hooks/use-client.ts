@@ -1,17 +1,9 @@
-import type {SupabaseClient as BaseSupabaseClient} from '@elwood/js';
+import type {ElwoodClient} from '@elwood/js';
 import {invariant} from '@elwood/common';
-import type {Database} from '@elwood/common';
 import {useProviderContext} from './use-provider-context';
 
-type OurSupabaseClient = BaseSupabaseClient<Database>;
-
-export function useSupabase(): OurSupabaseClient {
+export function useClient(): ElwoodClient {
   const value = useProviderContext();
-  invariant(
-    value.client,
-    'No supabaseClient in Provider context (for useSupabase())',
-  );
+  invariant(value.client, 'No client in Provider context (for useClient())');
   return value.client;
 }
-
-export type SupabaseClient = OurSupabaseClient;

@@ -2,7 +2,7 @@ import type {UseQueryOptions, UseQueryResult} from '@tanstack/react-query';
 import {useQuery} from '@tanstack/react-query';
 import type {NodeTree, GetNodeTreeResult} from '@elwood/common';
 import type {SupabaseClient} from '@/hooks/use-client';
-import {useSupabase} from '@/hooks/use-client';
+import {useClient} from '@/hooks/use-client';
 import keys from './_keys';
 
 export type UseGetNodeTreeResult = GetNodeTreeResult;
@@ -18,7 +18,7 @@ export function useGetNodeTree(
     'queryFn' | 'queryKey'
   > = {},
 ): UseQueryResult<UseGetNodeTreeResult> {
-  const supabase = useSupabase();
+  const supabase = useClient();
 
   return useQuery({
     ...opts,

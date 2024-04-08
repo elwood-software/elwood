@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
 import {FilesBlobContent} from '@/components/files/blob';
-import {useSupabase} from '../use-client';
+import {useClient} from '../use-client';
 
 export interface UseRenderedBlobResultData {
   raw: string | undefined;
@@ -19,7 +19,7 @@ export interface UseRenderedBlobInput {
 export function useRenderedBlob(
   input: UseRenderedBlobInput,
 ): [JSX.Element, UseRenderedBlobResultData | null] {
-  const supabase = useSupabase();
+  const supabase = useClient();
 
   const query = useQuery({
     queryKey: ['file-content', input.prefix.join('/')],

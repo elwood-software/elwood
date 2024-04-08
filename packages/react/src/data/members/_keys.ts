@@ -4,14 +4,17 @@ import type {UseSearchMembersInput} from './use-search-members';
 
 export type KeyFn = (input: Json) => string[];
 
-const keys: Record<'search', KeyFn> = {
+const keys: Record<'search' | 'current', KeyFn> = {
   search(input: UseSearchMembersInput) {
     return [
       'members--search',
       toArray(input.path).join('/'),
-      input.query,
+      input.query ?? '-',
       input.role ?? '-',
     ];
+  },
+  current() {
+    return ['members--current'];
   },
 };
 

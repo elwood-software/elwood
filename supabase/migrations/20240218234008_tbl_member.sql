@@ -1,5 +1,5 @@
 
--- PROFILE
+
 CREATE TABLE elwood.member (
   "instance_id" uuid NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
   "id" uuid NOT NULL DEFAULT extensions.uuid_generate_v4(),
@@ -17,20 +17,29 @@ CREATE TABLE elwood.member (
   PRIMARY KEY ("id")
 );
 
--- only one user_id per instance
+
 CREATE UNIQUE INDEX IF NOT EXISTS elwood_idx_member_user_id ON elwood.member("instance_id", "user_id");
--- only one username per instance
 CREATE UNIQUE INDEX IF NOT EXISTS elwood_idx_member_username ON elwood.member("instance_id", "username");
+alter table elwood."member" enable row level security;
+
+create function elwood.is_a_member()
+returns boolean
+language plpgsql
+security definer
+as $$
+begin
+  return exists (
+    select 1 from elwood.member
+    where auth.uid() = user_id 
+  );
+end;
+$$;
 
 
--- SETTINGS
-CREATE TABLE elwood.settings (
-  "instance_id" uuid NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
-  "name" VARCHAR(20) NOT NULL PRIMARY KEY,
-  "value" jsonb NOT NULL DEFAULT '{}'::jsonb,
-  "created_at" timestamptz default now(),
-  "updated_at" timestamptz default now()
-);
+CREATE VIEW public.elwood_members AS
+  SELECT * FROM elwood.member;
 
--- only one name per instance
-CREATE UNIQUE INDEX IF NOT EXISTS elwood_idx_settings_name ON elwood.settings("instance_id", "name");
+create policy "Members can view all members."
+on elwood.member for select
+to authenticated
+using (elwood.is_a_member());

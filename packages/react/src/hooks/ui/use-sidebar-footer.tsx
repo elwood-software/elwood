@@ -31,7 +31,7 @@ interface UploadState {
 }
 
 export function useSidebarFooter(): JSX.Element {
-  const {uploadManager} = useProviderContext();
+  const {uploadManager, member} = useProviderContext();
   const toast = useSonner();
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const theme = useTheme();
@@ -180,7 +180,7 @@ export function useSidebarFooter(): JSX.Element {
         variant="ghost"
         icon={<CircleUserRound className="size-5" />}
         className="text-muted-foreground">
-        hihi
+        {member.display_name}
       </Button>
     </DropdownMenu>
   );

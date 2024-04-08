@@ -5,7 +5,7 @@ import type {
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import type {GetNodeResult, NodeRecord} from '@elwood/common';
 import {invariant} from '@elwood/common';
-import {useSupabase} from '@/hooks/use-client';
+import {useClient} from '@/hooks/use-client';
 import {getNode} from './use-get-node';
 import keys from './_keys';
 
@@ -41,7 +41,7 @@ export function useCreateNode(
     'mutationFn'
   > = {},
 ): UseMutationResult<UseCreateNodeResult, Error, UseCreateNodeInput> {
-  const supabase = useSupabase();
+  const supabase = useClient();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -61,7 +61,7 @@ export function useCreateNode(
 }
 
 export async function createNode(
-  supabase: ReturnType<typeof useSupabase>,
+  supabase: ReturnType<typeof useClient>,
   input: UseCreateNodeInput,
 ): Promise<GetNodeResult> {
   let content: File | string | null = null;

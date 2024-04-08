@@ -3,12 +3,16 @@ import type {PropsWithChildren} from 'react';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import Uppy from '@uppy/core';
 import Tus from '@uppy/tus';
-import {invariant} from '@elwood/common';
+import {invariant, type Member} from '@elwood/common';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
+import {Spinner} from '@elwood/ui';
 import {ProviderContext, type ProviderContextValue} from '@/context';
 
-export type ElwoodProviderProps = Omit<ProviderContextValue, 'uploadManager'>;
+export type ElwoodProviderProps = Omit<
+  ProviderContextValue,
+  'uploadManager' | 'member'
+>;
 
 const queryClient = new QueryClient();
 
@@ -19,6 +23,7 @@ export function ElwoodProvider(
 ): JSX.Element {
   invariant(props.client, 'Client is required for ElwoodProvider');
 
+  const [member, setMember] = useState<Member | null | false>(null);
   const [uploadManager, setUploadManager] = useState<Uppy | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const getHeaders = useCallback(() => {
@@ -53,18 +58,36 @@ export function ElwoodProvider(
 
     props.client.auth
       .getSession()
-      .then(({data}) => {
+      .then(async ({data}) => {
         invariant(data.session?.access_token);
+
+        const result = await props.client
+          .members()
+          .select('*')
+          .eq('user_id', data.session.user.id)
+          .single();
+
+        invariant(result.data, 'Member is missing');
+
+        setMember(result.data);
         setAccessToken(data.session.access_token);
       })
       .catch(() => {
-        throw new Error('Failed to initialize Uppy');
+        setMember(false);
       });
   }, [props.client, getHeaders]);
 
+  if (member === false) {
+    return <div>Unauthorized</div>;
+  }
+
+  if (member === null) {
+    return <Spinner full />;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
-      <ProviderContext.Provider value={{...props, uploadManager}}>
+      <ProviderContext.Provider value={{...props, uploadManager, member}}>
         {props.children}
       </ProviderContext.Provider>
     </QueryClientProvider>

@@ -6,7 +6,7 @@ import {toArray} from '@elwood/common';
 import {FilesTree, type FilesTreeProps} from '@/components/files/tree';
 import {getNodeTree} from '@/data/node/use-get-node-tree';
 import {getNode} from '@/data/node/use-get-node';
-import {useSupabase} from '../use-client';
+import {useClient} from '../use-client';
 
 interface TreeState {
   rootNodeId: string | null;
@@ -41,7 +41,7 @@ type TreeAction =
   | {type: 'RESET'};
 
 export function useNodeTree(prefix: string[]): JSX.Element {
-  const supabase = useSupabase();
+  const supabase = useClient();
   const [state, dispatch] = useReducer<Reducer<TreeState, TreeAction>>(
     reducer,
     {

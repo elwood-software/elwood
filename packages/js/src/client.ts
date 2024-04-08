@@ -6,6 +6,7 @@ import {
 import type {
   PostgrestClient,
   PostgrestFilterBuilder,
+  PostgrestQueryBuilder,
 } from '@supabase/postgrest-js';
 import {invariant, type Database as ElwoodDatabase} from '@elwood/common';
 
@@ -129,6 +130,17 @@ export class ElwoodClient<
 
   removeAllChannels(): ReturnType<SupabaseClient['removeAllChannels']> {
     return this.#supabaseClient.removeAllChannels();
+  }
+
+  /**
+   * Elwood API
+   */
+
+  members(): PostgrestQueryBuilder<
+    ElwoodDatabase['public'],
+    ElwoodDatabase['public']['Views']['elwood_members']
+  > {
+    return this.#elwoodClient.from('elwood_members');
   }
 
   async getNode(

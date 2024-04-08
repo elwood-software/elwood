@@ -22,6 +22,10 @@ loadSync({
 
 const ghToken = Deno.env.get('GITHUB_TOKEN');
 
+if (ghToken) {
+  console.log('using GITHUB_TOKEN');
+}
+
 try {
   const cmd = new Deno.Command('supabase', {
     args: ['status', '-o', 'json'],
@@ -94,6 +98,8 @@ async function buildSeedFromRepoPath(
       },
     },
   );
+
+  !result.ok && console.log(await result.text());
 
   assert(result.ok, `Failed to fetch seed repo path "${path}"`);
 

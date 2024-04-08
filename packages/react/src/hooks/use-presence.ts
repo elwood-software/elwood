@@ -1,7 +1,7 @@
 import {useEffect, useReducer, type Dispatch} from 'react';
 import type {SupabaseClient, RealtimeChannel} from '@elwood/js';
 import {invariant} from '@elwood/common';
-import {useSupabase} from './use-client';
+import {useClient} from './use-client';
 
 function noOp() {
   // do nothing
@@ -57,7 +57,7 @@ const initialState: PresenceState = {
 };
 
 export function usePresence(key: string | undefined): PresenceState {
-  const supabase = useSupabase();
+  const supabase = useClient();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {

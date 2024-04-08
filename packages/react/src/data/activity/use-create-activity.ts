@@ -10,7 +10,7 @@ import {
   type JsonObject,
   type ActivityType,
 } from '@elwood/common';
-import {useSupabase} from '@/hooks/use-client';
+import {useClient} from '@/hooks/use-client';
 import keys from './_keys';
 
 export interface UseCreateActivityInput {
@@ -31,7 +31,7 @@ export function useCreateActivity(
     'mutationFn'
   > = {},
 ): UseMutationResult<UseCreateActivityResult, Error, UseCreateActivityInput> {
-  const supabase = useSupabase();
+  const supabase = useClient();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -52,7 +52,7 @@ export function useCreateActivity(
 }
 
 export async function createActivity(
-  supabase: ReturnType<typeof useSupabase>,
+  supabase: ReturnType<typeof useClient>,
   input: UseCreateActivityInput,
 ): Promise<UseCreateActivityResult> {
   const {data} = await supabase.auth.getSession();

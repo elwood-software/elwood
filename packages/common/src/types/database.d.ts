@@ -36,33 +36,39 @@ export type Database = {
     Tables: {
       elwood_activity: {
         Row: {
-          asset: string
+          asset_id: string
           asset_type: string
           attachments: Json
           created_at: string | null
+          id: string
           instance_id: string
+          is_resolved: boolean
           text: string
           type: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
           updated_at: string | null
           user_id: string
         }
         Insert: {
-          asset: string
+          asset_id: string
           asset_type: string
           attachments?: Json
           created_at?: string | null
+          id?: string
           instance_id?: string
+          is_resolved?: boolean
           text: string
           type: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
           updated_at?: string | null
           user_id: string
         }
         Update: {
-          asset?: string
+          asset_id?: string
           asset_type?: string
           attachments?: Json
           created_at?: string | null
+          id?: string
           instance_id?: string
+          is_resolved?: boolean
           text?: string
           type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
           updated_at?: string | null
@@ -72,7 +78,57 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      elwood_members: {
+        Row: {
+          added_by_user_id: string | null
+          created_at: string | null
+          display_name: string | null
+          id: string | null
+          instance_id: string | null
+          type: Database["public"]["Enums"]["elwood_member_type"] | null
+          updated_at: string | null
+          user_id: string | null
+          username: string | null
+        }
+        Insert: {
+          added_by_user_id?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id?: string | null
+          instance_id?: string | null
+          type?: Database["public"]["Enums"]["elwood_member_type"] | null
+          updated_at?: string | null
+          user_id?: string | null
+          username?: string | null
+        }
+        Update: {
+          added_by_user_id?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id?: string | null
+          instance_id?: string | null
+          type?: Database["public"]["Enums"]["elwood_member_type"] | null
+          updated_at?: string | null
+          user_id?: string | null
+          username?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "elwood_member_added_by_user_id"
+            columns: ["added_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "elwood_member_user_id"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       elwood_get_node: {

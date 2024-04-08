@@ -5,7 +5,7 @@ import {
   type UseQueryResult,
 } from '@tanstack/react-query';
 import {type ActivityRecord} from '@elwood/common';
-import {useSupabase} from '@/hooks/use-client';
+import {useClient} from '@/hooks/use-client';
 import keys from './_keys';
 
 export interface UseActivityInput {
@@ -17,7 +17,7 @@ export function useActivity(
   input: UseActivityInput,
   opts: Omit<UseQueryOptions, 'queryKey' | 'queryFn'> = {},
 ): UseQueryResult<ActivityRecord[]> {
-  const supabase = useSupabase();
+  const supabase = useClient();
 
   return useQuery({
     ...opts,
@@ -29,7 +29,7 @@ export function useActivity(
 }
 
 export async function getActivity(
-  supabase: ReturnType<typeof useSupabase>,
+  supabase: ReturnType<typeof useClient>,
   input: UseActivityInput,
 ): Promise<ActivityRecord[]> {
   const q = supabase.from('elwood_activity').select('*');
