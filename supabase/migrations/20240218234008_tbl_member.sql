@@ -9,7 +9,6 @@ CREATE TABLE elwood.member (
   "display_name" text NULL,
   "added_by_user_id" uuid NULL,
   "role" elwood.elwood_member_role NOT NULL DEFAULT 'MEMBER',
-  
   "created_at" timestamptz default now(),
   "updated_at" timestamptz default now(),
 
@@ -38,7 +37,17 @@ $$;
 
 
 CREATE VIEW public.elwood_members AS
-  SELECT * FROM elwood.member;
+  SELECT 
+    "id",
+    "user_id",
+    "type",
+    "username",
+    "display_name",
+    "added_by_user_id",
+    "role",
+    "created_at",
+    "updated_at"
+  FROM elwood.member;
 
 create policy "Members can view all members."
 on elwood.member for select
