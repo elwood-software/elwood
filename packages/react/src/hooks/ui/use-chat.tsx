@@ -1,4 +1,4 @@
-import {Textarea, Button} from '@elwood/ui';
+import {Textarea} from '@elwood/ui';
 import {invariant, toArray} from '@elwood/common';
 import {
   type ChangeEvent,
@@ -31,14 +31,14 @@ export function useChat(input: UseChatInput): JSX.Element {
 
   const feed = toArray(query.data).map(item => {
     return {
-      id: item.id,
+      id: item.id ?? '',
       type: 'message',
       content: item.text,
       timestamp: new Date(item.created_at ?? ''),
-      author: 'poop',
+      author: item.member.display_name,
       children: [],
       likes: 0,
-    };
+    } as ChatFeedItem;
   });
 
   function onSubmit(e: FormEvent): void {

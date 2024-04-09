@@ -10,6 +10,7 @@ import {useUploadButton} from '@/hooks/ui/use-upload-button';
 import {useGetNode} from '@/data/node/use-get-node';
 import {useProviderContext} from '@/hooks/use-provider-context';
 import {useCreateFolderButton} from '@/hooks/ui/use-create-folder-button';
+import {useBookmarkButton} from '@/hooks/ui/use-bookmark-button';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesTreeRoute(): JSX.Element {
@@ -51,13 +52,17 @@ export default function FilesTreeRoute(): JSX.Element {
 
   const createFolderButton = useCreateFolderButton({
     prefix,
-    variant: 'secondary',
+    variant: 'outline',
     size: 'sm',
   });
   const uploadButton = useUploadButton({
     prefix,
-    variant: 'secondary',
+    variant: 'outline',
     size: 'sm',
+  });
+  const bookmarkButton = useBookmarkButton({
+    assetId: treeQuery.data?.node.id,
+    assetType: 'NODE',
   });
 
   const headerLeft = <FileBreadcrumbs prefix={prefix} />;
@@ -65,6 +70,7 @@ export default function FilesTreeRoute(): JSX.Element {
     <div className="flex items-center justify-center space-x-2">
       {createFolderButton}
       {uploadButton}
+      {bookmarkButton}
     </div>
   );
 

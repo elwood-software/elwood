@@ -79,6 +79,5 @@ DROP TYPE IF EXISTS elwood.activity_type CASCADE;
 CREATE TYPE elwood.activity_type AS ENUM (
     'COMMENT',
     'REACTION',
-    'LIKE',
-    'SAVE'
+    'LIKE'
 );

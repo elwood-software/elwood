@@ -3,7 +3,7 @@ import type {PropsWithChildren} from 'react';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import Uppy from '@uppy/core';
 import Tus from '@uppy/tus';
-import {invariant, type Member} from '@elwood/common';
+import {invariant, type MemberRecord} from '@elwood/common';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import {Spinner} from '@elwood/ui';
@@ -24,7 +24,7 @@ export function ElwoodProvider(
 ): JSX.Element {
   invariant(props.client, 'Client is required for ElwoodProvider');
 
-  const [member, setMember] = useState<Member | null | false>(null);
+  const [member, setMember] = useState<MemberRecord | null | false>(null);
   const [uploadManager, setUploadManager] = useState<Uppy | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const getHeaders = useCallback(() => {

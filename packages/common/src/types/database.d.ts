@@ -44,7 +44,9 @@ export type Database = {
           attachments: Json | null
           created_at: string | null
           id: string | null
+          is_deleted: boolean | null
           is_resolved: boolean | null
+          member_id: string | null
           text: string | null
           type: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
           updated_at: string | null
@@ -56,7 +58,9 @@ export type Database = {
           attachments?: Json | null
           created_at?: string | null
           id?: string | null
+          is_deleted?: boolean | null
           is_resolved?: boolean | null
+          member_id?: string | null
           text?: string | null
           type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
           updated_at?: string | null
@@ -68,13 +72,29 @@ export type Database = {
           attachments?: Json | null
           created_at?: string | null
           id?: string | null
+          is_deleted?: boolean | null
           is_resolved?: boolean | null
+          member_id?: string | null
           text?: string | null
           type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
           updated_at?: string | null
           user_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "elwood_activity_member_id"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "member"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "elwood_activity_member_id"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "elwood_member"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "elwood_activity_user_id"
             columns: ["user_id"]

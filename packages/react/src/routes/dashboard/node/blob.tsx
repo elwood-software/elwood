@@ -1,3 +1,4 @@
+import {useEffect, type MouseEvent} from 'react';
 import {useParams} from 'react-router-dom';
 import {
   Icons,
@@ -9,12 +10,12 @@ import {
 } from '@elwood/ui';
 import {invariant, toArray} from '@elwood/common';
 import {useCopyToClipboard} from 'react-use';
-import {useEffect} from 'react';
 import {PageLayout} from '@/components/layouts/page';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
 import {useGetNode} from '@/data/node/use-get-node';
 import {useChat} from '@/hooks/ui/use-chat';
+import {useBookmarkButton} from '@/hooks/ui/use-bookmark-button';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesBlobRoute(): JSX.Element {
@@ -41,11 +42,16 @@ export default function FilesBlobRoute(): JSX.Element {
   invariant(path, 'Must provide a path');
 
   const prefix = toArray(path.split('/')).filter(Boolean);
+
   const [blob] = useRenderedBlob({prefix});
   const query = useGetNode({path: prefix});
   const node = query.data?.node;
   const chat = useChat({
     assetId: node?.id ?? '',
+    assetType: 'NODE',
+  });
+  const bookmarkButton = useBookmarkButton({
+    assetId: node?.id,
     assetType: 'NODE',
   });
 
@@ -58,6 +64,7 @@ export default function FilesBlobRoute(): JSX.Element {
   }
 
   const headerLeft = <FileBreadcrumbs prefix={prefix} />;
+  const headerRight = <div>{bookmarkButton}</div>;
   const rail = <> {chat}</>;
 
   function onCopyToClipboard(e: MouseEvent, type: 'content' | 'link'): void {
@@ -66,7 +73,7 @@ export default function FilesBlobRoute(): JSX.Element {
   }
 
   return (
-    <PageLayout headerLeft={headerLeft} rail={rail}>
+    <PageLayout headerLeft={headerLeft} headerRight={headerRight} rail={rail}>
       <div className="border rounded-lg">
         <div className="border-b px-3 py-1 flex items-center justify-between">
           <div className="font-mono text-xs text-muted-foreground">

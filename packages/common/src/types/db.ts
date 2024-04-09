@@ -23,9 +23,9 @@ export type GetNodeTreeResult =
     tree: NodeTree[];
   };
 
-export type Member = Database['public']['Views']['elwood_member']['Row'];
+export type MemberRecord = Database['public']['Views']['elwood_member']['Row'];
 
-export type SearchMembersResult = Member[];
+export type SearchMembersResult = MemberRecord[];
 
 export type ActivityType =
   Database['public']['Views']['elwood_activity']['Row']['type'];

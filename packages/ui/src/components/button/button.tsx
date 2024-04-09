@@ -82,8 +82,6 @@ export const Button = forwardRef<
   const {
     className,
     children,
-    rounded = true,
-    outline = false,
     variant = 'default',
     size = 'default',
     loading = false,

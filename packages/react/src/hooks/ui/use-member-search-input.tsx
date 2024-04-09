@@ -2,7 +2,7 @@ import {type ReactNode, useState, type FormEvent, useRef} from 'react';
 import {useList, useClickAway} from 'react-use';
 import {toArray} from '@elwood/common';
 import {Spinner} from '@elwood/ui';
-import {type Member} from '@elwood/common';
+import {type MemberRecord} from '@elwood/common';
 import {clsx} from 'clsx';
 import {useSearchMembers} from '@/data/members/use-search-members';
 
@@ -42,7 +42,7 @@ export function useMemberSearchInput(): [
     }
   }
 
-  function onSelect(item: Member): void {
+  function onSelect(item: MemberRecord): void {
     push({
       type: 'member',
       value: String(item.username),
