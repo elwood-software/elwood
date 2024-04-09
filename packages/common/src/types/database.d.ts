@@ -34,57 +34,63 @@ export type Database = {
   }
   public: {
     Tables: {
-      elwood_activity: {
-        Row: {
-          asset_id: string
-          asset_type: string
-          attachments: Json
-          created_at: string | null
-          id: string
-          instance_id: string
-          is_resolved: boolean
-          text: string
-          type: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          asset_id: string
-          asset_type: string
-          attachments?: Json
-          created_at?: string | null
-          id?: string
-          instance_id?: string
-          is_resolved?: boolean
-          text: string
-          type: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          asset_id?: string
-          asset_type?: string
-          attachments?: Json
-          created_at?: string | null
-          id?: string
-          instance_id?: string
-          is_resolved?: boolean
-          text?: string
-          type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE"
-          updated_at?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
-      elwood_members: {
+      elwood_activity: {
+        Row: {
+          asset_id: string | null
+          asset_type: string | null
+          attachments: Json | null
+          created_at: string | null
+          id: string | null
+          is_resolved: boolean | null
+          text: string | null
+          type: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          asset_id?: string | null
+          asset_type?: string | null
+          attachments?: Json | null
+          created_at?: string | null
+          id?: string | null
+          is_resolved?: boolean | null
+          text?: string | null
+          type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          asset_id?: string | null
+          asset_type?: string | null
+          attachments?: Json | null
+          created_at?: string | null
+          id?: string | null
+          is_resolved?: boolean | null
+          text?: string | null
+          type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "elwood_activity_user_id"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      elwood_member: {
         Row: {
           added_by_user_id: string | null
           created_at: string | null
           display_name: string | null
           id: string | null
-          instance_id: string | null
+          role: "ADMIN" | "MANAGER" | "MEMBER" | null
           type: Database["public"]["Enums"]["elwood_member_type"] | null
           updated_at: string | null
           user_id: string | null
@@ -95,7 +101,7 @@ export type Database = {
           created_at?: string | null
           display_name?: string | null
           id?: string | null
-          instance_id?: string | null
+          role?: "ADMIN" | "MANAGER" | "MEMBER" | null
           type?: Database["public"]["Enums"]["elwood_member_type"] | null
           updated_at?: string | null
           user_id?: string | null
@@ -106,7 +112,7 @@ export type Database = {
           created_at?: string | null
           display_name?: string | null
           id?: string | null
-          instance_id?: string | null
+          role?: "ADMIN" | "MANAGER" | "MEMBER" | null
           type?: Database["public"]["Enums"]["elwood_member_type"] | null
           updated_at?: string | null
           user_id?: string | null
@@ -147,7 +153,7 @@ export type Database = {
       }
     }
     Enums: {
-      elwood_member_type: "USER" | "TEAM" | "GUEST"
+      elwood_member_type: "USER" | "TEAM"
       elwood_node_type: "TREE" | "BLOB" | "BUCKET"
     }
     CompositeTypes: {
@@ -161,11 +167,6 @@ export type Database = {
         rootNodeId: string | null
         expandedIds: string[] | null
         tree: Database["public"]["CompositeTypes"]["elwood_node_tree"][] | null
-      }
-      elwood_member: {
-        username: string | null
-        display_name: string | null
-        type: Database["public"]["Enums"]["elwood_member_type"] | null
       }
       elwood_node: {
         id: string | null

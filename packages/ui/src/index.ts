@@ -17,6 +17,7 @@ export * from './components/breadcrumb/breadcrumb';
 export * from './components/hover-card/hover-card';
 export * from './components/form/textarea';
 export * from './components/table/table';
+export * from './components/card/card';
 
 export * from './svg/logo';
 export * from './svg/icons';

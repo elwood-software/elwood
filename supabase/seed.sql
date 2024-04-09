@@ -105,6 +105,10 @@ BEGIN
   user_id_three := local_only.create_user('fe636a7f-e263-4392-9366-5a86e9b75846', 'member@elwood.local', 'member', '');
   INSERT INTO elwood.member ("user_id", "username", "display_name") VALUES (user_id_three, 'member', 'Basic Member');
 
+  -- not a member
+  user_id_three := local_only.create_user(gen_random_uuid(), 'no_member@elwood.local', 'no_member', '');
+
+
 END $$;
 
 

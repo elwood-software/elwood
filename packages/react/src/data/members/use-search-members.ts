@@ -43,7 +43,7 @@ export function useSearchMembers(
     enabled: Boolean(debounce.query),
     queryKey: keys.search(debounce),
     async queryFn() {
-      return await client.searchMembers();
+      return await client.members();
     },
   });
 }

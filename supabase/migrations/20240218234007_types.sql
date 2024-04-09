@@ -59,14 +59,6 @@ CREATE TYPE public.elwood_member_type AS ENUM (
   'TEAM'
 );
 
-DROP TYPE IF EXISTS public.elwood_member CASCADE;
-CREATE TYPE public.elwood_member AS  (
-  "username" text,
-  "display_name" text,
-  "type" public.elwood_member_type
-);
-
-
 --
 -- @@ NAMESPACE: ELWOOD
 --

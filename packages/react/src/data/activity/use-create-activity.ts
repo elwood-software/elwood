@@ -3,13 +3,7 @@ import type {
   UseMutationResult,
 } from '@tanstack/react-query';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {
-  GetNodeResult,
-  NodeRecord,
-  invariant,
-  type JsonObject,
-  type ActivityType,
-} from '@elwood/common';
+import {invariant, type JsonObject, type ActivityType} from '@elwood/common';
 import {useClient} from '@/hooks/use-client';
 import keys from './_keys';
 
@@ -52,15 +46,15 @@ export function useCreateActivity(
 }
 
 export async function createActivity(
-  supabase: ReturnType<typeof useClient>,
+  client: ReturnType<typeof useClient>,
   input: UseCreateActivityInput,
 ): Promise<UseCreateActivityResult> {
-  const {data} = await supabase.auth.getSession();
+  const {data} = await client.auth.getSession();
 
   invariant(data.session?.user.id, 'Must be logged in to create activity');
 
-  const result = await supabase
-    .from('elwood_activity')
+  const result = await client
+    .activity()
     .insert({
       user_id: data.session.user.id,
       asset_type: input.assetType,
@@ -71,6 +65,12 @@ export async function createActivity(
     })
     .select('id')
     .maybeSingle();
+
+  if (result.error) {
+    throw new Error(result.error.message);
+  }
+
+  invariant(result.data, 'Expected data to be present');
 
   return result.data;
 }

@@ -23,12 +23,12 @@ export type GetNodeTreeResult =
     tree: NodeTree[];
   };
 
-export type Member = Database['public']['CompositeTypes']['elwood_member'];
+export type Member = Database['public']['Views']['elwood_member']['Row'];
 
 export type SearchMembersResult = Member[];
 
 export type ActivityType =
-  Database['public']['Tables']['elwood_activity']['Row']['type'];
+  Database['public']['Views']['elwood_activity']['Row']['type'];
 
 export type ActivityRecord =
-  Database['public']['Tables']['elwood_activity']['Row'];
+  Database['public']['Views']['elwood_activity']['Row'];

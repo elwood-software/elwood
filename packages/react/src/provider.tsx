@@ -8,6 +8,7 @@ import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import {Spinner} from '@elwood/ui';
 import {ProviderContext, type ProviderContextValue} from '@/context';
+import {NoAccess} from '@/components/no-access';
 
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
@@ -78,7 +79,7 @@ export function ElwoodProvider(
   }, [props.client, getHeaders]);
 
   if (member === false) {
-    return <div>Unauthorized</div>;
+    return <NoAccess />;
   }
 
   if (member === null) {

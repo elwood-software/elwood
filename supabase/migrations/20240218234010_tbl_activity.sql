@@ -41,4 +41,4 @@ using (elwood.is_a_member());
 create policy "Members can create activity."
 on elwood.activity for insert
 to authenticated                     
-with check (elwood.is_a_member());   
+with check (elwood.is_a_member());  

@@ -138,9 +138,16 @@ export class ElwoodClient<
 
   members(): PostgrestQueryBuilder<
     ElwoodDatabase['public'],
-    ElwoodDatabase['public']['Views']['elwood_members']
+    ElwoodDatabase['public']['Views']['elwood_member']
   > {
-    return this.#elwoodClient.from('elwood_members');
+    return this.#elwoodClient.from('elwood_member');
+  }
+
+  activity(): PostgrestQueryBuilder<
+    ElwoodDatabase['public'],
+    ElwoodDatabase['public']['Views']['elwood_activity']
+  > {
+    return this.#elwoodClient.from('elwood_activity');
   }
 
   async getNode(

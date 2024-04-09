@@ -36,7 +36,7 @@ end;
 $$;
 
 
-CREATE VIEW public.elwood_members AS
+CREATE VIEW public.elwood_member AS
   SELECT 
     "id",
     "user_id",

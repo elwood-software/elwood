@@ -6,7 +6,13 @@ export type KeyFn = (input: Json) => string[];
 
 const keys: Record<'get', KeyFn> = {
   get(input: UseActivityInput) {
-    return ['activity--get'];
+    return [
+      'activity--get',
+      input.assetType,
+      input.assetId,
+      ...toArray(input.forUserIds).join('-'),
+      ...toArray(input.types).join('-'),
+    ];
   },
 };
 

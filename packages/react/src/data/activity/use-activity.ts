@@ -11,33 +11,43 @@ import keys from './_keys';
 export interface UseActivityInput {
   assetId: string;
   assetType: string;
+  forUserIds?: string[];
+  types?: ActivityRecord['type'][];
 }
 
 export function useActivity(
   input: UseActivityInput,
-  opts: Omit<UseQueryOptions, 'queryKey' | 'queryFn'> = {},
+  opts: Omit<UseQueryOptions<ActivityRecord[]>, 'queryKey' | 'queryFn'> = {},
 ): UseQueryResult<ActivityRecord[]> {
-  const supabase = useClient();
+  const client = useClient();
 
-  return useQuery({
+  return useQuery<ActivityRecord[]>({
     ...opts,
     queryKey: keys.get(input),
     queryFn: async () => {
-      return await getActivity(supabase, input);
+      return await getActivity(client, input);
     },
   });
 }
 
 export async function getActivity(
-  supabase: ReturnType<typeof useClient>,
+  client: ReturnType<typeof useClient>,
   input: UseActivityInput,
 ): Promise<ActivityRecord[]> {
-  const q = supabase.from('elwood_activity').select('*');
+  const q = client.from('elwood_activity').select('*');
 
   q.eq('asset_id', input.assetId);
   q.eq('asset_type', input.assetType);
 
+  if (input.forUserIds) {
+    q.in('user_id', input.forUserIds);
+  }
+
+  if (input.types) {
+    q.in('type', input.types);
+  }
+
   const result = await q;
 
-  return result.data as ActivityRecord[];
+  return (result.data ?? []) as ActivityRecord[];
 }
