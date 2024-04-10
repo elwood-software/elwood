@@ -32,3 +32,6 @@ export type ActivityType =
 
 export type ActivityRecord =
   Database['public']['Views']['elwood_activity']['Row'];
+
+export type BookmarkRecord =
+  Database['public']['Views']['elwood_bookmark']['Row'];

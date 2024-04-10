@@ -48,7 +48,7 @@ export type Database = {
           is_resolved: boolean | null
           member_id: string | null
           text: string | null
-          type: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
+          type: "COMMENT" | "REACTION" | "LIKE" | null
           updated_at: string | null
           user_id: string | null
         }
@@ -62,7 +62,7 @@ export type Database = {
           is_resolved?: boolean | null
           member_id?: string | null
           text?: string | null
-          type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
+          type?: "COMMENT" | "REACTION" | "LIKE" | null
           updated_at?: string | null
           user_id?: string | null
         }
@@ -76,7 +76,65 @@ export type Database = {
           is_resolved?: boolean | null
           member_id?: string | null
           text?: string | null
-          type?: "COMMENT" | "REACTION" | "LIKE" | "SAVE" | null
+          type?: "COMMENT" | "REACTION" | "LIKE" | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "elwood_activity_member_id"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "member"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "elwood_activity_member_id"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "elwood_member"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "elwood_activity_user_id"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      elwood_bookmark: {
+        Row: {
+          asset_id: string | null
+          asset_type: string | null
+          created_at: string | null
+          id: string | null
+          is_active: boolean | null
+          is_subscribed: boolean | null
+          member_id: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          asset_id?: string | null
+          asset_type?: string | null
+          created_at?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_subscribed?: boolean | null
+          member_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          asset_id?: string | null
+          asset_type?: string | null
+          created_at?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_subscribed?: boolean | null
+          member_id?: string | null
           updated_at?: string | null
           user_id?: string | null
         }

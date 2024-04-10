@@ -1,4 +1,5 @@
 import {useEffect} from 'react';
+import {Button} from '@/components/button';
 
 export interface BlobContentProps {
   html?: string | undefined;
@@ -38,9 +39,11 @@ export function FilesBlobContent(props: BlobContentProps): JSX.Element {
 
   return (
     <div className="flex items-center justify-center p-6">
-      <a target="_blank" href={props.rawUrl} rel="noopener">
-        View Raw Content
-      </a>
+      {props.rawUrl ? (
+        <Button href={props.rawUrl} rel="noopener" target="_blank">
+          View Raw Content
+        </Button>
+      ) : null}
     </div>
   );
 }

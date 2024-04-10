@@ -150,6 +150,13 @@ export class ElwoodClient<
     return this.#elwoodClient.from('elwood_activity');
   }
 
+  bookmarks(): PostgrestQueryBuilder<
+    ElwoodDatabase['public'],
+    ElwoodDatabase['public']['Views']['elwood_bookmark']
+  > {
+    return this.#elwoodClient.from('elwood_bookmark');
+  }
+
   async getNode(
     path: string[],
   ): Promise<

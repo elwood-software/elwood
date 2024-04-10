@@ -1,14 +1,15 @@
 import {
   BookMarkedIcon,
+  BookCheckIcon,
   Button,
   cn,
+  useSonner,
   type ButtonButtonProps,
   type ButtonProps,
 } from '@elwood/ui';
-import {toArray} from '@elwood/common';
-import {type MouseEvent} from 'react';
-import {useActivity} from '@/data/activity/use-activity';
-import {useCreateActivity} from '@/data/activity/use-create-activity';
+import {useEffect, type MouseEvent} from 'react';
+import {useBookmark} from '@/data/bookmarks/use-bookmark';
+import {useUpsertBookmark} from '@/data/bookmarks/use-upsert-bookmark';
 
 export interface UseBookmarkButtonInput
   extends Omit<ButtonProps, 'onClick' | 'type' | 'href'> {
@@ -25,32 +26,40 @@ export function useBookmarkButton(input: UseBookmarkButtonInput): JSX.Element {
     ...buttonProps
   } = input;
 
-  const action = useCreateActivity();
-  const query = useActivity(
+  const toast = useSonner();
+  const action = useUpsertBookmark();
+  const query = useBookmark(
     {
       assetId: assetId ?? '',
       assetType,
-      types: ['SAVE'],
     },
     {
       enabled: Boolean(assetId),
     },
   );
 
-  const currentActivity = toArray(query.data);
-  const isBookmarked =
-    currentActivity.length > 0 && currentActivity[0].is_deleted === false;
+  const isBookmarked = query.data?.is_active === true;
 
-  async function onClick(e: MouseEvent): Promise<void> {
+  console.log(query.data, isBookmarked);
+
+  function onClick(e: MouseEvent): void {
     e.preventDefault();
 
-    await action.mutateAsync({
+    action.mutate({
       assetId: assetId ?? '',
       assetType,
-      type: 'SAVE',
     });
   }
 
+  useEffect(() => {
+    if (action.error?.message) {
+      toast(action.error.message, {
+        type: 'error',
+      });
+    }
+  }, [action.error?.message, toast]);
+
+  const Icon = isBookmarked ? BookCheckIcon : BookMarkedIcon;
   const className = cn('size-4', {
     'stroke-primary': isBookmarked,
     'stroke-muted-foreground': !isBookmarked,
@@ -58,13 +67,13 @@ export function useBookmarkButton(input: UseBookmarkButtonInput): JSX.Element {
 
   return (
     <Button
-      loading={query.isLoading}
+      loading={query.isLoading || action.isPending}
       variant={variant}
       size={size}
       {...(buttonProps as ButtonButtonProps)}
       type="button"
       onClick={onClick}>
-      <BookMarkedIcon className={className} />
+      <Icon className={className} />
     </Button>
   );
 }

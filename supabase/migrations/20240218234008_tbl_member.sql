@@ -8,8 +8,6 @@ CREATE TABLE elwood.member (
   "username" text NULL,
   "display_name" text NULL,
   "added_by_user_id" uuid NULL,
-  "bookmarks" text[] NOT NULL DEFAULT ARRAY[]::text[],
-  "subscriptions" text[] NOT NULL DEFAULT ARRAY[]::text[],
   "role" elwood.elwood_member_role NOT NULL DEFAULT 'MEMBER',
   "created_at" timestamptz default now(),
   "updated_at" timestamptz default now(),

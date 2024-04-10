@@ -1,5 +1,5 @@
 
--- ACTIVITY
+
 CREATE TABLE IF NOT EXISTS elwood.activity (
   "instance_id" uuid NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
   "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
