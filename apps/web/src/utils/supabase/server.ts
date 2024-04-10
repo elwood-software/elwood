@@ -5,7 +5,6 @@ import {getSupabaseEnv} from './get-supabase-env';
 
 export function createClient(): SupabaseClient {
   const [url, key] = getSupabaseEnv();
-
   const cookieStore = cookies();
 
   return createServerClient(url, key, {

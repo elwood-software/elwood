@@ -8,13 +8,16 @@ import {
   dashboardRoutes,
   type RouterProps,
 } from '@elwood/react';
+import {Spinner} from '@elwood/ui';
+import {type ElwoodClient} from '@elwood/js';
 import {createClient} from '@/utils/supabase/client';
 
 export default function Page(): JSX.Element {
-  const client = useRef(createClient());
+  const [client, setClient] = useState<ElwoodClient | null>(null);
   const [router, setRouter] = useState<RouterProps['router'] | null>(null);
 
   useEffect(() => {
+    setClient(createClient());
     setRouter(
       createBrowserRouter(dashboardRoutes, {
         basename: `/`,
@@ -22,12 +25,12 @@ export default function Page(): JSX.Element {
     );
   }, []);
 
-  if (!router) {
-    return <div />;
+  if (!router || !client) {
+    return <Spinner full />;
   }
 
   return (
-    <ElwoodProvider workspaceName="Hello" client={client.current}>
+    <ElwoodProvider workspaceName="Hello" client={client}>
       <Router router={router} />
     </ElwoodProvider>
   );

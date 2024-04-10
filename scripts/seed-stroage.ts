@@ -8,12 +8,14 @@ import {
 } from 'https://esm.sh/@supabase/supabase-js@2.39.7';
 import {contentType} from 'https://deno.land/std@0.217.0/media_types/mod.ts';
 import {extname} from 'https://deno.land/std@0.217.0/path/mod.ts';
+import {Spinner} from 'https://deno.land/std@0.221.0/cli/mod.ts';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SEED_REPO_GITHUB_NAME = 'elwood-studio/seed';
+const spin = new Spinner();
 
 loadSync({
   envPath: path.join(__dirname, '../.env'),
@@ -27,28 +29,35 @@ if (ghToken) {
 }
 
 try {
-  const cmd = new Deno.Command('supabase', {
-    args: ['status', '-o', 'json'],
-  });
+  spin.start();
 
-  const {code, stdout} = await cmd.output();
+  let API_URL = Deno.env.get('SUPABASE_URL');
+  let SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
-  assert(code === 0, 'Failed to run supabase status');
+  if (!API_URL) {
+    spin.message = 'Fetching API_URL from supabase status';
 
-  let API_URL;
-  let SERVICE_ROLE_KEY;
+    const cmd = new Deno.Command('supabase', {
+      args: ['status', '-o', 'json'],
+    });
 
-  try {
-    const status = JSON.parse(new TextDecoder().decode(stdout).toString());
-    API_URL = status.API_URL;
+    const {code, stdout} = await cmd.output();
 
-    SERVICE_ROLE_KEY = status.SERVICE_ROLE_KEY;
-  } catch (err) {
-    throw new Error(`Failed to parse supabase status output: ${err.message}`);
+    assert(code === 0, 'Failed to run supabase status');
+
+    try {
+      const status = JSON.parse(new TextDecoder().decode(stdout).toString());
+      API_URL = status.API_URL;
+      SERVICE_ROLE_KEY = status.SERVICE_ROLE_KEY;
+    } catch (err) {
+      throw new Error(`Failed to parse supabase status output: ${err.message}`);
+    }
   }
 
   assert(API_URL, 'API_URL is missing');
   assert(SERVICE_ROLE_KEY, 'SERVICE_ROLE_KEY is missing');
+
+  spin.message = `Using API_URL: ${API_URL}`;
 
   const client = createClient(API_URL, SERVICE_ROLE_KEY, {
     global: {
@@ -79,7 +88,10 @@ try {
     objResult.data,
     `Failed to upload object (readme.md) with error "${objResult.error?.message}"`,
   );
+
+  spin.stop();
 } catch (err) {
+  spin.stop();
   console.error(err);
   Deno.exit(1);
 }
@@ -88,7 +100,7 @@ async function buildSeedFromRepoPath(
   client: SupabaseClient,
   path = '',
 ): Promise<void> {
-  console.log('buildSeedFromRepoPath()', path);
+  spin.message = `fetching ${path}...`;
 
   const result = await fetch(
     `https://api.github.com/repos/${SEED_REPO_GITHUB_NAME}/contents/${path}`,
