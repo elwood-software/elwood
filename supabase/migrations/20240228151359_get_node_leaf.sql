@@ -33,7 +33,7 @@ BEGIN
       return null;
     END IF; 
 
-    _node.id = elwood.create_node_id('BUCKET', ARRAY[]::text[], _bucket_row.name);
+    _node.id = elwood.create_node_id('BUCKET', _bucket_row.name, null);
     _node.type = 'BUCKET';
     _node.prefix = ARRAY[]::text[];
     _node.name = _bucket_row.name;
@@ -50,7 +50,7 @@ BEGIN
     SELECT * INTO _object_row FROM storage.objects WHERE "bucket_id" = _bucket_id AND "name" = _path;
 
     IF _object_row.id IS NULL THEN
-      _node.id = elwood.create_node_id('TREE', _prefix, _name);
+      _node.id = elwood.create_node_id_for_tree(_prefix, _name);
       _node.type = 'TREE';
       _node.prefix = _prefix;
       _node.name = _name;
@@ -58,8 +58,7 @@ BEGIN
     END IF;
       
     IF _object_row.id IS NOT NULL THEN
-      _node.id = elwood.create_node_id('BLOB', _prefix, _name);
-      _node.object_id := _object_row.id;
+      _node.id = elwood.create_node_id('BLOB', _bucket_id, _object_row.id);
       _node.type = 'BLOB';
       _node.prefix = _prefix;
       _node.name = _name;

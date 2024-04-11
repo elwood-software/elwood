@@ -8,6 +8,7 @@ import {
   useSonner,
   type ButtonButtonProps,
   type ButtonProps,
+  Tooltip,
 } from '@elwood/ui';
 import {useEffect, type MouseEvent} from 'react';
 import {type FollowType} from '@elwood/common';
@@ -66,6 +67,13 @@ export function useFollowButton(input: UseFollowButtonInput): JSX.Element {
 
   const SaveIcon = isActive ? BookCheckIcon : BookMarkedIcon;
   const SubscribeIcon = isActive ? BellRingIcon : BellIcon;
+
+  const saveLabel = isActive ? 'Remove Bookmark' : 'Bookmark';
+  const subscribeLabel = isActive
+    ? 'Unsubscribe'
+    : 'Subscribe to Notifications';
+  const label = type === 'SAVE' ? saveLabel : subscribeLabel;
+
   const Icon = type === 'SAVE' ? SaveIcon : SubscribeIcon;
   const className = cn('size-4', {
     'stroke-primary': isActive,
@@ -73,14 +81,16 @@ export function useFollowButton(input: UseFollowButtonInput): JSX.Element {
   });
 
   return (
-    <Button
-      loading={query.isLoading || action.isPending}
-      variant={variant}
-      size={size}
-      {...(buttonProps as ButtonButtonProps)}
-      type="button"
-      onClick={onClick}>
-      <Icon className={className} />
-    </Button>
+    <Tooltip label={label}>
+      <Button
+        loading={query.isLoading || action.isPending}
+        variant={variant}
+        size={size}
+        {...(buttonProps as ButtonButtonProps)}
+        type="button"
+        onClick={onClick}>
+        <Icon className={className} />
+      </Button>
+    </Tooltip>
   );
 }

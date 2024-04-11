@@ -13,6 +13,8 @@ DECLARE
   _node_type public.elwood_node_type;
   _expanded_ids text[]; 
   _path_id text;
+  _leaf elwood.get_node_leaf_result;
+  _leaf_node public.elwood_node;
 BEGIN
 
   IF array_length(p_path, 1) IS NULL THEN    
@@ -29,20 +31,14 @@ BEGIN
     END LOOP;
 
   ELSE 
-    _id := elwood.create_node_id('BUCKET'::public.elwood_node_type, p_path[1:1], null);
+    _id := elwood.create_node_id('BUCKET'::public.elwood_node_type, array_to_string(p_path[1:1],''));
   END IF;
 
   FOREACH _part IN ARRAY p_path LOOP
     _row_path := _row_path || _part;    
-    
-    IF array_length(_row_path, 1) = 1 THEN
-      _node_type := 'BUCKET'::public.elwood_node_type;
-      _path_id := elwood.create_node_id('BUCKET'::public.elwood_node_type, _row_path[1:1]);
-    ELSE
-      _node_type := 'TREE'::public.elwood_node_type;
-      _path_id := elwood.create_node_id('TREE'::public.elwood_node_type, _row_path[1:array_length(_row_path,1)-1], _row_path[array_length(_row_path,1)]);
-      _expanded_ids := _expanded_ids || _path_id;
-    END IF;
+    _leaf = elwood.get_node_leaf(_row_path);
+    _leaf_node = _leaf.node;
+    _expanded_ids := _expanded_ids || _leaf_node.id;
 
     FOREACH _row IN ARRAY elwood.get_node_children(_row_path)
     LOOP
