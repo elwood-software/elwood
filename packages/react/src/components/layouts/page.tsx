@@ -7,17 +7,25 @@ export interface PageLayoutProps {
   mainProps?: React.HTMLProps<HTMLDivElement>;
   rail?: ReactNode;
   loading?: boolean;
+  largeTitle?: ReactNode;
 }
 
 export function PageLayout(
   props: PropsWithChildren<PageLayoutProps>,
 ): JSX.Element {
+  const showHeader = props.headerLeft ?? props.headerRight ?? props.largeTitle;
+  const headerLeft = props.largeTitle ? (
+    <h1 className="text-3xl font-extrabold">{props.largeTitle}</h1>
+  ) : (
+    props.headerLeft
+  );
+
   return (
     <>
       <div className="flex flex-col min-h-0 h-screen w-full">
-        {props.headerLeft ?? props.headerRight ? (
+        {showHeader ? (
           <header className="flex items-center justify-between px-8 pt-4">
-            <div>{props.headerLeft}</div>
+            <div>{headerLeft}</div>
             <div>{props.headerRight}</div>
           </header>
         ) : null}

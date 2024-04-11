@@ -40,7 +40,11 @@ export function FilesBlobContent(props: BlobContentProps): JSX.Element {
   return (
     <div className="flex items-center justify-center p-6">
       {props.rawUrl ? (
-        <Button href={props.rawUrl} rel="noopener" target="_blank">
+        <Button
+          href={props.rawUrl}
+          rel="noopener"
+          target="_blank"
+          variant="secondary">
           View Raw Content
         </Button>
       ) : null}

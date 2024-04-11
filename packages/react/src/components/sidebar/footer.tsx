@@ -15,11 +15,7 @@ export function SidebarFooter(props: SidebarFooterProps): JSX.Element {
       <div className="flex justify-between items-center">
         {props.userMenu}
         <div className="flex items-center space-x-1">
-          <Button href="/saved" size="icon-sm" variant="ghost">
-            <UploadCloudIcon className="size-4" />
-          </Button>
-
-          <Button href="/saved" size="icon-sm" variant="ghost">
+          <Button href="/bookmarks" size="icon-sm" variant="ghost">
             <BookMarkedIcon className="size-4" />
           </Button>
 

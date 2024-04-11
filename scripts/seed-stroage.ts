@@ -90,6 +90,7 @@ try {
   );
 
   spin.stop();
+  console.log('Done!');
 } catch (err) {
   spin.stop();
   console.error(err);

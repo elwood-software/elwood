@@ -12,8 +12,3 @@ create unique index if not exists elwood_idx_settings_name on elwood.setting (
 );
 
 alter table elwood."setting" enable row level security;
-
-create policy "Members can view all settings."
-on elwood.setting for select
-to authenticated
-using (elwood.is_a_member());

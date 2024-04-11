@@ -40,17 +40,17 @@ CREATE VIEW public.elwood_follow AS
 create policy "Members can view their own follows."
 on elwood.follow for select
 to authenticated
-using ("user_id" = auth.uid());
+using (elwood.is_a_member() AND "user_id" = auth.uid());
 
 create policy "Members can create their own follow."
 on elwood.follow for insert
 to authenticated                     
-with check ("user_id" = auth.uid());  
+with check (elwood.is_a_member() AND "user_id" = auth.uid());  
 
 create policy "Members can update their own follow."
 on elwood.follow for update
 to authenticated                     
-with check ("user_id" = auth.uid());  
+with check (elwood.is_a_member() AND "user_id" = auth.uid());  
 
 
 -- BEFORE INSERT

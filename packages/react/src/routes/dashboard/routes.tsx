@@ -10,6 +10,8 @@ const NodeLayout = lazy(() => import('./node/layout'));
 const Tree = lazy(() => import('./node/tree'));
 const Blob = lazy(() => import('./node/blob'));
 const Create = lazy(() => import('./node/new'));
+const Bookmarks = lazy(() => import('./bookmarks'));
+const Notifications = lazy(() => import('./notifications'));
 
 const mainFallback = <MainFallback />;
 const fallback = <PageLayout loading />;
@@ -24,6 +26,22 @@ export const dashboardRoutes: RouteObject[] = [
         element: (
           <Suspense fallback={mainFallback}>
             <Home />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/bookmarks',
+        element: (
+          <Suspense fallback={mainFallback}>
+            <Bookmarks />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/notifications',
+        element: (
+          <Suspense fallback={mainFallback}>
+            <Notifications />
           </Suspense>
         ),
       },

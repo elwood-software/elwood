@@ -3,16 +3,21 @@ import {Icons} from '@elwood/ui';
 import {useGetNode} from '@/data/node/use-get-node';
 import {NodeLink} from '@/components/link';
 import {FilesTable} from '@/components/files/table';
-import {MainLayout} from '@/components/layouts/main';
 import {PageLayout} from '@/components/layouts/page';
+import {useMainLayout} from '@/hooks/ui/use-main-layout';
+import {useChat} from '@/hooks/ui/use-chat';
 import {useProviderContext} from '@/hooks/use-provider-context';
-import {useSidebarFooter} from '@/hooks/ui/use-sidebar-footer';
 
 export default function FilesHome(): JSX.Element {
-  const {workspaceName} = useProviderContext();
+  const {member} = useProviderContext();
+  const MainLayout = useMainLayout();
+  const chat = useChat({
+    assetId: 'root',
+    assetType: 'PAGE',
+  });
+
   const query = useGetNode({path: []});
   const buckets = toArray(query.data?.children);
-  const sidebarFooter = useSidebarFooter();
 
   const treeQuery = useGetNode({
     path: [],
@@ -36,13 +41,15 @@ export default function FilesHome(): JSX.Element {
   );
 
   return (
-    <MainLayout
-      title={workspaceName}
-      sidebar={sidebar}
-      sidebarFooter={sidebarFooter}>
-      <PageLayout>
-        <div className="border rounded">
-          <FilesTable nodes={tree} prefix={[]} />
+    <MainLayout sidebar={sidebar}>
+      <PageLayout largeTitle={`Hello, ${member.display_name ?? ''}`}>
+        <div className="flex-grow grid grid-cols-2 gap-6 min-h-full pb-6">
+          <div>
+            <div className="border rounded">
+              <FilesTable nodes={tree} prefix={[]} />
+            </div>
+          </div>
+          <div className="border rounded">{chat}</div>
         </div>
       </PageLayout>
     </MainLayout>

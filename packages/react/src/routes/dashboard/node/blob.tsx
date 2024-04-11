@@ -51,6 +51,13 @@ export default function FilesBlobRoute(): JSX.Element {
     assetType: 'NODE',
   });
   const bookmarkButton = useFollowButton({
+    type: 'SAVE',
+    assetId: node?.id,
+    assetType: 'NODE',
+  });
+
+  const subscribeButton = useFollowButton({
+    type: 'SUBSCRIBE',
     assetId: node?.id,
     assetType: 'NODE',
   });
@@ -64,7 +71,12 @@ export default function FilesBlobRoute(): JSX.Element {
   }
 
   const headerLeft = <FileBreadcrumbs prefix={prefix} />;
-  const headerRight = <div>{bookmarkButton}</div>;
+  const headerRight = (
+    <div className="flex items-center justify-center space-x-2">
+      {bookmarkButton}
+      {subscribeButton}
+    </div>
+  );
   const rail = <> {chat}</>;
 
   function onCopyToClipboard(e: MouseEvent, type: 'content' | 'link'): void {
