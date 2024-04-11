@@ -150,11 +150,11 @@ export class ElwoodClient<
     return this.#elwoodClient.from('elwood_activity');
   }
 
-  bookmarks(): PostgrestQueryBuilder<
+  follow(): PostgrestQueryBuilder<
     ElwoodDatabase['public'],
-    ElwoodDatabase['public']['Views']['elwood_bookmark']
+    ElwoodDatabase['public']['Views']['elwood_follow']
   > {
-    return this.#elwoodClient.from('elwood_bookmark');
+    return this.#elwoodClient.from('elwood_follow');
   }
 
   async getNode(

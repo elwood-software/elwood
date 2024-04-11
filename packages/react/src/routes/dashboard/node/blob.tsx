@@ -15,7 +15,7 @@ import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
 import {useGetNode} from '@/data/node/use-get-node';
 import {useChat} from '@/hooks/ui/use-chat';
-import {useBookmarkButton} from '@/hooks/ui/use-bookmark-button';
+import {useFollowButton} from '@/hooks/ui/use-follow-button';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesBlobRoute(): JSX.Element {
@@ -50,7 +50,7 @@ export default function FilesBlobRoute(): JSX.Element {
     assetId: node?.id ?? '',
     assetType: 'NODE',
   });
-  const bookmarkButton = useBookmarkButton({
+  const bookmarkButton = useFollowButton({
     assetId: node?.id,
     assetType: 'NODE',
   });

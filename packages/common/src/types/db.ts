@@ -33,5 +33,8 @@ export type ActivityType =
 export type ActivityRecord =
   Database['public']['Views']['elwood_activity']['Row'];
 
-export type BookmarkRecord =
-  Database['public']['Views']['elwood_bookmark']['Row'];
+export type FollowRecord = Database['public']['Views']['elwood_follow']['Row'];
+
+export type FollowType = Required<
+  Database['public']['Views']['elwood_follow']['Row']['type']
+>;

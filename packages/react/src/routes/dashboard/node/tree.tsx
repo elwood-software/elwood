@@ -10,7 +10,7 @@ import {useUploadButton} from '@/hooks/ui/use-upload-button';
 import {useGetNode} from '@/data/node/use-get-node';
 import {useProviderContext} from '@/hooks/use-provider-context';
 import {useCreateFolderButton} from '@/hooks/ui/use-create-folder-button';
-import {useBookmarkButton} from '@/hooks/ui/use-bookmark-button';
+import {useFollowButton} from '@/hooks/ui/use-follow-button';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesTreeRoute(): JSX.Element {
@@ -60,7 +60,13 @@ export default function FilesTreeRoute(): JSX.Element {
     variant: 'outline',
     size: 'sm',
   });
-  const bookmarkButton = useBookmarkButton({
+  const bookmarkButton = useFollowButton({
+    type: 'SAVE',
+    assetId: treeQuery.data?.node.id,
+    assetType: 'NODE',
+  });
+  const subscribeButton = useFollowButton({
+    type: 'SUBSCRIBE',
     assetId: treeQuery.data?.node.id,
     assetType: 'NODE',
   });
@@ -71,6 +77,7 @@ export default function FilesTreeRoute(): JSX.Element {
       {createFolderButton}
       {uploadButton}
       {bookmarkButton}
+      {subscribeButton}
     </div>
   );
 

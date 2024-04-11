@@ -128,6 +128,14 @@ export function useSidebarFooter(): JSX.Element {
 
   const userMenuItems: DropdownMenuItem[] = [
     {
+      id: 'username',
+      children: `Hi ${member.display_name ?? ''}`,
+    },
+    {
+      id: 'separator-mode',
+      type: 'separator',
+    },
+    {
       id: 'mode',
       type: 'label',
       icon: SunMoonIcon,

@@ -1,6 +1,8 @@
 import {
   BookMarkedIcon,
   BookCheckIcon,
+  BellIcon,
+  BellRingIcon,
   Button,
   cn,
   useSonner,
@@ -8,28 +10,32 @@ import {
   type ButtonProps,
 } from '@elwood/ui';
 import {useEffect, type MouseEvent} from 'react';
-import {useBookmark} from '@/data/bookmarks/use-bookmark';
-import {useUpsertBookmark} from '@/data/bookmarks/use-upsert-bookmark';
+import {type FollowType} from '@elwood/common';
+import {useFollow} from '@/data/follow/use-follow';
+import {useUpsertFollow} from '@/data/follow/use-upsert-follow';
 
-export interface UseBookmarkButtonInput
+export interface UseFollowButtonInput
   extends Omit<ButtonProps, 'onClick' | 'type' | 'href'> {
+  type: FollowType;
   assetId: string | null | undefined;
   assetType: string;
 }
 
-export function useBookmarkButton(input: UseBookmarkButtonInput): JSX.Element {
+export function useFollowButton(input: UseFollowButtonInput): JSX.Element {
   const {
     assetId,
     assetType,
     variant = 'outline',
     size = 'sm',
+    type,
     ...buttonProps
   } = input;
 
   const toast = useSonner();
-  const action = useUpsertBookmark();
-  const query = useBookmark(
+  const action = useUpsertFollow();
+  const query = useFollow(
     {
+      type,
       assetId: assetId ?? '',
       assetType,
     },
@@ -38,14 +44,13 @@ export function useBookmarkButton(input: UseBookmarkButtonInput): JSX.Element {
     },
   );
 
-  const isBookmarked = query.data?.is_active === true;
-
-  console.log(query.data, isBookmarked);
+  const isActive = query.data?.is_active === true;
 
   function onClick(e: MouseEvent): void {
     e.preventDefault();
 
     action.mutate({
+      type,
       assetId: assetId ?? '',
       assetType,
     });
@@ -59,10 +64,12 @@ export function useBookmarkButton(input: UseBookmarkButtonInput): JSX.Element {
     }
   }, [action.error?.message, toast]);
 
-  const Icon = isBookmarked ? BookCheckIcon : BookMarkedIcon;
+  const SaveIcon = isActive ? BookCheckIcon : BookMarkedIcon;
+  const SubscribeIcon = isActive ? BellRingIcon : BellIcon;
+  const Icon = type === 'SAVE' ? SaveIcon : SubscribeIcon;
   const className = cn('size-4', {
-    'stroke-primary': isBookmarked,
-    'stroke-muted-foreground': !isBookmarked,
+    'stroke-primary': isActive,
+    'stroke-muted-foreground': !isActive,
   });
 
   return (

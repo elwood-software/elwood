@@ -68,8 +68,14 @@ CREATE TYPE elwood.get_node_leaf_result AS (
   "node" public.elwood_node
 );
 
-DROP TYPE IF EXISTS elwood.elwood_member_role CASCADE;
-CREATE TYPE elwood.elwood_member_role AS ENUM (
+DROP TYPE IF EXISTS elwood.follow_type CASCADE;
+CREATE TYPE elwood.follow_type AS ENUM (
+  'SAVE',
+  'SUBSCRIBE'
+);
+
+DROP TYPE IF EXISTS elwood.member_role CASCADE;
+CREATE TYPE elwood.member_role AS ENUM (
   'ADMIN',
   'MANAGER',
   'MEMBER'

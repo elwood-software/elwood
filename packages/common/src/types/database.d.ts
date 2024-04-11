@@ -104,15 +104,14 @@ export type Database = {
           },
         ]
       }
-      elwood_bookmark: {
+      elwood_follow: {
         Row: {
           asset_id: string | null
           asset_type: string | null
           created_at: string | null
           id: string | null
           is_active: boolean | null
-          is_subscribed: boolean | null
-          member_id: string | null
+          type: "SAVE" | "SUBSCRIBE" | null
           updated_at: string | null
           user_id: string | null
         }
@@ -122,8 +121,7 @@ export type Database = {
           created_at?: string | null
           id?: string | null
           is_active?: boolean | null
-          is_subscribed?: boolean | null
-          member_id?: string | null
+          type?: "SAVE" | "SUBSCRIBE" | null
           updated_at?: string | null
           user_id?: string | null
         }
@@ -133,28 +131,13 @@ export type Database = {
           created_at?: string | null
           id?: string | null
           is_active?: boolean | null
-          is_subscribed?: boolean | null
-          member_id?: string | null
+          type?: "SAVE" | "SUBSCRIBE" | null
           updated_at?: string | null
           user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "elwood_activity_member_id"
-            columns: ["member_id"]
-            isOneToOne: false
-            referencedRelation: "member"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "elwood_activity_member_id"
-            columns: ["member_id"]
-            isOneToOne: false
-            referencedRelation: "elwood_member"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "elwood_activity_user_id"
+            foreignKeyName: "elwood_follow_user_id"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"

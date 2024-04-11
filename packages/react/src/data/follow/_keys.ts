@@ -1,11 +1,11 @@
 import type {Json} from '@elwood/common';
-import type {UseBookmarkInput} from './use-bookmark';
+import type {UseFollowInput} from './use-follow';
 
 export type KeyFn = (input: Json) => string[];
 
 const keys: Record<'get', KeyFn> = {
-  get(input: UseBookmarkInput) {
-    return ['bookmarks--get', input.assetType, input.assetId];
+  get(input: UseFollowInput) {
+    return ['follow--get', input.type, input.assetType, input.assetId];
   },
 };
 

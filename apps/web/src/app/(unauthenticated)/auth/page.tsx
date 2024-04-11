@@ -27,8 +27,6 @@ export default function AuthPage(props: AuthPageProps): JSX.Element {
       redirect_uri: url.searchParams.get('redirect_uri') ?? url.pathname,
     });
 
-    console.log(state, url, params);
-
     redirect(`/auth/complete?${params.toString()}`, RedirectType.replace);
   }
 
