@@ -13,20 +13,25 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const SEED_REPO_GITHUB_NAME = 'elwood-studio/seed';
 const spin = new Spinner();
+const envPath = path.join(__dirname, '../.env');
+
+console.log('Starting to seed storage...');
+console.log(`Loading .env file from ${envPath}...`);
 
 loadSync({
-  envPath: path.join(__dirname, '../.env'),
+  envPath,
   export: true,
 });
 
 const ghToken = Deno.env.get('GITHUB_TOKEN');
 
 if (ghToken) {
-  console.log('using GITHUB_TOKEN');
+  console.log('Using GITHUB_TOKEN env...');
 }
+
+console.log(`Using https://github.com/${SEED_REPO_GITHUB_NAME}...`);
 
 try {
   spin.start();
@@ -163,20 +168,20 @@ async function buildSeedFromRepoPath(
       }
 
       if (item.type === 'dir') {
-        pathName.push('.emptyFolderPlaceholder');
+        // pathName.push('.emptyFolderPlaceholder');
 
-        const name = pathName.join('/');
-        const objResult = await client.storage
-          .from(bucketName)
-          .upload(name, ':0', {
-            contentType:
-              contentType(extname(item.name)) ?? 'application/octet-stream',
-          });
+        // const name = pathName.join('/');
+        // const objResult = await client.storage
+        //   .from(bucketName)
+        //   .upload(name, ':0', {
+        //     contentType:
+        //       contentType(extname(item.name)) ?? 'application/octet-stream',
+        //   });
 
-        assert(
-          objResult.data,
-          `Failed to create folder (${name}) with error "${objResult.error?.message}"`,
-        );
+        // assert(
+        //   objResult.data,
+        //   `Failed to create folder (${name}) with error "${objResult.error?.message}"`,
+        // );
 
         await buildSeedFromRepoPath(client, item.path);
       }

@@ -6,10 +6,17 @@ create table if not exists elwood.notification (
   "data" jsonb not null default '{}'::jsonb,
   "has_seen" boolean not null default false,
   "seen_at" timestamptz null,
+  "bucket_id" text null,
+  "object_id" uuid null,
   "created_at" timestamptz default now(),
   "updated_at" timestamptz default now(),
+
   constraint "elwood_notification_user_id"
     foreign key ("user_id") references "auth"."users" ("id"),
+  constraint "elwood_follow_bucket_id"
+    foreign key ("bucket_id") references "storage"."buckets"("id"),
+  constraint "elwood_follow_object_id"
+    foreign key ("object_id") references "storage"."objects"("id"),
   primary key ("id")
 );
 
@@ -23,6 +30,8 @@ create view public.elwood_notification as
     "data",
     "has_seen",
     "seen_at",
+    "bucket_id",
+    "object_id",
     "created_at",
     "updated_at"
   from elwood.notification;
