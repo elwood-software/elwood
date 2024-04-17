@@ -17,39 +17,39 @@ DECLARE
   _leaf_node public.elwood_node;
 BEGIN
 
-  IF array_length(p_path, 1) IS NULL THEN    
-    _id := 'root';
+  -- IF array_length(p_path, 1) IS NULL THEN    
+  --   _id := 'root';
 
-    FOR _row IN
-      SELECT * FROM elwood.get_node_children(p_path)
-    LOOP
-      _result := _result || jsonb_build_object(
-        'id', _row.id,
-        'node', to_jsonb(_row),
-        'parent', 'root'
-      );
-    END LOOP;
+  --   FOR _row IN
+  --     SELECT * FROM elwood.get_node_children(p_path)
+  --   LOOP
+  --     _result := _result || jsonb_build_object(
+  --       'id', _row.id,
+  --       'node', to_jsonb(_row),
+  --       'parent', 'root'
+  --     );
+  --   END LOOP;
 
-  ELSE 
-    _id := elwood.create_node_id('BUCKET'::public.elwood_node_type, array_to_string(p_path[1:1],''));
-  END IF;
+  -- ELSE 
+  --   _id := elwood.create_node_id('BUCKET'::public.elwood_node_type, array_to_string(p_path[1:1],''));
+  -- END IF;
 
-  FOREACH _part IN ARRAY p_path LOOP
-    _row_path := _row_path || _part;    
-    _leaf = elwood.get_node_leaf(_row_path);
-    _leaf_node = _leaf.node;
-    _expanded_ids := _expanded_ids || _leaf_node.id;
+  -- FOREACH _part IN ARRAY p_path LOOP
+  --   _row_path := _row_path || _part;    
+  --   _leaf = elwood.get_node_leaf(_row_path);
+  --   _leaf_node = _leaf.node;
+  --   _expanded_ids := _expanded_ids || _leaf_node.id;
 
-    FOREACH _row IN ARRAY elwood.get_node_children(_row_path)
-    LOOP
-      _result := _result || jsonb_build_object(
-        'id', _row->>'id',
-        'node', _row,
-        'parent', _path_id
-      );
-    END LOOP;
+  --   FOREACH _row IN ARRAY elwood.get_node_children(_row_path)
+  --   LOOP
+  --     _result := _result || jsonb_build_object(
+  --       'id', _row->>'id',
+  --       'node', _row,
+  --       'parent', _path_id
+  --     );
+  --   END LOOP;
 
-  END LOOP;
+  -- END LOOP;
 
   RETURN jsonb_build_object(
     'rootNodeId', _id,

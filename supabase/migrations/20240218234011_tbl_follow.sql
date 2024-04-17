@@ -3,22 +3,29 @@ create table if not exists elwood.follow (
   "id" uuid not null default uuid_generate_v4(),
   "user_id" uuid not null,
   "type" elwood.follow_type not null DEFAULT 'SAVE',
-  "asset_id" text not null,
-  "asset_type" text not null,
+  "bucket_id" text not null,
+  "object_id" uuid not null,
   "is_active" boolean not null default false,
   "created_at" timestamptz default now(),
   "updated_at" timestamptz default now(),
 
   constraint "elwood_follow_user_id"
     foreign key ("user_id") references "auth"."users" ("id"),
+
+  constraint "elwood_follow_bucket_id"
+    foreign key ("bucket_id") references "storage"."buckets"("id"),
+
+  constraint "elwood_follow_object_id"
+    foreign key ("object_id") references "storage"."objects"("id"),
+
   primary key ("id")
 );
 
 create unique index if not exists elwood_idx_follow_user_asset on elwood.follow (
   "user_id",
   "type",
-  "asset_id",
-  "asset_type"
+  "bucket_id",
+  "object_id"
 );
 
 
@@ -30,8 +37,8 @@ CREATE VIEW public.elwood_follow AS
     "id",
     "user_id",
     "type",
-    "asset_id",
-    "asset_type",
+    "bucket_id",
+    "object_id",
     "is_active",
     "created_at",
     "updated_at"

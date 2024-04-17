@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@elwood/common": "workspace:*",
-    "@supabase/postgrest-js": "^1.15.1",
-    "@supabase/supabase-js": "^2.42.1"
+    "@supabase/postgrest-js": "^1.15.2",
+    "@supabase/supabase-js": "^2.42.3"
   },
   "devDependencies": {
     "@elwood/jest-presets": "workspace:*",

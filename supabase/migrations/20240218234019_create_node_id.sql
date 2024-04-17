@@ -43,7 +43,7 @@ BEGIN
   _bucket_id := ARRAY_TO_STRING(p_prefix[:1], '');
   _name := p_prefix[1:_path_length-1] || ARRAY['.emptyFolderPlaceholder'];
   
-RAISE WARNING 'create_node_id_for_tree: _bucket_id %, _name %', _bucket_id, _name;
+RAISE WARNING 'create_node_id_for_tree: _bucket_id %, _p % _name %', _bucket_id, p_prefix, _name;
 
   SELECT * INTO _object_row FROM storage.objects WHERE "bucket_id" = _bucket_id AND "name" = array_to_string(_name, '/');
   
