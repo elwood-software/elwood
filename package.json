@@ -28,8 +28,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/elwood-studio/elwood.git"
-  },
-  "dependencies": {
-    "eslint": "^9.0.0"
   }
 }
