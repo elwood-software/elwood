@@ -39,10 +39,10 @@ export function Dialog(props: DialogProps): JSX.Element {
   const fnArgs: DialogPropsFnArgs = {
     isOpen: open,
     close: () => {
-      setOpen(false);
+      onChange(false);
     },
     open: () => {
-      setOpen(true);
+      onChange(true);
     },
   };
 

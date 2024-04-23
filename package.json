@@ -14,14 +14,15 @@
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
     "reset": "pnpm -s dlx rimraf -g **/.turbo **/dist **/node_modules ./node_modules **/tsconfig.tsbuildinfo **/*.zip **/*.log **/.DS_Store **/.next",
-    "gen-db-types": "supabase gen types typescript --local > packages/common/src/types/database.d.ts"
+    "gen-db-types": "supabase gen types typescript --local > packages/common/src/types/database.d.ts",
+    "seed-storage": "./scripts/seed-storage.ts"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
     "prettier-plugin-sql-cst": "^0.11.5",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@9.0.1",
+  "packageManager": "pnpm@9.0.5",
   "engines": {
     "node": ">=18"
   },

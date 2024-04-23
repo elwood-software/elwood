@@ -1,3 +1,4 @@
+import {type MouseEventHandler} from 'react';
 import {clsx} from 'clsx';
 import {
   Breadcrumb,
@@ -14,6 +15,7 @@ export interface FilesBreadcrumbsProps {
   className?: string;
   prefix: string[];
   variant?: 'default' | 'compact';
+  onClick?: MouseEventHandler;
 }
 
 export function FileBreadcrumbs(props: FilesBreadcrumbsProps): JSX.Element {
@@ -67,7 +69,7 @@ export function FileBreadcrumbs(props: FilesBreadcrumbsProps): JSX.Element {
             <Fragment key={`Breadcrumbs-${item.id}`}>
               <BreadcrumbItem className="flex items-center">
                 <BreadcrumbLink asChild>
-                  <Link className={cn} href={item.href}>
+                  <Link className={cn} href={item.href} onClick={props.onClick}>
                     {item.name}
                   </Link>
                 </BreadcrumbLink>

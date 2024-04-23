@@ -28,7 +28,7 @@ export function AuthForm(props: AuthFormProps): JSX.Element {
                 autoComplete="email"
                 id="email"
                 name="email"
-                placeholder="awesome@elwood.studio"
+                placeholder="awesome@elwood.software"
                 required
                 type="email"
               />

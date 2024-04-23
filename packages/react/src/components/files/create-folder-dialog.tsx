@@ -1,4 +1,4 @@
-import {Dialog, type DialogProps} from '@elwood/ui';
+import {Dialog, type DialogProps, type DialogPropsFnArgs} from '@elwood/ui';
 import {type GetNodeResult} from '@elwood/common';
 import {
   CreateFolderForm,
@@ -23,7 +23,7 @@ export function CreateFolderDialog(
     ...dialogProps
   } = props;
 
-  const content = (
+  const content = ({close}: DialogPropsFnArgs): JSX.Element => (
     <>
       <CreateFolderForm
         value={value}
@@ -37,6 +37,7 @@ export function CreateFolderDialog(
             return (
               <div key={item.id}>
                 <FileBreadcrumbs
+                  onClick={close}
                   prefix={[...item.node.prefix, item.node.name]}
                 />
               </div>
