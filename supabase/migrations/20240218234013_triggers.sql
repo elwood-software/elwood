@@ -1,4 +1,5 @@
 -- BEFORE INSERT
+
 create or replace function elwood.after_object_insert_or_update()
 returns trigger
 language PLPGSQL
@@ -61,6 +62,7 @@ BEGIN
 END;
 $$;
 
+DROP TRIGGER IF EXISTS trigger_after_object_insert_or_update on storage.objects;
 create trigger trigger_after_object_insert_or_update
 before insert on storage.objects
 for each row

@@ -22,6 +22,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS elwood_idx_member_user_id ON elwood.member("in
 CREATE UNIQUE INDEX IF NOT EXISTS elwood_idx_member_username ON elwood.member("instance_id", "username");
 alter table elwood."member" enable row level security;
 
+DROP FUNCTION IF EXISTS elwood.is_a_member() CASCADE;
 create function elwood.is_a_member()
 returns boolean
 language plpgsql
