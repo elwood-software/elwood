@@ -1,4 +1,6 @@
-import {useEffect} from 'react';
+import {type PropsWithChildren, useEffect, useRef} from 'react';
+import {invariant} from '@elwood/common';
+import {useClient} from '@/hooks/use-client';
 import {Button} from '@/components/button';
 
 export interface BlobContentProps {
@@ -11,7 +13,11 @@ export interface BlobContentProps {
   rawUrl?: string;
 }
 
-export function FilesBlobContent(props: BlobContentProps): JSX.Element {
+export function FilesBlobContent(
+  props: PropsWithChildren<BlobContentProps>,
+): JSX.Element {
+  const client = useClient();
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (props.style && document.querySelector('style[data-blob]') === null) {
       const style = document.createElement('style');
@@ -28,12 +34,11 @@ export function FilesBlobContent(props: BlobContentProps): JSX.Element {
     return <img alt="User Provided Blob" src={props.rawUrl} />;
   }
 
-  if (props.html) {
+  if (props.children) {
     return (
-      <div
-        className="markdown-body"
-        dangerouslySetInnerHTML={{__html: props.html}}
-      />
+      <div ref={ref} className="markdown-body">
+        {props.children}
+      </div>
     );
   }
 

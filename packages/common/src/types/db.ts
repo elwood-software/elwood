@@ -10,7 +10,9 @@ export interface GetNodeResult {
 }
 
 export type NodeRecord = Database['public']['CompositeTypes']['elwood_node'] & {
+  id: string;
   prefix: string[];
+  type: NodeType;
 };
 
 export type NodeTree =

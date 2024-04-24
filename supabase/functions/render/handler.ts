@@ -1,8 +1,11 @@
-import {render, CSS} from 'https://deno.land/x/gfm/mod.ts';
+import {dirname} from 'https://deno.land/std@0.223.0/path/mod.ts';
+import {CSS} from 'https://deno.land/x/gfm@0.6.0/mod.ts';
 import {typeByExtension} from 'https://deno.land/std@0.217.0/media_types/type_by_extension.ts';
 import {parseMediaType} from 'https://deno.land/std@0.217.0/media_types/parse_media_type.ts';
 import {extname} from 'https://deno.land/std@0.217.0/path/extname.ts';
 import {encodeBase64} from 'https://deno.land/std@0.217.0/encoding/base64.ts';
+
+import {renderMarkdown} from './render-markdown.ts';
 
 const CAN_RENDER = ['text/markdown', 'text/plain'];
 
@@ -59,8 +62,11 @@ export async function handler(input: HandlerInput): Promise<HandlerResult> {
   if (CAN_RENDER.includes(content_type)) {
     const text = await response.text();
     raw = encodeBase64(text);
-    html = render(text as string, {
-      baseUrl: input.baseUrl,
+    html = renderMarkdown({
+      text,
+      baseUrl: `${PUBLIC_SUPABASE_URL}/functions/v1/render`,
+      accessToken: input.accessTokens,
+      basePath: `${input.bucket}/${dirname(input.key)}`,
     });
     style = CSS;
   } else {

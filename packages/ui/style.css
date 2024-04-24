@@ -67,12 +67,28 @@ body:not(.light):not(.dark) {
   }
 }
 
-@component components {
-  .switch {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+.switch {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body .markdown-body {
+  --color-canvas-default: var(--background);
+  --color-fg-default: var(--foreground);
+  --color-border-muted: hsl(var(--border));
+  --borderColor-muted: hsl(var(--border));
+  --borderColor-default: hsl(var(--border));
+  --fgColor-muted: hsl(var(--muted-foreground));
+  --bgColor-muted: hsl(var(--input));
+
+  a {
+    @apply text-foreground underline;
   }
-  .markdown-body {
-    --color-canvas-default: var(--color-background);
-    --color-fg-default: var(--color-foreground);
+
+  blockquote a {
+    @apply text-muted-foreground underline;
+  }
+
+  img.local-src-hidden {
+    @apply hidden;
   }
 }

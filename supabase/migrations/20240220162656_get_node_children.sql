@@ -50,14 +50,17 @@ BEGIN
     RAISE WARNING 'get_node_children: _search_row %', _search_row.name;
 
         IF _search_row.id IS NULL THEN
+
+        RAISE WARNING 'xxxx: xxx %', ARRAY[_bucket_id] || string_to_array(_search_row.name,'/');
+
             _object_row.type := 'TREE';
-            _object_row.id := elwood.create_node_id_for_tree(ARRAY[_bucket_id] || p_prefix, _search_row.name);
+            _object_row.id := elwood.create_node_id_for_tree(ARRAY[_bucket_id] || string_to_array(_search_row.name,'/'));
         ELSE 
-            _object_row.type := 'BLOB';
+            _object_row.type := 'BLOB'; 
+            _object_row.id := elwood.create_node_id(_node_type, _bucket_id, _search_row.id);
         END IF;
 
         IF _search_row.name != '.emptyFolderPlaceholder' THEN
-            _object_row.id := elwood.create_node_id(_node_type, _bucket_id, _search_row.id);
             _object_row.prefix := p_prefix;
             _object_row.name := _search_row.name;
             _object_row.mime_type := _search_row.metadata->>'mimetype';

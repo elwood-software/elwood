@@ -112,6 +112,7 @@ export type Database = {
           created_at: string | null
           id: string | null
           is_active: boolean | null
+          is_object_blob: boolean | null
           object_name: string | null
           type: "SAVE" | "SUBSCRIBE" | null
           updated_at: string | null
@@ -124,6 +125,7 @@ export type Database = {
           created_at?: string | null
           id?: string | null
           is_active?: boolean | null
+          is_object_blob?: never
           object_name?: never
           type?: "SAVE" | "SUBSCRIBE" | null
           updated_at?: string | null
@@ -136,6 +138,7 @@ export type Database = {
           created_at?: string | null
           id?: string | null
           is_active?: boolean | null
+          is_object_blob?: never
           object_name?: never
           type?: "SAVE" | "SUBSCRIBE" | null
           updated_at?: string | null

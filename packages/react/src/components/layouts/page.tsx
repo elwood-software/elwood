@@ -1,10 +1,11 @@
 import type {PropsWithChildren, ReactNode} from 'react';
-import {Spinner} from '@elwood/ui';
+import {Spinner, cn} from '@elwood/ui';
 
 export interface PageLayoutProps {
   headerLeft?: ReactNode;
   headerRight?: ReactNode;
   mainProps?: React.HTMLProps<HTMLDivElement>;
+  mainClassName?: string;
   rail?: ReactNode;
   loading?: boolean;
   largeTitle?: ReactNode;
@@ -20,6 +21,11 @@ export function PageLayout(
     props.headerLeft
   );
 
+  const bodyClass = cn(
+    'flex-grow flex-nowrap overflow-y-auto overflow-x-hidden min-h-0',
+    props.mainClassName,
+  );
+
   return (
     <>
       <div className="flex flex-col min-h-0 h-screen w-full">
@@ -29,10 +35,8 @@ export function PageLayout(
             <div>{props.headerRight}</div>
           </header>
         ) : null}
-        <div className="flex-grow flex flex-row flex-nowrap min-h-0 px-8 pt-4">
-          <div
-            {...props.mainProps}
-            className="flex-grow flex-nowrap overflow-y-auto overflow-x-hidden min-h-0">
+        <div className="flex-grow flex flex-row flex-nowrap min-h-0 px-8 py-4">
+          <div {...props.mainProps} className={bodyClass}>
             {props.children}
             {props.loading ? (
               <div className="w-full h-full flex items-center justify-center">

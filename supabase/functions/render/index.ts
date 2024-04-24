@@ -7,6 +7,13 @@ Deno.serve(async req => {
   }
 
   try {
+    if (req.method === 'GET') {
+      return new Response(JSON.stringify(''), {
+        status: 200,
+        headers: addCorsHeaders({'Content-Type': 'application/json'}),
+      });
+    }
+
     const {bucket, key} = await req.json();
     const body = await handler({
       bucket,

@@ -46,6 +46,8 @@ export async function getFollows(
     q.eq('asset_type', input.assetType);
   }
 
+  q.order('created_at', {ascending: false});
+
   const result = await q;
 
   return result.data;

@@ -43,13 +43,12 @@ export default function FilesHome(): JSX.Element {
   return (
     <MainLayout sidebar={sidebar}>
       <PageLayout largeTitle={`Hello, ${member.display_name ?? ''}`}>
-        <div className="flex-grow grid grid-cols-2 gap-6 min-h-full pb-6">
+        <div className="py-6">
           <div>
             <div className="border rounded">
               <FilesTable nodes={tree} prefix={[]} />
             </div>
           </div>
-          <div className="border rounded">{chat}</div>
         </div>
       </PageLayout>
     </MainLayout>

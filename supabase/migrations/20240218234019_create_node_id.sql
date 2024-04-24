@@ -27,10 +27,9 @@ $$ language plpgsql;
 
 
 
-DROP FUNCTION IF EXISTS elwood.create_node_id_for_tree(text[], text);
+DROP FUNCTION IF EXISTS elwood.create_node_id_for_tree(text[]);
 CREATE OR REPLACE FUNCTION elwood.create_node_id_for_tree(
-  p_prefix text[],
-  p_name text
+  p_path text[]
 ) RETURNS text
 AS $$
 DECLARE 
@@ -39,11 +38,11 @@ DECLARE
   _object_row storage.objects;  
   _path_length int;
 BEGIN
-  _path_length := array_length(p_prefix, 1);
-  _bucket_id := ARRAY_TO_STRING(p_prefix[:1], '');
-  _name := p_prefix[1:_path_length-1] || ARRAY['.emptyFolderPlaceholder'];
+  _path_length := array_length(p_path, 1);
+  _bucket_id := ARRAY_TO_STRING(p_path[:1], '');
+  _name := p_path[2:] || ARRAY['.emptyFolderPlaceholder'];
   
-RAISE WARNING 'create_node_id_for_tree: _bucket_id %, _p % _name %', _bucket_id, p_prefix, _name;
+  RAISE WARNING 'create_node_id_for_tree: p_path % || %', p_path, array_to_string(_name, '/');
 
   SELECT * INTO _object_row FROM storage.objects WHERE "bucket_id" = _bucket_id AND "name" = array_to_string(_name, '/');
   

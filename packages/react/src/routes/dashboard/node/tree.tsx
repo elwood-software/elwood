@@ -1,5 +1,6 @@
 import {useCallback, useMemo} from 'react';
 import {useParams} from 'react-router-dom';
+import {useTitle} from 'react-use';
 import Dropzone from 'react-dropzone';
 import {UploadCloudIcon} from '@elwood/ui';
 import {toArray, noOp} from '@elwood/common';
@@ -11,6 +12,7 @@ import {useGetNode} from '@/data/node/use-get-node';
 import {useProviderContext} from '@/hooks/use-provider-context';
 import {useCreateFolderButton} from '@/hooks/ui/use-create-folder-button';
 import {useFollowButton} from '@/hooks/ui/use-follow-button';
+import {createNodeLink} from '@/components/link';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesTreeRoute(): JSX.Element {
@@ -48,6 +50,10 @@ export default function FilesTreeRoute(): JSX.Element {
     path: prefix,
   });
 
+  useTitle(
+    `${treeQuery.data?.node.name ?? '...'} | ${prefix.join('/')} | Elwood`,
+  );
+
   const tree = toArray(treeQuery.data?.children);
 
   const createFolderButton = useCreateFolderButton({
@@ -81,6 +87,11 @@ export default function FilesTreeRoute(): JSX.Element {
     </div>
   );
 
+  const nodes = tree.map(node => ({
+    ...node,
+    href: createNodeLink(node),
+  }));
+
   return (
     <Dropzone onDrop={onDrop} noClick>
       {({getRootProps, getInputProps, isDragActive}) => (
@@ -90,7 +101,7 @@ export default function FilesTreeRoute(): JSX.Element {
             headerRight={headerRight}
             mainProps={{...getRootProps(), style: {position: 'relative'}}}>
             <div className="border rounded">
-              <FilesTable nodes={tree} prefix={prefix} />
+              <FilesTable nodes={nodes} prefix={prefix} />
             </div>
 
             {isDragActive ? (

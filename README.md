@@ -36,11 +36,12 @@ To develop locally, you will need to have the following installed:
 
 To get started, run the following commands:
 
-1. `supabase up`
-2. `./scripts/seed-storage.ts`
-3. `pnpm install`
-4. `pnpm dev`
-5. open [http://localhost:3002](http://localhost:3002)
+1. `git clone https://github.com/elwood-software/elwood.git`
+2. `supabase up`
+3. `./scripts/seed-storage.ts`
+4. `pnpm install`
+5. `pnpm dev`
+6. open [http://localhost:3002](http://localhost:3002)
 
 ## :raised_hand: Support
 

@@ -12,8 +12,10 @@ import {Spinner} from 'https://deno.land/std@0.221.0/cli/mod.ts';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
+// Git repo slug to pull seed files from
+const SEED_REPO_GITHUB_NAME = 'elwood-software/seed';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SEED_REPO_GITHUB_NAME = 'elwood-studio/seed';
 const spin = new Spinner();
 const envPath = path.join(__dirname, '../.env');
 

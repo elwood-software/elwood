@@ -50,7 +50,7 @@ BEGIN
     SELECT * INTO _object_row FROM storage.objects WHERE "bucket_id" = _bucket_id AND "name" = _path;
 
     IF _object_row.id IS NULL THEN
-      _node.id = elwood.create_node_id_for_tree(_prefix, _name);
+      _node.id = elwood.create_node_id_for_tree(p_path);
       _node.type = 'TREE';
       _node.prefix = _prefix;
       _node.name = _name;

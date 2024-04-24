@@ -9,7 +9,7 @@ import {
   useSonner,
 } from '@elwood/ui';
 import {invariant, toArray} from '@elwood/common';
-import {useCopyToClipboard} from 'react-use';
+import {useCopyToClipboard, useTitle} from 'react-use';
 import {PageLayout} from '@/components/layouts/page';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
@@ -62,6 +62,8 @@ export default function FilesBlobRoute(): JSX.Element {
     assetType: 'NODE',
   });
 
+  useTitle(`${node?.name ?? '...'} | ${prefix.join('/')} | Elwood`);
+
   if (query.isLoading) {
     return <PageLayout />;
   }
@@ -86,42 +88,50 @@ export default function FilesBlobRoute(): JSX.Element {
 
   return (
     <PageLayout headerLeft={headerLeft} headerRight={headerRight} rail={rail}>
-      <div className="border rounded-lg">
-        <div className="border-b px-3 py-1 flex items-center justify-between">
-          <div className="font-mono text-xs text-muted-foreground">
-            {node.size} Bytes &middot; {node.mime_type}
-          </div>
-          <div className="flex items-center justify-center space-x-2">
-            <Tooltip label="Download content">
-              <Button size="icon-sm" type="button" variant="ghost">
-                <Icons.Download className="w-[1em] h-[1em]" />
-              </Button>
-            </Tooltip>
-            <Tooltip label="Copy content to clipboard">
-              <Button
-                size="icon-sm"
-                type="button"
-                variant="ghost"
-                onClick={e => {
-                  onCopyToClipboard(e, 'content');
-                }}>
-                <ClipboardCopyIcon className="w-[1em] h-[1em]" />
-              </Button>
-            </Tooltip>
-            <Tooltip label="Copy API Link to clipboard">
-              <Button
-                size="icon-sm"
-                type="button"
-                variant="ghost"
-                onClick={e => {
-                  onCopyToClipboard(e, 'link');
-                }}>
-                <LinkIcon className="w-[1em] h-[1em]" />
-              </Button>
-            </Tooltip>
+      <div className="">
+        <div className="sticky top-0 bg-background">
+          <div className="border rounded-t-lg px-8 py-1 flex items-center justify-between bg-background">
+            <div className="font-mono text-xs text-muted-foreground">
+              {node.size} Bytes &middot; {node.mime_type}
+            </div>
+            <div className="flex items-center justify-center space-x-2">
+              <Tooltip label="Download content">
+                <Button size="icon-sm" type="button" variant="ghost">
+                  <Icons.Download className="w-[1em] h-[1em]" />
+                </Button>
+              </Tooltip>
+              <Tooltip label="Copy content to clipboard">
+                <Button
+                  size="icon-sm"
+                  type="button"
+                  variant="ghost"
+                  onClick={e => {
+                    onCopyToClipboard(e, 'content');
+                  }}>
+                  <ClipboardCopyIcon className="w-[1em] h-[1em]" />
+                </Button>
+              </Tooltip>
+              <Tooltip label="Copy API Link to clipboard">
+                <Button
+                  size="icon-sm"
+                  type="button"
+                  variant="ghost"
+                  onClick={e => {
+                    onCopyToClipboard(e, 'link');
+                  }}>
+                  <LinkIcon className="w-[1em] h-[1em]" />
+                </Button>
+              </Tooltip>
+            </div>
           </div>
         </div>
-        <div className="p-6">{blob}</div>
+        <div className="px-8 py-6 overflow-y-auto border-l border-r">
+          {blob}
+        </div>
+        <div className="sticky bottom-0">
+          <span className="bg-background w-3 h-3 absolute bottom-0 left-0 z-0 " />
+          <div className="border border-t-0 rounded-b-lg h-6 flex items-center justify-between relative" />
+        </div>
       </div>
     </PageLayout>
   );

@@ -1,10 +1,18 @@
 import {toArray} from '@elwood/common';
-import type {NodeRecord} from '@elwood/common';
-import {Link, NodeLink} from '../link';
+import type {NodeType} from '@elwood/common';
+import {Link} from '../link';
 import {FileIcon} from './icon';
 
+export interface FilesTableRow {
+  type: NodeType;
+  id: string;
+  prefix: string[];
+  name: string | null;
+  href: string;
+}
+
 export interface FilesTableProps {
-  nodes: NodeRecord[] | undefined;
+  nodes: FilesTableRow[] | undefined;
   prefix?: string[] | undefined;
 }
 
@@ -39,12 +47,12 @@ export function FilesTable(props: FilesTableProps): JSX.Element {
             <tr key={`FilesTable-row-${row.id}`}>
               <td className="w-4">
                 <div className="py-2 pl-6 text-muted-foreground">
-                  <FileIcon nodeType={row.type ?? 'BLOB'} size={16} />
+                  <FileIcon nodeType={row.type} size={16} />
                 </div>
               </td>
               <td>
                 <div className="px-3 py-2">
-                  <NodeLink node={row}>{row.name}</NodeLink>
+                  <Link href={row.href}>{row.name}</Link>
                 </div>
               </td>
             </tr>

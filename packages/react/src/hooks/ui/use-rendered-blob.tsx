@@ -1,6 +1,9 @@
 import {useQuery} from '@tanstack/react-query';
+import {useMemo} from 'react';
+import {default as parse, Element} from 'html-react-parser';
 import {FilesBlobContent} from '@/components/files/blob';
 import {useClient} from '../use-client';
+import {RenderStorageImage} from './use-storage-image';
 
 export interface UseRenderedBlobResultData {
   raw: string | undefined;
@@ -18,20 +21,11 @@ export interface UseRenderedBlobInput {
 
 export function useRenderedBlob(
   input: UseRenderedBlobInput,
-): [JSX.Element, UseRenderedBlobResultData | null] {
+): [JSX.Element, UseRenderedBlobResultData | null | undefined] {
   const supabase = useClient();
 
   const query = useQuery({
     queryKey: ['file-content', input.prefix.join('/')],
-    initialData: {
-      raw_url: undefined,
-      raw: undefined,
-      html: undefined,
-      style: undefined,
-      is_video: false,
-      is_image: false,
-      content_type: 'application/octet-stream',
-    },
     async queryFn({queryKey}) {
       const [_, pPrefix] = queryKey;
       const [pBucketId, ...pFilePath] = pPrefix.split('/');
@@ -49,20 +43,48 @@ export function useRenderedBlob(
     },
   });
 
-  const blob = query.isFetching ? (
-    <div />
-  ) : (
-    <FilesBlobContent
-      base64EncodedRaw={query.data?.raw}
-      contentType={query.data?.content_type ?? 'application/octet-stream'}
-      html={query.data?.html ?? undefined}
-      isImage={query.data?.is_image ?? false}
-      isVideo={query.data?.is_video ?? false}
-      key={`Content-${input.prefix.join('/')}`}
-      rawUrl={query.data?.raw_url}
-      style={query.data?.style}
-    />
-  );
+  const blob = useMemo(() => {
+    if (!query.data) {
+      return <div />;
+    }
+
+    let child: ReturnType<typeof parse> | undefined;
+
+    if (query.data.html) {
+      child = parse(query.data.html, {
+        replace(domNode) {
+          if (
+            domNode instanceof Element &&
+            domNode.tagName.toLowerCase() === 'img'
+          ) {
+            const {'data-src': src, ...attr} = domNode.attribs;
+
+            return (
+              <RenderStorageImage
+                key={`remote-image:${src}`}
+                src={src}
+                attr={attr}
+              />
+            );
+          }
+        },
+      });
+    }
+
+    return (
+      <FilesBlobContent
+        base64EncodedRaw={query.data.raw}
+        contentType={query.data.content_type}
+        html={query.data.html}
+        isImage={query.data.is_image}
+        isVideo={query.data.is_video}
+        key={`Content-${input.prefix.join('/')}`}
+        rawUrl={query.data.raw_url}
+        style={query.data.style}>
+        {child}
+      </FilesBlobContent>
+    );
+  }, [input.prefix, query.data]);
 
   return [blob, query.data];
 }

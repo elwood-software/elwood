@@ -36,12 +36,15 @@ CREATE VIEW public.elwood_follow AS
     "is_active",
     "created_at",
     "updated_at",
+    (split_part(asset_id, ':', 3) = 'blob')::boolean as is_object_blob,
     (select name from storage.buckets where id = split_part(asset_id, ':', 4)) as bucket_name,
-    (
+    replace(
       CASE
         WHEN split_part(asset_id, ':', 5) = '' THEN NULL
         ELSE (select name from storage.objects where id = split_part(asset_id, ':', 5)::uuid)
-      END
+      END,
+      '/.emptyFolderPlaceholder',
+      ''
     ) as object_name
   FROM elwood.follow;
 
