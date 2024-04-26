@@ -1,20 +1,15 @@
 import {toArray} from '@elwood/common';
 import {Icons} from '@elwood/ui';
 import {useGetNode} from '@/data/node/use-get-node';
-import {NodeLink} from '@/components/link';
+import {NodeLink, createNodeLink} from '@/components/link';
 import {FilesTable} from '@/components/files/table';
 import {PageLayout} from '@/components/layouts/page';
 import {useMainLayout} from '@/hooks/ui/use-main-layout';
-import {useChat} from '@/hooks/ui/use-chat';
 import {useProviderContext} from '@/hooks/use-provider-context';
 
 export default function FilesHome(): JSX.Element {
   const {member} = useProviderContext();
   const MainLayout = useMainLayout();
-  const chat = useChat({
-    assetId: 'root',
-    assetType: 'PAGE',
-  });
 
   const query = useGetNode({path: []});
   const buckets = toArray(query.data?.children);
@@ -24,6 +19,11 @@ export default function FilesHome(): JSX.Element {
   });
 
   const tree = toArray(treeQuery.data?.children);
+
+  const nodes = tree.map(node => ({
+    ...node,
+    href: createNodeLink(node),
+  }));
 
   const sidebar = (
     <ul className="space-y-3 mt-6">
@@ -46,7 +46,7 @@ export default function FilesHome(): JSX.Element {
         <div className="py-6">
           <div>
             <div className="border rounded">
-              <FilesTable nodes={tree} prefix={[]} />
+              <FilesTable nodes={nodes} prefix={[]} />
             </div>
           </div>
         </div>
