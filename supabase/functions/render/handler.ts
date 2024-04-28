@@ -24,6 +24,7 @@ export type HandlerResult = {
   style: string | undefined;
   is_video: boolean;
   is_image: boolean;
+  is_pdf: boolean;
   content_type: string;
 };
 
@@ -47,12 +48,14 @@ export async function handler(input: HandlerInput): Promise<HandlerResult> {
   // as the true content type. if there isn't helpful,
   // we fallback to what the user gave us, what we can infer
   // from the file extension, or just default to octet
-  const [content_type] = parseMediaType(
-    response.headers.get('content-type') ??
-      input.contentType ??
-      typeByExtension(extname(input.key)) ??
-      'application/octet-stream',
-  );
+  const content_type =
+    typeByExtension(extname(input.key)) ??
+    parseMediaType(
+      response.headers.get('content-type') ??
+        input.contentType ??
+        'application/octet-stream',
+    )[0] ??
+    'application/octet-stream';
 
   let raw: string | undefined = undefined;
   let raw_url: string | undefined = undefined;
@@ -96,6 +99,7 @@ export async function handler(input: HandlerInput): Promise<HandlerResult> {
     raw_url,
     style,
     html,
+    is_pdf: content_type === 'application/pdf',
     is_video: Boolean(content_type?.startsWith('video/')),
     is_image: Boolean(content_type.startsWith('image/')),
   };

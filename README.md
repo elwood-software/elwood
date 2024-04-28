@@ -21,6 +21,7 @@
 - [ ] Desktop app
 - [ ] Unified search
 - [ ] Universal file access
+- [ ] Zero knowledge, end-to-end encrypted file storage
 
 <p>Elwood is currently in public <strong>BETA</strong>. We are actively developing and improving the code & documentation. If you have any questions, please reach out to us at <a href="mailto:hello@elwood.software">hello@elwood.software</a>.</p>
 
@@ -42,6 +43,10 @@ To get started, run the following commands:
 4. `pnpm install`
 5. `pnpm dev`
 6. open [http://localhost:3002](http://localhost:3002)
+7. login with:
+   - `admin@elwood.local`:`admin`
+   - `member@elwood.local`:`member`
+   - `no_member@elwood.local`:`no_member`
 
 ## :raised_hand: Support
 

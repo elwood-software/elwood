@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 export default {
   reactStrictMode: true,
   transpilePackages: [
@@ -6,4 +7,8 @@ export default {
     '@elwood/js',
     '@elwood/ui',
   ],
+  webpack(config) {
+    config.resolve.alias.canvas = false;
+    return config;
+  },
 };

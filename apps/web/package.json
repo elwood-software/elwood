@@ -20,8 +20,9 @@
     "geist": "^1.3.0",
     "next": "^14.2.3",
     "postcss": "^8.4.38",
-    "react": "^18.3.0",
-    "react-dom": "^18.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-pdf": "^7.7.1",
     "react-use": "^17.5.0",
     "tailwindcss": "^3.4.3",
     "zod": "^3.23.4"
@@ -31,7 +32,7 @@
     "@elwood/typescript-config": "workspace:*",
     "@next/eslint-plugin-next": "^14.2.3",
     "@types/node": "^20.12.7",
-    "@types/react": "^18.3.0",
+    "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "typescript": "^5.4.5"
   }

@@ -22,7 +22,7 @@ export function PageLayout(
   );
 
   const bodyClass = cn(
-    'flex-grow flex-nowrap overflow-y-auto overflow-x-hidden min-h-0',
+    'flex-grow flex-nowrap overflow-y-auto overflow-x-hidden min-h-0 pb-4',
     props.mainClassName,
   );
 
@@ -35,7 +35,7 @@ export function PageLayout(
             <div>{props.headerRight}</div>
           </header>
         ) : null}
-        <div className="flex-grow flex flex-row flex-nowrap min-h-0 px-8 py-4">
+        <div className="flex-grow flex flex-row flex-nowrap min-h-0 px-8 pt-4">
           <div {...props.mainProps} className={bodyClass}>
             {props.children}
             {props.loading ? (

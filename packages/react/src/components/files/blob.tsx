@@ -36,7 +36,7 @@ export function FilesBlobContent(
 
   if (props.children) {
     return (
-      <div ref={ref} className="markdown-body">
+      <div ref={ref} className="markdown-body p-6">
         {props.children}
       </div>
     );

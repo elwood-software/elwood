@@ -88,50 +88,44 @@ export default function FilesBlobRoute(): JSX.Element {
 
   return (
     <PageLayout headerLeft={headerLeft} headerRight={headerRight} rail={rail}>
-      <div className="">
-        <div className="sticky top-0 bg-background">
-          <div className="border rounded-t-lg px-8 py-1 flex items-center justify-between bg-background">
-            <div className="font-mono text-xs text-muted-foreground">
-              {node.size} Bytes &middot; {node.mime_type}
-            </div>
-            <div className="flex items-center justify-center space-x-2">
-              <Tooltip label="Download content">
-                <Button size="icon-sm" type="button" variant="ghost">
-                  <Icons.Download className="w-[1em] h-[1em]" />
-                </Button>
-              </Tooltip>
-              <Tooltip label="Copy content to clipboard">
-                <Button
-                  size="icon-sm"
-                  type="button"
-                  variant="ghost"
-                  onClick={e => {
-                    onCopyToClipboard(e, 'content');
-                  }}>
-                  <ClipboardCopyIcon className="w-[1em] h-[1em]" />
-                </Button>
-              </Tooltip>
-              <Tooltip label="Copy API Link to clipboard">
-                <Button
-                  size="icon-sm"
-                  type="button"
-                  variant="ghost"
-                  onClick={e => {
-                    onCopyToClipboard(e, 'link');
-                  }}>
-                  <LinkIcon className="w-[1em] h-[1em]" />
-                </Button>
-              </Tooltip>
-            </div>
+      <div className="sticky top-0 bg-background z-50">
+        <div className="border rounded-t-lg px-3 py-1 flex items-center justify-between bg-background">
+          <div className="font-mono text-xs text-muted-foreground">
+            {node.size} Bytes &middot; {node.mime_type}
+          </div>
+          <div className="flex items-center justify-center space-x-2">
+            <Tooltip label="Download content">
+              <Button size="icon-sm" type="button" variant="ghost">
+                <Icons.Download className="w-[1em] h-[1em]" />
+              </Button>
+            </Tooltip>
+            <Tooltip label="Copy content to clipboard">
+              <Button
+                size="icon-sm"
+                type="button"
+                variant="ghost"
+                onClick={e => {
+                  onCopyToClipboard(e, 'content');
+                }}>
+                <ClipboardCopyIcon className="w-[1em] h-[1em]" />
+              </Button>
+            </Tooltip>
+            <Tooltip label="Copy API Link to clipboard">
+              <Button
+                size="icon-sm"
+                type="button"
+                variant="ghost"
+                onClick={e => {
+                  onCopyToClipboard(e, 'link');
+                }}>
+                <LinkIcon className="w-[1em] h-[1em]" />
+              </Button>
+            </Tooltip>
           </div>
         </div>
-        <div className="px-8 py-6 overflow-y-auto border-l border-r">
-          {blob}
-        </div>
-        <div className="sticky bottom-0">
-          <span className="bg-background w-3 h-3 absolute bottom-0 left-0 z-0 " />
-          <div className="border border-t-0 rounded-b-lg h-6 flex items-center justify-between relative" />
-        </div>
+      </div>
+      <div className="overflow-y-auto border-l border-r border-b rounded-b-lg">
+        {blob}
       </div>
     </PageLayout>
   );

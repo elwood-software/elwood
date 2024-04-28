@@ -6,7 +6,7 @@ import {
   createClient,
   type SupabaseClient,
 } from 'https://esm.sh/@supabase/supabase-js@2.39.7';
-import {contentType} from 'https://deno.land/std@0.217.0/media_types/mod.ts';
+import {typeByExtension} from 'https://deno.land/std@0.217.0/media_types/mod.ts';
 import {extname} from 'https://deno.land/std@0.217.0/path/mod.ts';
 import {Spinner} from 'https://deno.land/std@0.221.0/cli/mod.ts';
 import path from 'node:path';
@@ -133,7 +133,7 @@ async function buildSeedFromRepoPath(
       .from(bucketName)
       .upload(pathName.join('/'), await resp.blob(), {
         contentType:
-          contentType(extname(body.name)) ?? 'application/octet-stream',
+          typeByExtension(extname(body.name)) ?? 'application/octet-stream',
       });
 
     assert(
@@ -146,7 +146,7 @@ async function buildSeedFromRepoPath(
 
   if (path == '') {
     for (const item of body) {
-      if (item.type == 'file') {
+      if (item.type === 'file') {
         continue;
       }
 
@@ -163,28 +163,11 @@ async function buildSeedFromRepoPath(
     }
   } else {
     for (const item of body) {
-      const [bucketName, ...pathName] = item.path.split('/');
-
       if (item.type === 'file') {
         await buildSeedFromRepoPath(client, item.path);
       }
 
       if (item.type === 'dir') {
-        // pathName.push('.emptyFolderPlaceholder');
-
-        // const name = pathName.join('/');
-        // const objResult = await client.storage
-        //   .from(bucketName)
-        //   .upload(name, ':0', {
-        //     contentType:
-        //       contentType(extname(item.name)) ?? 'application/octet-stream',
-        //   });
-
-        // assert(
-        //   objResult.data,
-        //   `Failed to create folder (${name}) with error "${objResult.error?.message}"`,
-        // );
-
         await buildSeedFromRepoPath(client, item.path);
       }
     }

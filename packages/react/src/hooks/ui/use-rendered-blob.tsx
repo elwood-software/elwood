@@ -2,8 +2,10 @@ import {useQuery} from '@tanstack/react-query';
 import {useMemo} from 'react';
 import {default as parse, Element} from 'html-react-parser';
 import {FilesBlobContent} from '@/components/files/blob';
+
 import {useClient} from '../use-client';
 import {RenderStorageImage} from './use-storage-image';
+import {RenderIframe} from './use-render-iframe';
 
 export interface UseRenderedBlobResultData {
   raw: string | undefined;
@@ -12,6 +14,7 @@ export interface UseRenderedBlobResultData {
   style: string | undefined;
   is_video: boolean;
   is_image: boolean;
+  is_pdf: boolean;
   content_type: string;
 }
 
@@ -25,6 +28,9 @@ export function useRenderedBlob(
   const supabase = useClient();
 
   const query = useQuery({
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchInterval: false,
     queryKey: ['file-content', input.prefix.join('/')],
     async queryFn({queryKey}) {
       const [_, pPrefix] = queryKey;
@@ -69,6 +75,10 @@ export function useRenderedBlob(
           }
         },
       });
+    }
+
+    if (query.data.is_pdf) {
+      return <RenderIframe />;
     }
 
     return (
