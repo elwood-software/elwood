@@ -1,4 +1,5 @@
 import {addCorsHeaders} from '../_shared/cors.ts';
+import {assert} from '../_shared/deps.ts';
 import {handler} from './handler.ts';
 
 Deno.serve(async req => {
@@ -7,12 +8,7 @@ Deno.serve(async req => {
   }
 
   try {
-    if (req.method === 'GET') {
-      return new Response(JSON.stringify(''), {
-        status: 200,
-        headers: addCorsHeaders({'Content-Type': 'application/json'}),
-      });
-    }
+    assert(req.method === 'POST', 'Method not allowed');
 
     const {bucket, key} = await req.json();
     const body = await handler({
