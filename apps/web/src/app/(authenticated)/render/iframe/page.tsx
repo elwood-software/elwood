@@ -1,11 +1,9 @@
 'use client';
 
 import {useState, useEffect} from 'react';
-import {useMeasure} from 'react-use';
 import {useSearchParams} from 'next/navigation';
 
 import {type ElwoodClient} from '@elwood/js';
-import type {JsonObject} from '@elwood/common';
 import {Spinner} from '@elwood/ui';
 import {Render, useRenderers} from '@elwood/react';
 import {ElwoodProvider} from '@elwood/react';
@@ -13,47 +11,25 @@ import {createClient} from '@/utils/supabase/client';
 
 export default function RenderIframePage(): JSX.Element {
   const [client, setClient] = useState<ElwoodClient | null>(null);
-  const [ref, {width, height}] = useMeasure<HTMLDivElement>();
-  const [isReady, setIsReady] = useState(false);
   const searchParams = useSearchParams();
   const [findRenderer] = useRenderers();
 
-  function postMessage(type: string, value: JsonObject) {
-    window.parent.postMessage({type, value}, location.origin);
-  }
+  const path = searchParams.get('path');
+  const contentType = searchParams.get('contentType');
 
   useEffect(() => {
     setClient(createClient());
-
-    function onMessage(e: MessageEvent) {
-      if (e.data === 'init') {
-        postMessage('height', {height});
-        return;
-      }
-    }
-
-    window.addEventListener('message', onMessage);
-
-    return function unload() {
-      window.removeEventListener('message', onMessage);
-    };
   }, []);
 
-  useEffect(() => {
-    if (parent) {
-      postMessage('height', {height});
-    }
-  }, [height]);
-
-  if (!searchParams.has('path')) {
+  if (!path) {
     return <div>No source provided</div>;
   }
 
-  if (!searchParams.has('contentType')) {
+  if (!contentType) {
     return <div>No content type provided</div>;
   }
 
-  const renderer = findRenderer(searchParams.get('contentType') ?? 'x');
+  const renderer = findRenderer(contentType);
 
   if (!renderer) {
     return <div>Unable to render</div>;
@@ -65,9 +41,13 @@ export default function RenderIframePage(): JSX.Element {
 
   return (
     <ElwoodProvider workspaceName="Hello" client={client}>
-      <span ref={ref}>
-        <Render renderer={renderer} rendererParams={{}} />
-      </span>
+      <Render
+        iframe={true}
+        path={path}
+        contentType={contentType}
+        renderer={renderer}
+        rendererParams={{}}
+      />
     </ElwoodProvider>
   );
 }

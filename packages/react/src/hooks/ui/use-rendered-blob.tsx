@@ -65,7 +65,14 @@ export function useRenderedBlob(
       );
     }
 
-    return <Render renderer={renderer} rendererParams={{}} />;
+    return (
+      <Render
+        path={input.prefix.join('/')}
+        contentType={query.data.content_type}
+        renderer={renderer}
+        rendererParams={{}}
+      />
+    );
   }, [input.prefix, query.data]);
 
   return [blob, query.data];
