@@ -13,7 +13,7 @@ export interface AuthPageProps {
   redirectUri?: string;
 }
 
-export default function AuthPage(props: AuthPageProps): JSX.Element {
+export default function AuthPage(): JSX.Element {
   const [loginIsLoading, action] =
     useFormActionLoading<LoginActionState>(login);
 
@@ -33,8 +33,8 @@ export default function AuthPage(props: AuthPageProps): JSX.Element {
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <AuthForm
-        hideEmail={props.hideEmail}
-        email={props.email}
+        hideEmail={false}
+        email={undefined}
         errors={state.message ?? []}
         loading={loginIsLoading}
         loginAction={loginAction}
