@@ -1,7 +1,7 @@
 'use client';
 
-import {useState, useEffect} from 'react';
-import {pdfjs, Document, Page} from 'react-pdf';
+import {useState, useEffect, lazy} from 'react';
+import type ReactPdf from 'react-pdf';
 import {useMeasure} from 'react-use';
 
 import {JsonObject} from '@elwood/common';
@@ -10,7 +10,9 @@ import {Spinner} from '@elwood/ui';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
-export default function RenderPdfPage(): JSX.Element {
+export default function RenderPdf(): JSX.Element {
+  const [reactPdf, setReactPdf] = useState<typeof ReactPdf | null>(null);
+
   const [numPages, setNumPages] = useState<number | null>(null);
   const [ref, {width, height}] = useMeasure<HTMLDivElement>();
   const [isReady, setIsReady] = useState(false);
@@ -20,9 +22,14 @@ export default function RenderPdfPage(): JSX.Element {
   }
 
   useEffect(() => {
-    if (!pdfjs.GlobalWorkerOptions.workerSrc) {
-      pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-    }
+    import('react-pdf').then(module => {
+      setReactPdf(module);
+      const {pdfjs} = module;
+
+      if (!pdfjs.GlobalWorkerOptions.workerSrc) {
+        pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -55,6 +62,14 @@ export default function RenderPdfPage(): JSX.Element {
     setIsReady(true);
   }
 
+  if (!reactPdf) {
+    return (
+      <div className="min-h-10 w-full h-full flex justify-center absolute top-0 left-0 z-50 bg-background">
+        <Spinner className="mt-5 stroke-muted-foreground" />
+      </div>
+    );
+  }
+
   return (
     <div ref={ref}>
       {!isReady && (
@@ -63,13 +78,13 @@ export default function RenderPdfPage(): JSX.Element {
         </div>
       )}
 
-      <Document
+      <reactPdf.Document
         renderMode="canvas"
         className="bg-white text-black w-full h-full"
-        file="http://127.0.0.1:54321/storage/v1/object/sign/Company%20Assets/script.pdf?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJDb21wYW55IEFzc2V0cy9zY3JpcHQucGRmIiwiaWF0IjoxNzE0MzIzODk2LCJleHAiOjE3MTQ0MTAyOTZ9._HIfN3zBk-7wGV1THG39tt5RM-PaOZil18zJF5qaPBo"
+        file={''}
         onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from(new Array(numPages), (el, index) => (
-          <Page
+          <reactPdf.Page
             className="w-full"
             width={width}
             height={height}
@@ -77,7 +92,7 @@ export default function RenderPdfPage(): JSX.Element {
             pageNumber={index + 1}
           />
         ))}
-      </Document>
+      </reactPdf.Document>
     </div>
   );
 }

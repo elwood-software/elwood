@@ -1,20 +1,16 @@
 import {useQuery} from '@tanstack/react-query';
 import {useMemo} from 'react';
-import {default as parse, Element} from 'html-react-parser';
-import {FilesBlobContent} from '@/components/files/blob';
+import {Renderer} from '@elwood/common';
+import {Render} from '@/components/render';
 
 import {useClient} from '../use-client';
-import {RenderStorageImage} from './use-storage-image';
+import {useRenderers} from './use-renderers';
 import {RenderIframe} from './use-render-iframe';
 
 export interface UseRenderedBlobResultData {
-  raw: string | undefined;
-  raw_url: string | undefined;
+  path: string;
   html: string | undefined;
   style: string | undefined;
-  is_video: boolean;
-  is_image: boolean;
-  is_pdf: boolean;
   content_type: string;
 }
 
@@ -26,6 +22,7 @@ export function useRenderedBlob(
   input: UseRenderedBlobInput,
 ): [JSX.Element, UseRenderedBlobResultData | null | undefined] {
   const supabase = useClient();
+  const [findRenderer] = useRenderers();
 
   const query = useQuery({
     refetchOnMount: false,
@@ -54,47 +51,26 @@ export function useRenderedBlob(
       return <div />;
     }
 
-    let child: ReturnType<typeof parse> | undefined;
+    let renderer = findRenderer(query.data.content_type);
 
-    if (query.data.html) {
-      child = parse(query.data.html, {
-        replace(domNode) {
-          if (
-            domNode instanceof Element &&
-            domNode.tagName.toLowerCase() === 'img'
-          ) {
-            const {'data-src': src, ...attr} = domNode.attribs;
-
-            return (
-              <RenderStorageImage
-                key={`remote-image:${src}`}
-                src={src}
-                attr={attr}
-              />
-            );
-          }
-        },
-      });
+    if (!renderer) {
+      return <div>Unable to render</div>;
     }
 
-    if (query.data.is_pdf) {
-      return <RenderIframe />;
+    if (renderer.iframe) {
+      return (
+        <RenderIframe
+          src={`/render/iframe?${new URLSearchParams({path: input.prefix.join('/'), contentType: query.data.content_type})}`}
+        />
+      );
     }
 
-    return (
-      <FilesBlobContent
-        base64EncodedRaw={query.data.raw}
-        contentType={query.data.content_type}
-        html={query.data.html}
-        isImage={query.data.is_image}
-        isVideo={query.data.is_video}
-        key={`Content-${input.prefix.join('/')}`}
-        rawUrl={query.data.raw_url}
-        style={query.data.style}>
-        {child}
-      </FilesBlobContent>
-    );
+    return <Render renderer={renderer} rendererParams={{}} />;
   }, [input.prefix, query.data]);
 
   return [blob, query.data];
+}
+
+export function RenderBlob(path: UseRenderedBlobInput) {
+  return useRenderedBlob(path)[0];
 }

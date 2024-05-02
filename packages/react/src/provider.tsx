@@ -9,6 +9,7 @@ import en from 'javascript-time-ago/locale/en';
 import {Spinner} from '@elwood/ui';
 import {ProviderContext, type ProviderContextValue} from '@/context';
 import {NoAccess} from '@/components/no-access';
+import {defaultRenders} from '@/renderer/default-renderers';
 
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
@@ -33,6 +34,7 @@ export function ElwoodProvider(
       apikey: props.client.key,
     };
   }, [accessToken, props.client.key]);
+  const renderers = props.renderers ?? defaultRenders;
 
   useEffect(() => {
     setUploadManager(
@@ -88,7 +90,8 @@ export function ElwoodProvider(
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ProviderContext.Provider value={{...props, uploadManager, member}}>
+      <ProviderContext.Provider
+        value={{...props, uploadManager, member, renderers}}>
         {props.children}
       </ProviderContext.Provider>
     </QueryClientProvider>

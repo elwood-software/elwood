@@ -22,16 +22,15 @@
     "postcss": "^8.4.38",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-pdf": "^7.7.1",
     "react-use": "^17.5.0",
     "tailwindcss": "^3.4.3",
-    "zod": "^3.23.4"
+    "zod": "^3.23.5"
   },
   "devDependencies": {
     "@elwood/eslint-config": "workspace:*",
     "@elwood/typescript-config": "workspace:*",
     "@next/eslint-plugin-next": "^14.2.3",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.8",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "typescript": "^5.4.5"

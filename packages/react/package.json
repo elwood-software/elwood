@@ -28,7 +28,7 @@
     "@elwood/js": "workspace:*",
     "@elwood/ui": "workspace:*",
     "@remix-run/router": "^1.16.0",
-    "@tanstack/react-query": "^5.32.0",
+    "@tanstack/react-query": "^5.32.1",
     "@uppy/core": "^3.11.0",
     "@uppy/dashboard": "^3.8.2",
     "@uppy/react": "^3.3.1",
@@ -38,7 +38,7 @@
     "javascript-time-ago": "^2.5.10",
     "react-accessible-treeview": "^2.9.0",
     "react-dropzone": "^14.2.3",
-    "react-pdf": "^7.7.1",
+    "react-pdf": "^8.0.0",
     "react-router-dom": "^6.23.0",
     "react-time-ago": "^7.3.1",
     "react-use": "^17.5.0"
@@ -59,7 +59,7 @@
     "@storybook/react-vite": "^8.0.9",
     "@storybook/test": "^8.0.9",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.8",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "eslint": "8.57.0",
@@ -71,7 +71,7 @@
     "storybook-dark-mode": "^4.0.1",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10",
+    "vite": "^5.2.11",
     "vite-tsconfig-paths": "^4.3.2"
   }
 }

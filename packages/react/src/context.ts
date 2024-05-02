@@ -1,6 +1,6 @@
 import {createContext} from 'react';
 import type Uppy from '@uppy/core';
-import {type JsonObject, type MemberRecord} from '@elwood/common';
+import type {Renderer, JsonObject, MemberRecord} from '@elwood/common';
 import {type ElwoodClient} from '@elwood/js';
 
 export interface ProviderContextValue {
@@ -9,6 +9,7 @@ export interface ProviderContextValue {
   initialData?: JsonObject;
   uploadManager: Uppy | null;
   member: MemberRecord;
+  renderers?: Renderer[];
 }
 
 export const ProviderContext = createContext<ProviderContextValue | null>(null);

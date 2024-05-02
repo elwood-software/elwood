@@ -7,9 +7,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "files": ["dist/**"],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --external react",
     "clean": "rm -rf dist",
@@ -40,7 +38,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.372.0",
+    "lucide-react": "^0.377.0",
     "next-themes": "^0.3.0",
     "react-loading-skeleton": "^3.4.0",
     "react-textarea-autosize": "^8.5.3",
@@ -64,7 +62,7 @@
     "@storybook/react-vite": "^8.0.9",
     "@storybook/test": "^8.0.9",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.8",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "eslint": "8.57.0",
