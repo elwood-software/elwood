@@ -2,17 +2,23 @@ import {Suspense, useEffect} from 'react';
 import type {Renderer, JsonObject} from '@elwood/common';
 import {useMeasure} from 'react-use';
 
+import {cn} from '@elwood/ui';
+
 export type RenderProps = {
   iframe?: boolean;
   path: string;
   contentType: string;
   renderer: Renderer;
   rendererParams: JsonObject;
+  className?: string;
 };
 
 export function Render(props: RenderProps) {
   const Component = props.renderer.component;
   const [ref, {width, height}] = useMeasure<HTMLDivElement>();
+  const className = cn(props.className, {
+    'py-4 px-6': !props.renderer.fill,
+  });
 
   function postMessage(type: string, value: JsonObject) {
     window.parent.postMessage({type, value}, location.origin);
@@ -47,7 +53,7 @@ export function Render(props: RenderProps) {
 
   return (
     <Suspense>
-      <div ref={ref}>
+      <div ref={ref} className={className}>
         <Component
           width={width}
           height={height}

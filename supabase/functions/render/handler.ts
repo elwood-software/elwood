@@ -3,7 +3,6 @@ import {CSS} from 'https://deno.land/x/gfm@0.6.0/mod.ts';
 import {typeByExtension} from 'https://deno.land/std@0.217.0/media_types/type_by_extension.ts';
 import {parseMediaType} from 'https://deno.land/std@0.217.0/media_types/parse_media_type.ts';
 import {extname} from 'https://deno.land/std@0.217.0/path/extname.ts';
-import {encodeBase64} from 'https://deno.land/std@0.217.0/encoding/base64.ts';
 
 import {renderMarkdown} from './render-markdown.ts';
 
@@ -18,14 +17,8 @@ export type HandlerInput = {
 };
 
 export type HandlerResult = {
-  raw: string | undefined;
-  raw_url: string | undefined;
-  html: string | undefined;
-  style: string | undefined;
-  is_video: boolean;
-  is_image: boolean;
-  is_pdf: boolean;
   content_type: string;
+  params: Record<string, unknown>;
 };
 
 export async function handler(input: HandlerInput): Promise<HandlerResult> {
@@ -57,50 +50,21 @@ export async function handler(input: HandlerInput): Promise<HandlerResult> {
     )[0] ??
     'application/octet-stream';
 
-  let raw: string | undefined = undefined;
-  let raw_url: string | undefined = undefined;
-  let html: string | undefined = undefined;
-  let style: string | undefined = undefined;
+  let params: Record<string, unknown> = {};
 
   if (CAN_RENDER.includes(content_type)) {
     const text = await response.text();
-    raw = encodeBase64(text);
-    html = renderMarkdown({
+    params.html = renderMarkdown({
       text,
       baseUrl: `${PUBLIC_SUPABASE_URL}/functions/v1/render`,
       accessToken: input.accessTokens,
       basePath: `${input.bucket}/${dirname(input.key)}`,
     });
-    style = CSS;
-  } else {
-    const response = await fetch(
-      `${SUPABASE_URL}/storage/v1/object/sign/${input.bucket}/${input.key}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: SUPABASE_ANON_KEY!,
-          Authorization: `Bearer ${input.accessTokens}`,
-        },
-        body: JSON.stringify({
-          expiresIn: 60 * 60 * 24, // 24 hours
-        }),
-      },
-    );
-
-    const data = await response.json();
-
-    raw_url = `${PUBLIC_SUPABASE_URL}/storage/v1${data.signedURL}`;
+    params.style = CSS;
   }
 
   return {
     content_type,
-    raw,
-    raw_url,
-    style,
-    html,
-    is_pdf: content_type === 'application/pdf',
-    is_video: Boolean(content_type?.startsWith('video/')),
-    is_image: Boolean(content_type.startsWith('image/')),
+    params,
   };
 }

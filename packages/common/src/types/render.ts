@@ -1,7 +1,7 @@
 import type {LazyExoticComponent, ComponentType} from 'react';
-import {JsonObject} from './scalar';
+import type {JsonObject, Json} from './scalar';
 
-export type RendererProps<Params = JsonObject> = {
+export type RendererProps<Params extends Json = Json> = {
   path: string;
   contentType: string;
   params: Params;
@@ -14,5 +14,6 @@ export type RendererProps<Params = JsonObject> = {
 export type Renderer = {
   contentType: string[];
   iframe?: boolean;
+  fill?: boolean;
   component: LazyExoticComponent<ComponentType<RendererProps>>;
 };

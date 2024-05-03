@@ -1,16 +1,16 @@
-import {useQuery} from '@tanstack/react-query';
 import {useMemo} from 'react';
-import {Renderer} from '@elwood/common';
-import {Render} from '@/components/render';
+import {useQuery} from '@tanstack/react-query';
+import type {JsonObject} from '@elwood/common';
 
+import {Render} from '@/components/render';
 import {useClient} from '../use-client';
 import {useRenderers} from './use-renderers';
 import {RenderIframe} from './use-render-iframe';
+import {Button} from '@elwood/ui';
 
 export interface UseRenderedBlobResultData {
   path: string;
-  html: string | undefined;
-  style: string | undefined;
+  params: JsonObject;
   content_type: string;
 }
 
@@ -54,7 +54,13 @@ export function useRenderedBlob(
     let renderer = findRenderer(query.data.content_type);
 
     if (!renderer) {
-      return <div>Unable to render</div>;
+      return (
+        <div className="flex items-center justify-center py-10">
+          <Button href="" variant="outline">
+            Download Raw Content
+          </Button>
+        </div>
+      );
     }
 
     if (renderer.iframe) {
@@ -70,7 +76,7 @@ export function useRenderedBlob(
         path={input.prefix.join('/')}
         contentType={query.data.content_type}
         renderer={renderer}
-        rendererParams={{}}
+        rendererParams={query.data.params}
       />
     );
   }, [input.prefix, query.data]);
