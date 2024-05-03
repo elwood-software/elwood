@@ -22,7 +22,7 @@ export function useRenderedBlob(
   input: UseRenderedBlobInput,
 ): [JSX.Element, UseRenderedBlobResultData | null | undefined] {
   const supabase = useClient();
-  const [findRenderer] = useRenderers();
+  const [findRenderer, renderers] = useRenderers();
 
   const query = useQuery({
     refetchOnMount: false,
@@ -56,9 +56,7 @@ export function useRenderedBlob(
     if (!renderer) {
       return (
         <div className="flex items-center justify-center py-10">
-          <Button href="" variant="outline">
-            Download Raw Content
-          </Button>
+          Unable to find renderer for content type: {query.data.content_type}
         </div>
       );
     }

@@ -15,5 +15,6 @@ export type Renderer = {
   contentType: string[];
   iframe?: boolean;
   fill?: boolean;
+  fallback?: boolean;
   component: LazyExoticComponent<ComponentType<RendererProps>>;
 };

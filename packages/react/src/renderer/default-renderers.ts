@@ -24,4 +24,10 @@ export const defaultRenders: Renderer[] = [
     iframe: false,
     component: lazy(() => import('../renderer/image')),
   },
+  {
+    contentType: [],
+    iframe: false,
+    fallback: true,
+    component: lazy(() => import('../renderer/download')),
+  },
 ];

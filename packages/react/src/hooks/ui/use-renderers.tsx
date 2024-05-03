@@ -16,10 +16,13 @@ export type FindRenderer = (contentType: string) => Renderer | undefined;
 
 export function useRenderers(): [FindRenderer, Renderer[]] {
   const {renderers = []} = useProviderContext();
+  const fallback = renderers.find(r => r.fallback);
 
   return [
     (contentType: string) => {
-      return renderers.find(r => r.contentType.includes(contentType));
+      return (
+        renderers.find(r => r.contentType.includes(contentType)) ?? fallback
+      );
     },
     renderers,
   ];

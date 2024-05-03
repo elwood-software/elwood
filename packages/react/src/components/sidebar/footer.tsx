@@ -18,10 +18,6 @@ export function SidebarFooter(props: SidebarFooterProps): JSX.Element {
           <Button href="/bookmarks" size="icon-sm" variant="ghost">
             <BookMarkedIcon className="size-4" />
           </Button>
-
-          <Button href="/notifications" size="icon-sm" variant="ghost">
-            <BellIcon className="size-4" />
-          </Button>
         </div>
       </div>
     </footer>
