@@ -15,15 +15,21 @@
 - [x] Real-time, multi-user collaboration
 - [x] Simple user management
 - [x] File previews for images, videos, and documents (text, markdown, code)
-- [ ] GPT-4 chat based file manager assistant
 - [ ] Public link sharing
-- [ ] Fine grained Role-based access control (RBAC)
-- [ ] Desktop app
-- [ ] Unified search
-- [ ] Universal file access
+- [ ] Role-based access control (RBAC)
+- [ ] Unified search with external providers (S3, Dropbox, Box, Google Drive, etc)
+- [ ] AI chat based file manager assistant
 - [ ] Zero knowledge, end-to-end encrypted file storage
+- [ ] Desktop app
 
 <p>Elwood is currently in public <strong>BETA</strong>. We are actively developing and improving the code & documentation. If you have any questions, please reach out to us at <a href="mailto:hello@elwood.software">hello@elwood.software</a>.</p>
+
+## 📦 Demo
+
+You can try out the latest version of Elwood at [demo.elwood.software](https://demo.elwood.software), with these credentials:
+
+- `demo@elwood.software`:`demo`
+- `demo_user@elwood.software`:`demo_user`
 
 ## 🚀 Development
 
