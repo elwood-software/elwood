@@ -6,14 +6,25 @@ import {RenderStorageImage} from '@/hooks/ui/use-storage-image';
 export type RenderHtmlProps = RendererProps<{
   style: string;
   html: string;
+  headers: Array<{
+    slug: string;
+    text: string;
+    level: number;
+  }>;
 }>;
 
 export default function RenderHtml(props: RenderHtmlProps) {
-  const {style, html} = props.params;
+  const {style, html, headers} = props.params;
   const ref = useRef<HTMLDivElement>(null);
   const [child, setChild] = useState<
     JSX.Element | JSX.Element[] | string | null
   >(null);
+
+  useEffect(() => {
+    props.postMessage('set-headers', {
+      headers,
+    });
+  }, [headers]);
 
   useEffect(() => {
     import('html-react-parser').then(mod => {

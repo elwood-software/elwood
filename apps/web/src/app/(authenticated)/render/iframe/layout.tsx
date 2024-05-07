@@ -3,9 +3,10 @@
 import {useState, useEffect, PropsWithChildren} from 'react';
 
 import {type ElwoodClient} from '@elwood/js';
-import {Spinner} from '@elwood/ui';
-import {ElwoodProvider} from '@elwood/react';
+
 import {createClient} from '@/utils/supabase/client';
+import {default as PageLoading} from './loading';
+import {Provider} from '@/app/provider';
 
 export default function RenderIframeLayout(
   props: PropsWithChildren,
@@ -17,12 +18,8 @@ export default function RenderIframeLayout(
   }, []);
 
   if (!client) {
-    return <Spinner />;
+    return <PageLoading />;
   }
 
-  return (
-    <ElwoodProvider workspaceName="Hello" client={client}>
-      {props.children}
-    </ElwoodProvider>
-  );
+  return <Provider client={client}>{props.children}</Provider>;
 }

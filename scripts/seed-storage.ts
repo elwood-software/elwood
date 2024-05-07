@@ -83,7 +83,7 @@ try {
     public: true,
   });
 
-  assert(bucketResult.data, 'Failed to create bucket');
+  assert(bucketResult.data, 'Failed to create "Public" bucket');
 
   const objResult = await client.storage
     .from('Public')

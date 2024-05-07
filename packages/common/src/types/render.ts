@@ -18,3 +18,9 @@ export type Renderer = {
   fallback?: boolean;
   component: LazyExoticComponent<ComponentType<RendererProps>>;
 };
+
+export type RendererHeader = {
+  slug: string;
+  title: string;
+  level: number;
+};

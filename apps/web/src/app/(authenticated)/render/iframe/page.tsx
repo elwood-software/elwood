@@ -4,10 +4,10 @@ import {useState, useEffect} from 'react';
 import {useSearchParams} from 'next/navigation';
 
 import {type ElwoodClient} from '@elwood/js';
-import {Spinner} from '@elwood/ui';
 import {Render, useRenderers} from '@elwood/react';
 import {ElwoodProvider} from '@elwood/react';
 import {createClient} from '@/utils/supabase/client';
+import {default as PageLoading} from './loading';
 
 export default function RenderIframePage(): JSX.Element {
   const [client, setClient] = useState<ElwoodClient | null>(null);
@@ -36,7 +36,7 @@ export default function RenderIframePage(): JSX.Element {
   }
 
   if (!client) {
-    return <Spinner />;
+    return <PageLoading />;
   }
 
   return (

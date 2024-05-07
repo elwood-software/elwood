@@ -1,9 +1,8 @@
 'use client';
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Router,
-  ElwoodProvider,
   createBrowserRouter,
   dashboardRoutes,
   type RouterProps,
@@ -11,6 +10,7 @@ import {
 import {Spinner} from '@elwood/ui';
 import {type ElwoodClient} from '@elwood/js';
 import {createClient} from '@/utils/supabase/client';
+import {Provider} from '@/app/provider';
 
 export default function Page(): JSX.Element {
   const [client, setClient] = useState<ElwoodClient | null>(null);
@@ -30,8 +30,8 @@ export default function Page(): JSX.Element {
   }
 
   return (
-    <ElwoodProvider workspaceName="Hello" client={client}>
+    <Provider client={client}>
       <Router router={router} />
-    </ElwoodProvider>
+    </Provider>
   );
 }

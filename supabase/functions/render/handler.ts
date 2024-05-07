@@ -50,16 +50,19 @@ export async function handler(input: HandlerInput): Promise<HandlerResult> {
     )[0] ??
     'application/octet-stream';
 
-  let params: Record<string, unknown> = {};
+  const params: Record<string, unknown> = {};
 
   if (CAN_RENDER.includes(content_type)) {
     const text = await response.text();
-    params.html = renderMarkdown({
+    const {html, headings} = renderMarkdown({
       text,
       baseUrl: `${PUBLIC_SUPABASE_URL}/functions/v1/render`,
       accessToken: input.accessTokens,
       basePath: `${input.bucket}/${dirname(input.key)}`,
     });
+
+    params.headings = headings;
+    params.html = html;
     params.style = CSS;
   }
 

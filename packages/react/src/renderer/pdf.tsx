@@ -8,6 +8,7 @@ import type {RendererProps} from '@elwood/common';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import {useGetNodePublicUrl} from '@/data/node/use-get-node-public-url';
+import {JsonObject} from '@elwood/common';
 
 export type RenderPdfProps = RendererProps<{}>;
 
@@ -27,7 +28,10 @@ export default function RenderPdf(props: RenderPdfProps): JSX.Element {
     });
   }, []);
 
-  function onDocumentLoadSuccess(e: {numPages: number}) {
+  function onDocumentLoadSuccess(e: {
+    numPages: number;
+    getOutline: () => Promise<JsonObject>;
+  }) {
     setNumPages(e.numPages);
     props.onReady();
   }

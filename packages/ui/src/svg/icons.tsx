@@ -56,6 +56,7 @@ export {
   ShieldXIcon,
   BookCheckIcon,
   BellRingIcon,
+  ListIcon,
 } from 'lucide-react';
 
 export const Icons: Record<string, LucideIcon> = {

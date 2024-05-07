@@ -5,6 +5,7 @@ import {
   Button,
   ClipboardCopyIcon,
   LinkIcon,
+  FileIcon,
   Tooltip,
   useSonner,
 } from '@elwood/ui';
@@ -16,6 +17,7 @@ import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
 import {useGetNode} from '@/data/node/use-get-node';
 import {useChat} from '@/hooks/ui/use-chat';
 import {useFollowButton} from '@/hooks/ui/use-follow-button';
+import {NodeBlob} from '@/components/node/blob';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesBlobRoute(): JSX.Element {
@@ -43,7 +45,7 @@ export default function FilesBlobRoute(): JSX.Element {
 
   const prefix = toArray(path.split('/')).filter(Boolean);
 
-  const [blob] = useRenderedBlob({prefix});
+  const [blob, blobData] = useRenderedBlob({prefix});
   const query = useGetNode({path: prefix});
   const node = query.data?.node;
   const chat = useChat({
@@ -86,47 +88,48 @@ export default function FilesBlobRoute(): JSX.Element {
     copyToClipboard('pooper');
   }
 
+  const actions = (
+    <>
+      <Tooltip label="Download content">
+        <Button size="icon-sm" type="button" variant="ghost">
+          <Icons.Download className="w-[1em] h-[1em]" />
+        </Button>
+      </Tooltip>
+      <Tooltip label="Copy content to clipboard">
+        <Button
+          size="icon-sm"
+          type="button"
+          variant="ghost"
+          onClick={e => {
+            onCopyToClipboard(e, 'content');
+          }}>
+          <ClipboardCopyIcon className="w-[1em] h-[1em]" />
+        </Button>
+      </Tooltip>
+      <Tooltip label="Copy API Link to clipboard">
+        <Button
+          size="icon-sm"
+          type="button"
+          variant="ghost"
+          onClick={e => {
+            onCopyToClipboard(e, 'link');
+          }}>
+          <LinkIcon className="w-[1em] h-[1em]" />
+        </Button>
+      </Tooltip>
+    </>
+  );
+
   return (
     <PageLayout headerLeft={headerLeft} headerRight={headerRight} rail={rail}>
-      <div className="sticky top-0 bg-background z-50">
-        <div className="border rounded-t-lg px-3 py-1 flex items-center justify-between bg-background">
-          <div className="font-mono text-xs text-muted-foreground">
-            {node.size} Bytes &middot; {node.mime_type}
-          </div>
-          <div className="flex items-center justify-center space-x-2">
-            <Tooltip label="Download content">
-              <Button size="icon-sm" type="button" variant="ghost">
-                <Icons.Download className="w-[1em] h-[1em]" />
-              </Button>
-            </Tooltip>
-            <Tooltip label="Copy content to clipboard">
-              <Button
-                size="icon-sm"
-                type="button"
-                variant="ghost"
-                onClick={e => {
-                  onCopyToClipboard(e, 'content');
-                }}>
-                <ClipboardCopyIcon className="w-[1em] h-[1em]" />
-              </Button>
-            </Tooltip>
-            <Tooltip label="Copy API Link to clipboard">
-              <Button
-                size="icon-sm"
-                type="button"
-                variant="ghost"
-                onClick={e => {
-                  onCopyToClipboard(e, 'link');
-                }}>
-                <LinkIcon className="w-[1em] h-[1em]" />
-              </Button>
-            </Tooltip>
-          </div>
-        </div>
-      </div>
-      <div className="overflow-y-auto border-l border-r border-b rounded-b-lg">
+      <NodeBlob
+        sticky
+        headers={blobData?.params?.headings}
+        size={Number(node.size)}
+        mimeType={node.mime_type}
+        actions={actions}>
         {blob}
-      </div>
+      </NodeBlob>
     </PageLayout>
   );
 }

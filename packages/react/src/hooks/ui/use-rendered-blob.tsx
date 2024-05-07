@@ -1,12 +1,12 @@
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
-import type {JsonObject} from '@elwood/common';
+import type {JsonObject, RendererHeader} from '@elwood/common';
 
 import {Render} from '@/components/render';
 import {useClient} from '../use-client';
 import {useRenderers} from './use-renderers';
 import {RenderIframe} from './use-render-iframe';
-import {Button} from '@elwood/ui';
+import {Button, Spinner} from '@elwood/ui';
 
 export interface UseRenderedBlobResultData {
   path: string;
@@ -20,9 +20,14 @@ export interface UseRenderedBlobInput {
 
 export function useRenderedBlob(
   input: UseRenderedBlobInput,
-): [JSX.Element, UseRenderedBlobResultData | null | undefined] {
+): [
+  JSX.Element,
+  UseRenderedBlobResultData | null | undefined,
+  RendererHeader[],
+] {
   const supabase = useClient();
-  const [findRenderer, renderers] = useRenderers();
+  const [findRenderer] = useRenderers();
+  const [headers, setHeaders] = useState<RendererHeader[] | null>(null);
 
   const query = useQuery({
     refetchOnMount: false,
@@ -47,6 +52,14 @@ export function useRenderedBlob(
   });
 
   const blob = useMemo(() => {
+    if (query.isLoading) {
+      return (
+        <div className="flex items-center justify-center">
+          <Spinner className="stroke-text-muted-foreground" />
+        </div>
+      );
+    }
+
     if (!query.data) {
       return <div />;
     }
@@ -65,6 +78,13 @@ export function useRenderedBlob(
       return (
         <RenderIframe
           src={`/render/iframe?${new URLSearchParams({path: input.prefix.join('/'), contentType: query.data.content_type})}`}
+          onMessage={(type, data) => {
+            switch (type) {
+              case 'set-headers':
+                setHeaders(data.headers);
+                break;
+            }
+          }}
         />
       );
     }
@@ -77,9 +97,9 @@ export function useRenderedBlob(
         rendererParams={query.data.params}
       />
     );
-  }, [input.prefix, query.data]);
+  }, [input.prefix, query.data, query.isLoading]);
 
-  return [blob, query.data];
+  return [blob, query.data, headers ?? query.data?.params.headings ?? []];
 }
 
 export function RenderBlob(path: UseRenderedBlobInput) {

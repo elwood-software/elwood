@@ -1,8 +1,10 @@
+import type {JsonObject} from '@elwood/common';
 import {Spinner} from '@elwood/ui';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 export type UseRenderIframeInput = {
   src: string;
+  onMessage?(type: string, data: JsonObject): void;
 };
 
 export function useRenderIframe(input: UseRenderIframeInput): JSX.Element {
@@ -18,6 +20,10 @@ export function useRenderIframe(input: UseRenderIframeInput): JSX.Element {
             setHeight(e.data.value.height);
             break;
         }
+      }
+
+      if (input.onMessage) {
+        input.onMessage(e.data.type, e.data.value);
       }
     }
 
@@ -37,11 +43,6 @@ export function useRenderIframe(input: UseRenderIframeInput): JSX.Element {
 
   return (
     <>
-      {!isReady && (
-        <span className="w-full h-full py-5 flex justify-center">
-          <Spinner />
-        </span>
-      )}
       <iframe
         ref={ref}
         src={input.src}
