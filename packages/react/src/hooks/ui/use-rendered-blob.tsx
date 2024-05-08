@@ -54,8 +54,8 @@ export function useRenderedBlob(
   const blob = useMemo(() => {
     if (query.isLoading) {
       return (
-        <div className="flex items-center justify-center">
-          <Spinner className="stroke-text-muted-foreground" />
+        <div className="flex items-center justify-center w-full min-h-10">
+          <Spinner className="stroke-muted-foreground" />
         </div>
       );
     }
