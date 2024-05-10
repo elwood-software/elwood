@@ -58,11 +58,11 @@ export default function FilesBlobRoute(): JSX.Element {
     assetType: 'NODE',
   });
 
-  const subscribeButton = useFollowButton({
-    type: 'SUBSCRIBE',
-    assetId: node?.id,
-    assetType: 'NODE',
-  });
+  // const subscribeButton = useFollowButton({
+  //   type: 'SUBSCRIBE',
+  //   assetId: node?.id,
+  //   assetType: 'NODE',
+  // });
 
   useTitle(`${node?.name ?? '...'} | ${prefix.join('/')} | Elwood`);
 
@@ -78,7 +78,6 @@ export default function FilesBlobRoute(): JSX.Element {
   const headerRight = (
     <div className="flex items-center justify-center space-x-2">
       {bookmarkButton}
-      {subscribeButton}
     </div>
   );
   const rail = <> {chat}</>;
