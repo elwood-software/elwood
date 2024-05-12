@@ -36,7 +36,7 @@ You can try out the latest version of Elwood at [demo.elwood.software](https://d
 To develop locally, you will need to have the following installed:
 
 - [Docker](https://docs.docker.com/get-docker/)
-- [PNPM](https://pnpm.io/installation)
+- [pnpm](https://pnpm.io/installation)
 - [Node.js](https://nodejs.org/en/download/)
 - [Deno](https://deno.land/#installation)
 - [Supabase CLI](https://supabase.io/docs/guides/cli)

@@ -10,6 +10,7 @@ export type UseGetNodePublicUrlResult = {
 
 export interface UseGetNodePublicUrlInput {
   path: string[];
+  download?: boolean;
 }
 
 export function useGetNodePublicUrl(
@@ -42,7 +43,9 @@ export async function getNodePublicUrl(
 
   const result = await client.storage
     .from(bucket)
-    .createSignedUrl(path.join('/'), 60);
+    .createSignedUrl(path.join('/'), 60, {
+      download: input.download,
+    });
 
   if (result.error) {
     throw result.error;

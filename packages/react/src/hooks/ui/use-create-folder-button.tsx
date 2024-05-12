@@ -22,9 +22,11 @@ export function useCreateFolderButton(
     e.preventDefault();
     setIsLoading(true);
 
+    console.log('prefix', prefix, value);
+
     try {
       const _result = await action.mutateAsync({
-        prefix,
+        prefix: [...prefix],
         name: value,
         type: 'TREE',
       });

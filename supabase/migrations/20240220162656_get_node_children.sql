@@ -51,10 +51,10 @@ BEGIN
 
         IF _search_row.id IS NULL THEN
 
-        RAISE WARNING 'xxxx: xxx %', ARRAY[_bucket_id] || string_to_array(_search_row.name,'/');
+        RAISE WARNING 'xxxx: xxx %', ARRAY[_bucket_id] || string_to_array(_path,'/')|| string_to_array(_search_row.name,'/');
 
             _object_row.type := 'TREE';
-            _object_row.id := elwood.create_node_id_for_tree(ARRAY[_bucket_id] || string_to_array(_search_row.name,'/'));
+            _object_row.id := elwood.create_node_id_for_tree(ARRAY[_bucket_id] || string_to_array(_path,'/')|| string_to_array(_search_row.name,'/'));
         ELSE 
             _object_row.type := 'BLOB'; 
             _object_row.id := elwood.create_node_id(_node_type, _bucket_id, _search_row.id);

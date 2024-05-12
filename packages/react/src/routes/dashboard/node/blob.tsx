@@ -1,16 +1,7 @@
-import {useEffect, type MouseEvent} from 'react';
 import {useParams} from 'react-router-dom';
-import {
-  Icons,
-  Button,
-  ClipboardCopyIcon,
-  LinkIcon,
-  FileIcon,
-  Tooltip,
-  useSonner,
-} from '@elwood/ui';
+import {Icons, Button, LinkIcon, Tooltip} from '@elwood/ui';
 import {invariant, toArray} from '@elwood/common';
-import {useCopyToClipboard, useTitle} from 'react-use';
+import {useTitle} from 'react-use';
 import {PageLayout} from '@/components/layouts/page';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
@@ -18,25 +9,13 @@ import {useGetNode} from '@/data/node/use-get-node';
 import {useChat} from '@/hooks/ui/use-chat';
 import {useFollowButton} from '@/hooks/ui/use-follow-button';
 import {NodeBlob} from '@/components/node/blob';
+import {useCopyToClipboardButton} from '@/hooks/ui/use-copy-to-clipboard-button';
+import {useDownloadButton} from '@/hooks/ui/use-download-button';
 import type {FilesRouteParams} from '../types';
 
 export default function FilesBlobRoute(): JSX.Element {
   const params = useParams<FilesRouteParams>();
   const path = params['*'];
-  const [copyState, copyToClipboard] = useCopyToClipboard();
-  const toast = useSonner();
-
-  useEffect(() => {
-    if (copyState.value) {
-      toast('Copied to clipboard', {type: 'success'});
-    }
-  }, [copyState.value, toast]);
-
-  useEffect(() => {
-    if (copyState.error) {
-      toast('Error copying to clipboard', {type: 'error'});
-    }
-  }, [copyState.error, toast]);
 
   // this is mostly for type checking
   // the router should handle making sure we have
@@ -66,6 +45,36 @@ export default function FilesBlobRoute(): JSX.Element {
 
   useTitle(`${node?.name ?? '...'} | ${prefix.join('/')} | Elwood`);
 
+  const copyContentButton = useCopyToClipboardButton({
+    label: 'Copy raw file to clipboard',
+    size: 'icon-sm',
+    variant: 'ghost',
+    copy: {
+      type: 'node-blob',
+      path: prefix,
+      mimeType: node?.mime_type,
+    },
+  });
+
+  const copyUrlButton = useCopyToClipboardButton({
+    children: <LinkIcon className="w-[1em] h-[1em]" />,
+    label: 'Copy link to clipboard',
+    size: 'icon-sm',
+    variant: 'ghost',
+    copy: {
+      type: 'node-url',
+      path: prefix,
+      mimeType: node?.mime_type,
+    },
+  });
+
+  const downloadButton = useDownloadButton({
+    label: 'Download raw file',
+    size: 'icon-sm',
+    variant: 'ghost',
+    path: prefix,
+  });
+
   if (query.isLoading) {
     return <PageLayout />;
   }
@@ -82,40 +91,11 @@ export default function FilesBlobRoute(): JSX.Element {
   );
   const rail = <> {chat}</>;
 
-  function onCopyToClipboard(e: MouseEvent, type: 'content' | 'link'): void {
-    e.preventDefault();
-    copyToClipboard('pooper');
-  }
-
   const actions = (
     <>
-      <Tooltip label="Download content">
-        <Button size="icon-sm" type="button" variant="ghost">
-          <Icons.Download className="w-[1em] h-[1em]" />
-        </Button>
-      </Tooltip>
-      <Tooltip label="Copy content to clipboard">
-        <Button
-          size="icon-sm"
-          type="button"
-          variant="ghost"
-          onClick={e => {
-            onCopyToClipboard(e, 'content');
-          }}>
-          <ClipboardCopyIcon className="w-[1em] h-[1em]" />
-        </Button>
-      </Tooltip>
-      <Tooltip label="Copy API Link to clipboard">
-        <Button
-          size="icon-sm"
-          type="button"
-          variant="ghost"
-          onClick={e => {
-            onCopyToClipboard(e, 'link');
-          }}>
-          <LinkIcon className="w-[1em] h-[1em]" />
-        </Button>
-      </Tooltip>
+      {downloadButton}
+      {copyContentButton}
+      {copyUrlButton}
     </>
   );
 

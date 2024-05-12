@@ -27,7 +27,7 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true
   },
-  "cSpell.words": ["clsx", "supabase"],
+  "cSpell.words": ["clsx", "Sonner", "supabase"],
   "sqltools.connections": [
     {
       "previewLimit": 50,

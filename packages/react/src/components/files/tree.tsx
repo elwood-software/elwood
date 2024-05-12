@@ -5,7 +5,7 @@ import type {
 } from 'react-accessible-treeview';
 import {default as TreeView} from 'react-accessible-treeview';
 import {type NodeType, type NodeTree} from '@elwood/common';
-import {Icons} from '@elwood/ui';
+import {Icons, Spinner} from '@elwood/ui';
 import {toArray} from '@elwood/common';
 import {Link, createNodeLink} from '@/components/link';
 import {FileIcon} from './icon';
@@ -14,6 +14,9 @@ import {Fragment, MouseEvent, MouseEventHandler} from 'react';
 export interface FilesTreeProps {
   tree: NodeTree[];
   rootNodeId: string | null;
+  expandedIds: string[];
+  loadingIds: string[];
+  onToggleExpandClick: (node: NodeTree['node']) => void;
 }
 
 export function FilesTree(props: FilesTreeProps): JSX.Element {
@@ -23,16 +26,29 @@ export function FilesTree(props: FilesTreeProps): JSX.Element {
     return <></>;
   }
 
-  return <TreeNode parent={rootNodeId} tree={tree} level={0} />;
+  return (
+    <TreeNode
+      expandedIds={props.expandedIds}
+      loadingIds={props.loadingIds}
+      parent={rootNodeId}
+      tree={tree}
+      level={0}
+      onToggleExpandClick={props.onToggleExpandClick}
+    />
+  );
 }
 
-type TreeNodeProps = {
+type TreeNodeProps = Pick<
+  FilesTreeProps,
+  'onToggleExpandClick' | 'expandedIds' | 'loadingIds'
+> & {
   parent: string;
   tree: NodeTree[];
   level: number;
 };
 
 function TreeNode(props: TreeNodeProps) {
+  const {expandedIds = [], loadingIds = []} = props;
   const nodes = props.tree.filter(node => node.parent === props.parent);
 
   if (nodes.length === 0) {
@@ -49,14 +65,19 @@ function TreeNode(props: TreeNodeProps) {
                 name={node.node.name ?? ''}
                 nodeType={node.node.type}
                 href={createNodeLink(node.node)}
-                level={props.level}
-                open={false}
-                onOpenClick={e => {}}
+                level={props.level + 1}
+                open={expandedIds.includes(node.node.id)}
+                loading={loadingIds.includes(node.node.id)}
+                onToggleExpandClick={e => {
+                  e.preventDefault();
+                  props.onToggleExpandClick(node.node);
+                }}
               />
             )}
-            {node.node.type !== 'BLOB' ? (
+            {node.node.type !== 'BLOB' && expandedIds.includes(node.node.id) ? (
               <div>
                 <TreeNode
+                  {...props}
                   parent={node.node.id}
                   tree={props.tree}
                   level={props.level + 1}
@@ -72,7 +93,8 @@ function TreeNode(props: TreeNodeProps) {
 
 type TreeNodeItemProps = {
   open: boolean;
-  onOpenClick: MouseEventHandler;
+  loading: boolean;
+  onToggleExpandClick: MouseEventHandler;
   href: string;
   nodeType: NodeType;
   name: string;
@@ -80,22 +102,36 @@ type TreeNodeItemProps = {
 };
 
 function TreeNodeItem(props: TreeNodeItemProps): JSX.Element {
-  const {onOpenClick, level, href, nodeType, name, open = false} = props;
+  const {
+    onToggleExpandClick,
+    level,
+    href,
+    nodeType,
+    name,
+    open = false,
+    loading = false,
+  } = props;
   const DirIcon = open ? Icons.ChevronDown : Icons.ChevronRight;
   const isBranch = nodeType !== 'BLOB';
 
   return (
     <div className="flex items-center py-1">
-      <button
-        onClick={onOpenClick}
-        style={{paddingLeft: 10 * (level - 1)}}
-        type="button">
-        <div className="w-[12px] h-[12px] flex items-center justify-center mr-1.5">
-          {isBranch ? (
-            <DirIcon className="text-muted-foreground" size={12} />
-          ) : null}
-        </div>
-      </button>
+      <div
+        className="size-[12px] flex items-center justify-center mr-1.5"
+        style={{marginLeft: 10 * (level - 1)}}>
+        {loading && (
+          <Spinner className="mr-1 size-[10px] stroke-muted-foreground" />
+        )}
+        {!loading && (
+          <button onClick={onToggleExpandClick} type="button">
+            <div className="size-[12px] flex items-center justify-center ">
+              {isBranch ? (
+                <DirIcon className="text-muted-foreground" size={12} />
+              ) : null}
+            </div>
+          </button>
+        )}
+      </div>
       <Link className="flex items-center" href={href}>
         <FileIcon
           className="mr-2 text-muted-foreground"

@@ -5,6 +5,8 @@ import {
   type CreateFolderFormProps,
 } from './create-folder-form';
 import {FileBreadcrumbs} from './breadcrumbs';
+import {Button} from '../button';
+import {createNodeLink} from '../link';
 
 export type CreateFolderDialogProps = Omit<DialogProps, 'content'> &
   CreateFolderFormProps & {
@@ -32,14 +34,23 @@ export function CreateFolderDialog(
         loading={loading}
       />
       {createdFolders.length > 0 && (
-        <div className="mt-6">
+        <div className="mt-6 space-y-3">
           {createdFolders.map(item => {
             return (
-              <div key={item.id}>
+              <div
+                key={`Create-Folder-${item.node.id}`}
+                className="flex items-center justify-between">
                 <FileBreadcrumbs
                   onClick={close}
-                  prefix={[...item.node.prefix, item.node.name]}
+                  prefix={[...item.node.prefix, item.node.name].map(String)}
                 />
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={close}
+                  href={createNodeLink(item.node)}>
+                  Open
+                </Button>
               </div>
             );
           })}
@@ -48,5 +59,12 @@ export function CreateFolderDialog(
     </>
   );
 
-  return <Dialog title="Create Folder" {...dialogProps} content={content} />;
+  return (
+    <Dialog
+      title="Create Folder"
+      {...dialogProps}
+      content={content}
+      className="max-w-[800px]"
+    />
+  );
 }

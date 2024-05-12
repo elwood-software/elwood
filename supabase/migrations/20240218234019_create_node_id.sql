@@ -45,6 +45,10 @@ BEGIN
   RAISE WARNING 'create_node_id_for_tree: p_path % || %', p_path, array_to_string(_name, '/');
 
   SELECT * INTO _object_row FROM storage.objects WHERE "bucket_id" = _bucket_id AND "name" = array_to_string(_name, '/');
+
+  IF _object_row IS NULL THEN
+    return 'urn:enid:no_object_row_found';
+  END IF;
   
   return elwood.create_node_id('TREE', _bucket_id, _object_row.id);
 

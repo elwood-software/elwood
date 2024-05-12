@@ -37,6 +37,10 @@ type TreeAction =
       type: 'HAS_EXPANDED';
       value: string;
     }
+  | {
+      type: 'HAS_COLLAPSED';
+      value: string;
+    }
   | {type: 'ERROR'; value: Error}
   | {type: 'RESET'};
 
@@ -79,9 +83,18 @@ export function useNodeTree(prefix: string[]): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally only run once
   }, [prefix.join('/')]);
 
-  async function onLoadData(node: ITreeViewOnLoadDataProps): Promise<void> {
-    const nodeId = String(node.element.id);
-    const nodePath = node.element.metadata?.path;
+  async function onOpenClick(node: NodeTree['node']): Promise<void> {
+    if (state.hasLoadedIds.includes(node.id)) {
+      if (state.expandedIds.includes(node.id)) {
+        dispatch({type: 'HAS_COLLAPSED', value: node.id});
+      } else {
+        dispatch({type: 'HAS_EXPANDED', value: node.id});
+      }
+      return;
+    }
+
+    const nodeId = node.id;
+    const nodePath = [...node.prefix, node.name ?? ''];
 
     if (!Array.isArray(nodePath)) {
       return;
@@ -120,7 +133,8 @@ export function useNodeTree(prefix: string[]): JSX.Element {
     rootNodeId: state.rootNodeId,
     tree: state.tree,
     expandedIds: state.expandedIds,
-    onLoadData,
+    loadingIds: state.loadingIds,
+    onToggleExpandClick: onOpenClick,
   } as FilesTreeProps);
 }
 
@@ -139,6 +153,12 @@ function reducer(state: TreeState, action: TreeAction): TreeState {
       return {
         ...state,
         expandedIds: [...new Set([...state.expandedIds, action.value])],
+      };
+    }
+    case 'HAS_COLLAPSED': {
+      return {
+        ...state,
+        expandedIds: state.expandedIds.filter(id => id !== action.value),
       };
     }
     case 'HAS_LOADED': {
