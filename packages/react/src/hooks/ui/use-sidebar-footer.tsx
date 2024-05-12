@@ -185,9 +185,8 @@ export function useSidebarFooter(): JSX.Element {
     <DropdownMenu items={userMenuItems} contentClassName="ml-3">
       <Button
         type="button"
-        variant="ghost"
-        icon={<CircleUserRound className="size-5" />}
-        className="text-muted-foreground">
+        variant="secondary"
+        icon={<CircleUserRound className="size-5" />}>
         {member.display_name}
       </Button>
     </DropdownMenu>

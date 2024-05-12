@@ -40,6 +40,7 @@
     "@elwood/eslint-config": "workspace:*",
     "@elwood/typescript-config": "workspace:*",
     "@next/eslint-plugin-next": "^14.2.3",
+    "eslint-plugin-next": "^0.0.0",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "sharp": "0.33.3"

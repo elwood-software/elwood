@@ -18,6 +18,7 @@ import {
 import {type LucideIcon} from 'lucide-react';
 
 export {
+  MailQuestionIcon,
   BellIcon,
   Package2Icon,
   StarIcon,
@@ -57,6 +58,7 @@ export {
   BookCheckIcon,
   BellRingIcon,
   ListIcon,
+  XIcon,
 } from 'lucide-react';
 
 export const Icons: Record<string, LucideIcon> = {

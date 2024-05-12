@@ -38,7 +38,7 @@ export type ButtonProps = (ButtonButtonProps | ButtonAnchorProps) & {
     | 'secondary'
     | 'ghost'
     | 'link';
-  size?: 'sm' | 'default' | 'lg' | 'icon' | 'icon-sm';
+  size?: 'sm' | 'default' | 'lg' | 'icon' | 'icon-sm' | 'xs';
   outline?: boolean;
   rounded?: boolean | 'full';
   as?: JSXElementConstructor<ButtonAnchorProps>;
@@ -65,6 +65,7 @@ export const buttonVariants = cva(
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
+        xs: 'h-8 px-1.5 py-1 rounded-md text-xs',
         'icon-sm': 'h-8 w-8',
       },
     },
@@ -88,36 +89,6 @@ export const Button = forwardRef<
     as,
     ...nativeProps
   } = props;
-
-  // const variantClass = clsx(
-  //   variant === 'primary' && 'text-white bg-primary',
-  //   variant === 'secondary' && 'text-foreground/90 bg-secondary',
-  //   variant === 'danger' && 'text-white bg-red-800',
-  //   variant === 'muted' && 'bg-muted text-white',
-  //   variant === 'ghost' && 'text-foreground bg-transparent',
-  //   variant === 'outline' && 'text-foreground bg-transparent border',
-  // );
-
-  // const roundedClass = clsx(
-  //   rounded === true && 'rounded-md',
-  //   rounded === 'full' && 'rounded-full',
-  // );
-
-  // const cn = clsx(
-  //   className,
-  //   'inline-flex font-bold text-center justify-center border relative transition-all hover:scale-105',
-  //   variantClass,
-  //   size === 'sm' && 'px-3 py-1.5 text-xs',
-  //   size === 'md' && 'px-6 py-2 text-sm',
-  //   size === 'lg' && 'px-8 py-3 text-base',
-  //   !outline && 'border-transparent',
-  //   outline && variant === 'primary' && 'bg-transparent border-primary',
-  //   outline && variant === 'white' && 'bg-transparent border-white',
-  //   outline && variant === 'ghost' && 'bg-transparent border',
-  //   outline && variant === 'secondary' && 'bg-transparent border-secondary',
-  //   roundedClass,
-  // );
-
   const _className = cn(buttonVariants({variant, size, className}));
 
   const loadingChildrenClass = clsx(loading && 'opacity-0 pointer-events-none');
