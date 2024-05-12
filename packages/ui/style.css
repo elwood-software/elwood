@@ -49,6 +49,9 @@
 }
 body {
   @apply bg-background text-foreground;
+
+  scrollbar-color: black transparent;
+  scrollbar-width: thin;
 }
 
 body:not(.light):not(.dark) {
