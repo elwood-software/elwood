@@ -43,12 +43,10 @@ export async function login(
     };
   }
 
-  const {data, error} = await client.auth.signInWithPassword({
+  const {error} = await client.auth.signInWithPassword({
     email: validatedFields.data.email,
     password: validatedFields.data.password,
   });
-
-  console.log('aaxxxxx', data, error);
 
   if (error) {
     return {

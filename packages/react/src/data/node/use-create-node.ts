@@ -65,6 +65,7 @@ export async function createNode(
   input: UseCreateNodeInput,
 ): Promise<GetNodeResult> {
   let content: File | string | null = null;
+  let contentType = input.mime_type ?? 'text/plain';
   const [bucket, ...path] = [...input.prefix];
   const getNodePath = input.prefix;
 
@@ -74,6 +75,7 @@ export async function createNode(
   switch (input.type) {
     case 'TREE': {
       content = ':)';
+      contentType = 'text/plain';
       path.push('.emptyFolderPlaceholder');
       break;
     }
@@ -91,7 +93,9 @@ export async function createNode(
 
   const {error} = await supabase.storage
     .from(bucket)
-    .upload(path.join('/'), content);
+    .upload(path.join('/'), content, {
+      contentType,
+    });
 
   invariant(!error, error?.message);
 

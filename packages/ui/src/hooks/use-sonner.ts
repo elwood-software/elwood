@@ -20,3 +20,7 @@ export function useSonner(): ToastFn {
     return toast(message, opts);
   };
 }
+
+export function useSonnerFn(): typeof toast {
+  return toast;
+}

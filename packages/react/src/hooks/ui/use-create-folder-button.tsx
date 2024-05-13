@@ -1,12 +1,19 @@
 import {useState, type FormEvent} from 'react';
-import {Button, type ButtonProps, type ButtonButtonProps} from '@elwood/ui';
-import {type GetNodeResult} from '@elwood/common';
+import {
+  Button,
+  useSonner,
+  useSonnerFn,
+  type ButtonProps,
+  type ButtonButtonProps,
+} from '@elwood/ui';
+import {invariant, type GetNodeResult} from '@elwood/common';
 import {CreateFolderDialog} from '@/components/files/create-folder-dialog';
 import {useCreateNode} from '@/data/node/use-create-node';
 
 export interface UseCreateFolderButtonInput
   extends Omit<ButtonProps, 'prefix' | 'href' | 'onClick' | 'type' | 'ref'> {
   prefix: string[];
+  onOpenFolder(path: string): void;
 }
 
 export function useCreateFolderButton(
@@ -17,22 +24,40 @@ export function useCreateFolderButton(
   const action = useCreateNode();
   const [createdNodes, setCreatedNodes] = useState<GetNodeResult[]>([]);
   const [value, setValue] = useState('');
+  const toast = useSonnerFn();
 
   async function onSubmit(e: FormEvent): Promise<void> {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log('prefix', prefix, value);
-
     try {
-      const _result = await action.mutateAsync({
+      const result = await action.mutateAsync({
         prefix: [...prefix],
         name: value,
         type: 'TREE',
       });
 
-      setCreatedNodes([...createdNodes, _result]);
+      invariant(result.node.prefix);
+
+      let toastId: string | number | null = null;
+
+      setCreatedNodes([...createdNodes, result]);
       setValue('');
+      toastId = toast.success(`Folder "${value}" created.`, {
+        action: {
+          label: 'Open',
+          onClick: () => {
+            if (toastId) {
+              toast.dismiss(toastId);
+            }
+            input.onOpenFolder([...result.node.prefix, value].join('/'));
+          },
+        },
+      });
+    } catch (e) {
+      toast.error('Unable to create folder.', {
+        description: (e as Error).message,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -47,7 +72,7 @@ export function useCreateFolderButton(
       value={value}>
       <Button
         variant="secondary"
-        {...(buttonProps as ButtonButtonProps)}
+        {...(buttonProps as Omit<ButtonButtonProps, 'type'>)}
         loading={isLoading}
         type="button">
         {children}
