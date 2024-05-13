@@ -1,5 +1,25 @@
 #!/usr/bin/env -S deno run --allow-run --allow-net --allow-env --allow-read
 
+/**
+ *
+ * seed-storage.ts
+ *
+ * This script seeds Supabase storage with files from a GitHub repository.
+ * By default, it looks for a local running install of Supabase,
+ * but you can use the env variables below to point to a remote Supabase instance.
+ *
+ * Environment Variables:
+ * GITHUB_TOKEN: GitHub token to access the seed repository to overcome rate limits
+ * ADD_BUCKET_RESTRICTIONS: Add size & mime-type upload restrictions to the buckets
+ * SUPABASE_URL: The URL of the Supabase instance
+ * SUPABASE_SERVICE_ROLE_KEY: The service role key of the Supabase instance
+ *
+ * Usage:
+ * ./seed-storage.ts
+ *
+ * Have questions, email us at hello@elwood.software
+ */
+
 import {loadSync} from 'https://deno.land/std@0.220.1/dotenv/mod.ts';
 import {assert} from 'https://deno.land/std@0.217.0/assert/mod.ts';
 import {
@@ -19,6 +39,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const spin = new Spinner();
 const envPath = path.join(__dirname, '../.env');
 
+const createdBucketNames: string[] = [];
+
 console.log('Starting to seed storage...');
 console.log(`Loading .env file from ${envPath}...`);
 
@@ -27,17 +49,18 @@ loadSync({
   export: true,
 });
 
+const addRestrictions = Boolean(
+  Deno.env.get('ADD_BUCKET_RESTRICTIONS') ?? undefined,
+);
 const ghToken = Deno.env.get('GITHUB_TOKEN');
 
 if (ghToken) {
   console.log('Using GITHUB_TOKEN env...');
 }
 
-console.log(`Using https://github.com/${SEED_REPO_GITHUB_NAME}...`);
+console.log(`Using Seed Repo https://github.com/${SEED_REPO_GITHUB_NAME}...`);
 
 try {
-  spin.start();
-
   let API_URL = Deno.env.get('SUPABASE_URL');
   let SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
@@ -64,6 +87,9 @@ try {
   assert(API_URL, 'API_URL is missing');
   assert(SERVICE_ROLE_KEY, 'SERVICE_ROLE_KEY is missing');
 
+  console.log(`Using Supabase API "${API_URL}"...`);
+
+  spin.start();
   spin.message = `Using API_URL: ${API_URL}`;
 
   const client = createClient(API_URL, SERVICE_ROLE_KEY, {
@@ -76,14 +102,7 @@ try {
 
   await buildSeedFromRepoPath(client, '');
 
-  await client.storage.emptyBucket('Public');
-  await client.storage.deleteBucket('Public');
-
-  const bucketResult = await client.storage.createBucket('Public', {
-    public: true,
-  });
-
-  assert(bucketResult.data, 'Failed to create "Public" bucket');
+  await createBucket(client, 'Public', true);
 
   const objResult = await client.storage
     .from('Public')
@@ -95,6 +114,26 @@ try {
     objResult.data,
     `Failed to upload object (readme.md) with error "${objResult.error?.message}"`,
   );
+
+  // if there are restrictions, add them to the buckets
+  if (addRestrictions === true) {
+    for (const bucketName of createdBucketNames) {
+      const fileSizeLimit = 1024 * 1024 * 5; // 5MB
+      const allowedMimeTypes = [
+        'image/png',
+        'image/jpeg',
+        'image/gif',
+        'text/plain',
+        'text/markdown',
+      ];
+
+      await client.storage.updateBucket(bucketName, {
+        public: bucketName === 'Public',
+        fileSizeLimit,
+        allowedMimeTypes,
+      });
+    }
+  }
 
   spin.stop();
   console.log('Done!');
@@ -150,15 +189,7 @@ async function buildSeedFromRepoPath(
         continue;
       }
 
-      await client.storage.emptyBucket(item.name);
-      await client.storage.deleteBucket(item.name);
-
-      const bucketResult = await client.storage.createBucket(item.name, {
-        public: false,
-      });
-
-      assert(bucketResult.data, 'Failed to create bucket');
-
+      await createBucket(client, item.name, false);
       await buildSeedFromRepoPath(client, item.path);
     }
   } else {
@@ -172,4 +203,21 @@ async function buildSeedFromRepoPath(
       }
     }
   }
+}
+
+async function createBucket(
+  client: SupabaseClient,
+  name: string,
+  isPublic: boolean = false,
+) {
+  createdBucketNames.push(name);
+
+  await client.storage.emptyBucket(name);
+  await client.storage.deleteBucket(name);
+
+  const bucketResult = await client.storage.createBucket(name, {
+    public: isPublic,
+  });
+
+  assert(bucketResult.data, `Failed to create bucket "${name}"`);
 }

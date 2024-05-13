@@ -14,7 +14,7 @@
 - [x] Lighting fast, resumable uploads
 - [x] Real-time, multi-user collaboration
 - [x] Simple user management
-- [x] File previews for images, videos, and documents (text, markdown, code)
+- [x] File previews for images, videos, and documents (text, pdf, markdown)
 - [ ] Public link sharing
 - [ ] Role-based access control (RBAC)
 - [ ] Unified search with external providers (S3, Dropbox, Box, Google Drive, etc)
