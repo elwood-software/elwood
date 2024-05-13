@@ -5,7 +5,6 @@
   "bracketSpacing": false,
   "singleQuote": true,
   "trailingComma": "all",
-  "pluginSearchDirs": false,
   "sqlKeywordCase": "lower",
   "plugins": ["prettier-plugin-sql-cst"],
   "overrides": [

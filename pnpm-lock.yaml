@@ -17,6 +17,9 @@ importers:
       prettier-plugin-sql-cst:
         specifier: ^0.11.5
         version: 0.11.5
+      prettier-plugin-tailwindcss:
+        specifier: ^0.5.14
+        version: 0.5.14(prettier@3.2.5)
       turbo:
         specifier: latest
         version: 1.13.3
@@ -184,6 +187,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
+      prettier-plugin-tailwindcss:
+        specifier: ^0.5.14
+        version: 0.5.14(prettier@3.2.5)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
