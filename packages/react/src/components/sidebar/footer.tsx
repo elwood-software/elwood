@@ -14,7 +14,7 @@ export function SidebarFooter(props: SidebarFooterProps): JSX.Element {
     <footer>
       <div className="mb-3">{props.uploadStatus}</div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center px-6">
         {props.userMenu}
         <div className="flex items-center space-x-1">
           <Button href="/bookmarks" size="icon-sm" variant="secondary">
@@ -23,9 +23,9 @@ export function SidebarFooter(props: SidebarFooterProps): JSX.Element {
         </div>
       </div>
 
-      <div className="border-t pt-3 mt-3 flex items-center space-x-1">
+      <div className="border-t px-6 pb-1 mt-6 flex items-center justify-center space-x-1">
         <Button
-          variant="outline"
+          variant="link"
           size="xs"
           href="https://github.com/elwood-software/elwood"
           className="text-muted-foreground"
@@ -39,21 +39,12 @@ export function SidebarFooter(props: SidebarFooterProps): JSX.Element {
             e.preventDefault();
             setFeedbackOpen(true);
           }}
-          variant="outline"
+          variant="link"
           size="xs"
           href="https://elwood.company/feedback"
           className="text-muted-foreground"
           target="_blank">
           Send Feedback
-        </Button>
-
-        <Button
-          variant="outline"
-          size="xs"
-          href="https://elwood.software/docs"
-          className="text-muted-foreground"
-          target="_blank">
-          <CircleHelpIcon className="size-[1em] stroke-current" />
         </Button>
 
         {feedbackOpen ? (
