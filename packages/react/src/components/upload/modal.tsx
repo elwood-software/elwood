@@ -1,3 +1,4 @@
+import type {MouseEventHandler} from 'react';
 import {
   Table,
   TableBody,
@@ -19,6 +20,7 @@ export interface UploadModalProps {
     type: string;
     error?: string;
   }[];
+  onClick: MouseEventHandler;
 }
 
 export function UploadModal(props: UploadModalProps): JSX.Element {
@@ -55,8 +57,12 @@ export function UploadModal(props: UploadModalProps): JSX.Element {
                     prefix={file.prefix}
                     variant="compact"
                     className="text-xs"
+                    onClick={props.onClick}
                   />
-                  <Link className="font-bold" href={href}>
+                  <Link
+                    className="font-bold"
+                    href={href}
+                    onClick={props.onClick}>
                     {file.name}
                   </Link>
                 </TableCell>

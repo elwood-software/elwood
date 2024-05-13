@@ -198,10 +198,12 @@ export function useSidebarFooter(): JSX.Element {
         userMenu={userMenu}
         uploadStatus={
           <Dialog
-            className="max-w-[50vw]"
+            className="max-w-[50vw] bg-background"
             title="Uploads"
             description={`You've uploaded ${String(uploadState.totalUploads)} files. Awesome!`}
-            content={<UploadModal files={uploadState.files} />}>
+            content={({close}) => (
+              <UploadModal onClick={close} files={uploadState.files} />
+            )}>
             {({open}) => (
               <UploadStatus onUploadsClick={open} {...uploadState} />
             )}

@@ -1,5 +1,5 @@
 import {useCallback, useMemo} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import {useTitle} from 'react-use';
 import Dropzone from 'react-dropzone';
 import {UploadCloudIcon} from '@elwood/ui';
@@ -18,6 +18,7 @@ import type {FilesRouteParams} from '../types';
 export default function FilesTreeRoute(): JSX.Element {
   const params = useParams<FilesRouteParams>();
   const {uploadManager} = useProviderContext();
+  const navigate = useNavigate();
 
   const path = params['*'];
   const prefix = useMemo(
@@ -60,6 +61,9 @@ export default function FilesTreeRoute(): JSX.Element {
     prefix,
     variant: 'outline',
     size: 'sm',
+    onOpenFolder(slug) {
+      navigate(`/tree/${slug}`);
+    },
   });
   const uploadButton = useUploadButton({
     prefix,
