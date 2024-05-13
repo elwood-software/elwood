@@ -26,8 +26,8 @@ create unique index if not exists elwood_idx_follow_user_asset on elwood.follow 
 alter table "elwood"."follow" enable row level security;
 
 DROP VIEW  IF EXISTS public.elwood_follow;
-CREATE VIEW public.elwood_follow AS
-  SELECT
+CREATE VIEW public.elwood_follow with (security_invoker=on)
+  AS SELECT
     "id",
     "user_id",
     "type",

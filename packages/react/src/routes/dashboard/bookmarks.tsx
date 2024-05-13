@@ -21,6 +21,7 @@ export default function Bookmarks(): JSX.Element {
     const type = (item.is_object_blob ? 'BLOB' : 'TREE') as NodeType;
 
     return {
+      object_name: item.object_name,
       id: item.asset_id?.split(':')[4] ?? '',
       type,
       prefix,
@@ -45,11 +46,20 @@ export default function Bookmarks(): JSX.Element {
     };
   });
 
+  const nodes = items.map(node => ({
+    ...node,
+    href: createNodeLink({
+      type: node.type,
+      prefix: node.prefix,
+      name: node.object_name,
+    }),
+  }));
+
   return (
     <MainLayout>
       <PageLayout largeTitle="Bookmarks">
         <div className="border rounded">
-          <FilesTable nodes={items} />
+          <FilesTable nodes={nodes} />
         </div>
       </PageLayout>
     </MainLayout>

@@ -1,7 +1,6 @@
 import type {UseQueryOptions, UseQueryResult} from '@tanstack/react-query';
 import {useQuery} from '@tanstack/react-query';
 import type {GetNodeResult} from '@elwood/common';
-import type {SupabaseClient} from '@/hooks/use-client';
 import {useClient} from '@/hooks/use-client';
 import keys from './_keys';
 
@@ -27,7 +26,7 @@ export function useGetNode(
 }
 
 export async function getNode(
-  supabase: SupabaseClient,
+  supabase: ReturnType<typeof useClient>,
   input: UseGetNodeInput,
 ): Promise<GetNodeResult | null> {
   const result = await supabase.rpc('elwood_get_node', {p_path: input.path});

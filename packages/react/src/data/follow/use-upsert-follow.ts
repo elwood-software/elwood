@@ -64,7 +64,7 @@ export async function upsertFollow(
       },
       {ignoreDuplicates: false, onConflict: 'type,user_id,asset_id,asset_type'},
     )
-    .eq('type', input.type)
+    .eq('type', input.type ?? '')
     .eq('user_id', data.session.user.id)
     .eq('asset_id', input.assetId)
     .eq('asset_type', input.assetType)

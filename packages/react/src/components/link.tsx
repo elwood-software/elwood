@@ -40,5 +40,5 @@ export function createNodeLink(
 
   const type = node.type === 'BLOB' ? 'blob' : 'tree';
 
-  return `/${type.toLowerCase()}/${path.map(encodeURIComponent).join('/')}`;
+  return `/${type.toLowerCase()}/${path.map(String).map(encodeURIComponent).join('/')}`;
 }

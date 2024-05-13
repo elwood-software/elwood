@@ -37,11 +37,14 @@ export async function getFollow(
 ): Promise<UseFollowResult> {
   const q = client.follow().select('*');
 
-  q.eq('type', input.type);
+  if (input.type) {
+    q.eq('type', input.type);
+  }
+
   q.eq('asset_id', input.assetId);
   q.eq('asset_type', input.assetType);
 
   const result = await q.maybeSingle();
 
-  return result.data;
+  return result.data as UseFollowResult;
 }

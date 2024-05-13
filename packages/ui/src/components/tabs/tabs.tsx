@@ -1,6 +1,6 @@
 import {type ReactNode} from 'react';
 import * as Primitive from '@radix-ui/react-tabs';
-import {useState} from 'react';
+
 import {clsx} from 'clsx';
 import {type Icon} from '../../svg/icons';
 

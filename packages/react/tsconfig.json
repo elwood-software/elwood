@@ -6,7 +6,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@elwood/ui": ["../ui/src"],
-      "@elwood/common": ["../common/src"]
+      "@elwood/common": ["../common/src"],
+      "@elwood/js": ["../js/src"],
+      "@ui/*": ["../ui/src/*"]
     }
   },
   "include": ["."],

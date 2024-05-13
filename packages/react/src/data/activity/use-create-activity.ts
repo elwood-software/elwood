@@ -72,5 +72,5 @@ export async function createActivity(
 
   invariant(result.data, 'Expected data to be present');
 
-  return result.data;
+  return result.data as UseCreateActivityResult;
 }

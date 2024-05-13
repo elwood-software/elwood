@@ -1,0 +1,30 @@
+name: "Install"
+description: "Sets up Node, and installs dependencies"
+
+inputs:
+  fetch-depth:
+    description: "The number of commits to fetch. 0 indicates all history for all branches and tags. 1 indicates the latest commit."
+    default: "1"
+    required: false
+  persist-credentials:
+    description: "Whether to persist credentials when fetching."
+    default: "true"
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Set up pnpm
+      uses: pnpm/action-setup@v3
+
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: ".node-version"
+        cache: pnpm
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        corepack enable
+        pnpm i

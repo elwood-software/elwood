@@ -37,8 +37,8 @@ end;
 $$;
 
 
-CREATE VIEW public.elwood_member AS
-  SELECT 
+CREATE VIEW public.elwood_member with (security_invoker=on)
+  AS SELECT 
     "id",
     "user_id",
     "type",

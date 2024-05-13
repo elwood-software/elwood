@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS elwood.activity (
 alter table elwood."activity" enable row level security;
 
 DROP VIEW  IF EXISTS public.elwood_activity;
-CREATE VIEW public.elwood_activity AS
-  SELECT
+CREATE VIEW public.elwood_activity with (security_invoker=on)
+  AS SELECT
     "a"."id",
     "a"."user_id",
     "a"."member_id",

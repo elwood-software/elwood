@@ -62,8 +62,10 @@ export function useNodeTree(prefix: string[]): JSX.Element {
 
     getNodeTree(supabase, {path: prefix})
       .then(result => {
-        dispatch({type: 'SET_ROOT_NODE_ID', value: result.rootNodeId});
-        dispatch({type: 'HAS_LOADED', value: result.rootNodeId});
+        const rootNodeId = result.rootNodeId ?? 'root';
+
+        dispatch({type: 'SET_ROOT_NODE_ID', value: rootNodeId});
+        dispatch({type: 'HAS_LOADED', value: rootNodeId});
 
         toArray(result.tree).forEach(node => {
           dispatch({type: 'ADD', value: node});

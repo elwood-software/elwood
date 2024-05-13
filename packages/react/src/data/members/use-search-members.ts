@@ -2,9 +2,7 @@ import type {UseQueryOptions, UseQueryResult} from '@tanstack/react-query';
 import {useQuery} from '@tanstack/react-query';
 import {useDebounce} from 'react-use';
 import type {SearchMembersResult} from '@elwood/common';
-import {toArray} from '@elwood/common';
 import {useState} from 'react';
-import type {SupabaseClient} from '@/hooks/use-client';
 import {useClient} from '@/hooks/use-client';
 import keys from './_keys';
 
@@ -43,7 +41,7 @@ export function useSearchMembers(
     enabled: Boolean(debounce.query),
     queryKey: keys.search(debounce),
     async queryFn() {
-      return await client.members();
+      return [];
     },
   });
 }

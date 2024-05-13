@@ -22,5 +22,6 @@ export const Primary: Story = {
     defaultOpen: true,
     title: 'Are you sure?',
     description: 'This action cannot be undone.',
+    onClick: () => {},
   },
 };

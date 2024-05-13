@@ -41,7 +41,7 @@ export async function getFollows(
     q.eq('type', input.type);
   }
 
-  if (input.assetId) {
+  if (input.assetId && input.assetType) {
     q.eq('asset_id', input.assetId);
     q.eq('asset_type', input.assetType);
   }
@@ -50,5 +50,5 @@ export async function getFollows(
 
   const result = await q;
 
-  return result.data;
+  return result.data as UseFollowsResult;
 }

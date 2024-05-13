@@ -23,8 +23,8 @@ create table if not exists elwood.notification (
 alter table "elwood"."notification" enable row level security;
 
 drop view if exists public.elwood_notification;
-create view public.elwood_notification as
-  select
+create view public.elwood_notification with (security_invoker=on)
+ AS SELECT
     "id",
     "type",
     "data",

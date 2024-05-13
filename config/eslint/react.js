@@ -11,8 +11,6 @@ const project = resolve(process.cwd(), 'tsconfig.json');
  *
  */
 
-console.log(project);
-
 module.exports = {
   extends: [
     '@vercel/style-guide/eslint/browser',

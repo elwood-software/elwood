@@ -4,7 +4,7 @@
     "lib": ["dom", "ES2015"],
     "types": ["jest", "node"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@ui/*": ["./src/*"]
     }
   },
   "include": [".", ".storybook"],

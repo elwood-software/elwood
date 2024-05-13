@@ -7,7 +7,7 @@ export interface FilesTableRow {
   type: NodeType;
   id: string;
   prefix: string[];
-  name: string | null;
+  name: string | null | JSX.Element;
   href: string;
 }
 
