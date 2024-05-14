@@ -183,12 +183,10 @@ export function useSidebarFooter(): JSX.Element {
 
   const userMenu = (
     <DropdownMenu items={userMenuItems} contentClassName="ml-3">
-      <Button
-        type="button"
-        variant="secondary"
-        icon={<CircleUserRound className="size-5" />}>
-        {member.display_name}
-      </Button>
+      <div className="flex items-center">
+        <CircleUserRound className="size-[1em]" />
+        <span className="font-bold ml-1">{member.display_name}</span>
+      </div>
     </DropdownMenu>
   );
 
