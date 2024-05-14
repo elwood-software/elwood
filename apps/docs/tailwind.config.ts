@@ -1,10 +1,15 @@
 import typographyPlugin from '@tailwindcss/typography'
+import type { PluginCreator } from 'postcss'
 import { type Config } from 'tailwindcss'
+import { darkMode, theme, plugins } from '@elwood/ui/tailwind.config.js'
+
+const themeExtend = theme?.extend || {}
 
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx,md}'],
-  darkMode: 'selector',
+  darkMode: darkMode ?? 'selector',
   theme: {
+    ...theme,
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],
       sm: ['0.875rem', { lineHeight: '1.5rem' }],
@@ -21,6 +26,7 @@ export default {
       '9xl': ['8rem', { lineHeight: '1' }],
     },
     extend: {
+      ...themeExtend,
       fontFamily: {
         sans: 'var(--font-inter)',
         display: ['var(--font-lexend)', { fontFeatureSettings: '"ss01"' }],
@@ -30,5 +36,5 @@ export default {
       },
     },
   },
-  plugins: [typographyPlugin],
+  plugins: [...Array.from(plugins as PluginCreator[]), typographyPlugin],
 } satisfies Config

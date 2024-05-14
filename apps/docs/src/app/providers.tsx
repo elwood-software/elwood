@@ -2,10 +2,8 @@
 
 import { ThemeProvider } from 'next-themes'
 
+import { ElwoodThemeProvider } from '@elwood/ui'
+
 export function Providers({ children }: { children: React.ReactNode }) {
-  return (
-    <ThemeProvider attribute="class" disableTransitionOnChange>
-      {children}
-    </ThemeProvider>
-  )
+  return <ElwoodThemeProvider>{children}</ElwoodThemeProvider>
 }

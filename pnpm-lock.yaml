@@ -117,6 +117,9 @@ importers:
       eslint-plugin-next:
         specifier: ^0.0.0
         version: 0.0.0
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
       prettier:
         specifier: ^3.2.5
         version: 3.2.5

@@ -35,9 +35,9 @@ function Header(): JSX.Element {
   return (
     <header
       className={clsx(
-        'sticky top-0 z-50 flex flex-none flex-wrap items-center justify-between bg-white px-4 py-5 shadow-md shadow-slate-900/5 transition duration-500 sm:px-6 lg:px-8 dark:shadow-none',
+        'bg-background sticky top-0 z-50 flex flex-none flex-wrap items-center justify-between px-4 py-5 shadow-md shadow-slate-900/5 transition duration-500 sm:px-6 lg:px-8 dark:shadow-none',
         isScrolled
-          ? 'dark:bg-slate-900/95 dark:backdrop-blur dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75'
+          ? 'dark:bg-background/95 dark:[@supports(backdrop-filter:blur(0))]:bg-background/75 dark:backdrop-blur'
           : 'dark:bg-transparent',
       )}
     >
@@ -49,17 +49,22 @@ function Header(): JSX.Element {
           <Logo className="hidden h-9 w-auto fill-slate-700 lg:block dark:fill-sky-100" />
         </Link>
       </div>
-      <div className="-my-5 mr-6 sm:mr-8 md:mr-0">
-        <Search />
-      </div>
+      <div className="-my-5 mr-6 sm:mr-8 md:mr-0">{/* <Search /> */}</div>
       <div className="relative flex basis-0 justify-end gap-6 sm:gap-8 md:flex-grow">
-        <ThemeSelector className="relative z-10" />
+        {/* <ThemeSelector className="relative z-10" /> */}
+        <Link
+          href="mailto:hello@elwood.software"
+          className="text-muted-foreground hover:text-foreground group text-sm"
+          aria-label="Email us"
+        >
+          hello@elwood.software
+        </Link>
         <Link
           href="https://github.com/elwood-software/elwood"
           className="group"
           aria-label="GitHub"
         >
-          <GitHubIcon className="h-6 w-6 fill-slate-400 group-hover:fill-slate-500 dark:group-hover:fill-slate-300" />
+          <GitHubIcon className="fill-muted-foreground group-hover:fill-foreground h-6 w-6" />
         </Link>
       </div>
     </header>
@@ -79,7 +84,7 @@ export function Layout({
   }
 
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex h-screen w-screen flex-col overflow-y-auto overscroll-y-auto">
       <Header />
 
       <div className="relative mx-auto flex w-full max-w-8xl flex-auto justify-center sm:px-2 lg:px-8 xl:px-12">
