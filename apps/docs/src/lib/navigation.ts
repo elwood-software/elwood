@@ -5,6 +5,13 @@ export const navigation = [
       {title: 'Introduction', href: '/docs/'},
       {title: 'Getting started', href: '/docs/getting-started'},
       {title: 'Support', href: '/docs/support'},
+    ],
+  },
+  {
+    title: 'Development',
+
+    links: [
+      {title: 'Changelog', href: '/docs/changelog'},
       {title: 'Contributing', href: '/docs/contributing'},
     ],
   },
