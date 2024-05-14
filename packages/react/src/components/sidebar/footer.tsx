@@ -12,12 +12,12 @@ export function SidebarFooter(props: SidebarFooterProps): JSX.Element {
 
   return (
     <footer>
-      <div className="mb-3">{props.uploadStatus}</div>
+      <div className="mb-3 mx-6">{props.uploadStatus}</div>
 
-      <div className="flex justify-between items-center px-6">
-        {props.userMenu}
+      <div className="flex justify-between items-center p-1 mx-6 border rounded-lg">
+        <div className="pl-2 cursor-pointer">{props.userMenu}</div>
         <div className="flex items-center space-x-1">
-          <Button href="/bookmarks" size="icon-sm" variant="secondary">
+          <Button href="/bookmarks" size="sm" variant="ghost">
             <BookMarkedIcon className="size-4" />
           </Button>
         </div>
