@@ -36,5 +36,5 @@ export default {
       },
     },
   },
-  plugins: [...Array.from(plugins as PluginCreator[]), typographyPlugin],
+  plugins: [...Array.from(plugins as PluginCreator<any>[]), typographyPlugin],
 } satisfies Config

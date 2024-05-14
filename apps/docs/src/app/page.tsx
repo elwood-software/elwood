@@ -1,5 +1,5 @@
-import { RedirectType, redirect } from 'next/navigation'
+import {RedirectType, redirect} from 'next/navigation';
 
 export default function Page(): void {
-  redirect('/docs', RedirectType.replace)
+  redirect('/docs', RedirectType.replace);
 }

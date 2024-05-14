@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format-check": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "format-fix": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
