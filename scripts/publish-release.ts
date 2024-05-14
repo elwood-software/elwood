@@ -49,9 +49,13 @@ if (!nodeAuthToken) {
 
 console.log('running pnpm release');
 const cmd = new Deno.Command('pnpm', {
-  args: ['lerna', 'version', semverType, '--force-publish', '-y'],
+  args: ['-r', 'publish', '--access=public', '--no-git-checks', '--force'],
   stdout: 'inherit',
   stderr: 'inherit',
+  cwd: path.join(__dirname, '..'),
+  env: {
+    GITHUB_TOKEN: nodeAuthToken!,
+  },
 });
 
 const {code} = await cmd.output();
