@@ -21,7 +21,9 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version-file: ".node-version"
+        registry-url: "https://npm.pkg.github.com"
         cache: pnpm
+        scope: "@elwood-software"
 
     - name: Install dependencies
       shell: bash

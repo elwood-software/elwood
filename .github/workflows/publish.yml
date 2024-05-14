@@ -1,0 +1,42 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: stable or canary?
+        required: true
+        type: choice
+        options:
+          - canary
+          - stable
+
+      semverType:
+        description: semver type?
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+jobs:
+  to-npm:
+    name: "NPM"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/composite-actions/install
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Build
+        run: pnpm build
+
+      - name: Publish 🚀
+        run: ./scripts/publish-release.js --release-type ${{ github.event.inputs.releaseType || 'canary' }} --semver-type ${{ github.event.inputs.semverType }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
