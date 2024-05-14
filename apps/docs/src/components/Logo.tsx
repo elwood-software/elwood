@@ -1,1 +1,1 @@
-export { Logo } from '@elwood/ui'
+export {Logo} from '@elwood/ui';

@@ -1,11 +1,11 @@
-import { DarkMode, Gradient, LightMode } from '@/components/Icon'
+import {DarkMode, Gradient, LightMode} from '@/components/Icon';
 
 export function PluginsIcon({
   id,
   color,
 }: {
-  id: string
-  color?: React.ComponentProps<typeof Gradient>['color']
+  id: string;
+  color?: React.ComponentProps<typeof Gradient>['color'];
 }) {
   return (
     <>
@@ -33,8 +33,7 @@ export function PluginsIcon({
           className="fill-[var(--icon-background)] stroke-[color:var(--icon-foreground)]"
           strokeWidth={2}
           strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+          strokeLinejoin="round">
           <path d="M3 9v14l12 6V15L3 9Z" />
           <path d="M27 9v14l-12 6V15l12-6Z" />
         </g>
@@ -47,8 +46,7 @@ export function PluginsIcon({
           className="stroke-[color:var(--icon-foreground)]"
           strokeWidth={2}
           strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+          strokeLinejoin="round">
           <path d="M20 5.5 27 9l-12 6L3 9l7-3.5" />
           <path d="M20 5c0 1.105-2.239 2-5 2s-5-.895-5-2m10 0c0-1.105-2.239-2-5-2s-5 .895-5 2m10 0v3c0 1.105-2.239 2-5 2s-5-.895-5-2V5" />
         </g>
@@ -65,5 +63,5 @@ export function PluginsIcon({
         />
       </DarkMode>
     </>
-  )
+  );
 }

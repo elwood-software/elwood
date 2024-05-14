@@ -1,26 +1,26 @@
-import { Fragment } from 'react'
-import Image from 'next/image'
-import clsx from 'clsx'
-import { Highlight } from 'prism-react-renderer'
+import {Fragment} from 'react';
+import Image from 'next/image';
+import clsx from 'clsx';
+import {Highlight} from 'prism-react-renderer';
 
-import { Button } from '@/components/Button'
-import { HeroBackground } from '@/components/HeroBackground'
-import blurCyanImage from '@/images/blur-cyan.png'
-import blurIndigoImage from '@/images/blur-indigo.png'
+import {Button} from '@/components/Button';
+import {HeroBackground} from '@/components/HeroBackground';
+import blurCyanImage from '@/images/blur-cyan.png';
+import blurIndigoImage from '@/images/blur-indigo.png';
 
-const codeLanguage = 'javascript'
+const codeLanguage = 'javascript';
 const code = `export default {
   strategy: 'predictive',
   engine: {
     cpus: 12,
     backups: ['./storage/cache.wtf'],
   },
-}`
+}`;
 
 const tabs = [
-  { name: 'cache-advance.config.js', isActive: true },
-  { name: 'package.json', isActive: false },
-]
+  {name: 'cache-advance.config.js', isActive: true},
+  {name: 'package.json', isActive: false},
+];
 
 function TrafficLightsIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -29,7 +29,7 @@ function TrafficLightsIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
       <circle cx="21" cy="5" r="4.5" />
       <circle cx="37" cy="5" r="4.5" />
     </svg>
-  )
+  );
 }
 
 export function Hero() {
@@ -64,7 +64,7 @@ export function Hero() {
             </div>
           </div>
           <div className="relative lg:static xl:pl-10">
-            <div className="absolute inset-x-[-50vw] -bottom-48 -top-32 [mask-image:linear-gradient(transparent,white,white)] lg:-bottom-32 lg:-top-32 lg:left-[calc(50%+14rem)] lg:right-0 lg:[mask-image:none] dark:[mask-image:linear-gradient(transparent,white,transparent)] lg:dark:[mask-image:linear-gradient(white,white,transparent)]">
+            <div className="absolute inset-x-[-50vw] -bottom-48 -top-32 [mask-image:linear-gradient(transparent,white,white)] dark:[mask-image:linear-gradient(transparent,white,transparent)] lg:-bottom-32 lg:-top-32 lg:left-[calc(50%+14rem)] lg:right-0 lg:[mask-image:none] lg:dark:[mask-image:linear-gradient(white,white,transparent)]">
               <HeroBackground className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:left-0 lg:translate-x-0 lg:translate-y-[-60%]" />
             </div>
             <div className="relative">
@@ -94,7 +94,7 @@ export function Hero() {
                 <div className="pl-4 pt-4">
                   <TrafficLightsIcon className="h-2.5 w-auto stroke-slate-500/30" />
                   <div className="mt-4 flex space-x-2 text-xs">
-                    {tabs.map((tab) => (
+                    {tabs.map(tab => (
                       <div
                         key={tab.name}
                         className={clsx(
@@ -102,14 +102,12 @@ export function Hero() {
                           tab.isActive
                             ? 'bg-gradient-to-r from-sky-400/30 via-sky-400 to-sky-400/30 p-px font-medium text-sky-300'
                             : 'text-slate-500',
-                        )}
-                      >
+                        )}>
                         <div
                           className={clsx(
                             'flex items-center rounded-full px-2.5',
                             tab.isActive && 'bg-slate-800',
-                          )}
-                        >
+                          )}>
                           {tab.name}
                         </div>
                       </div>
@@ -118,8 +116,7 @@ export function Hero() {
                   <div className="mt-6 flex items-start px-1 text-sm">
                     <div
                       aria-hidden="true"
-                      className="select-none border-r border-slate-300/5 pr-4 font-mono text-slate-600"
-                    >
+                      className="select-none border-r border-slate-300/5 pr-4 font-mono text-slate-600">
                       {Array.from({
                         length: code.split('\n').length,
                       }).map((_, index) => (
@@ -132,8 +129,7 @@ export function Hero() {
                     <Highlight
                       code={code}
                       language={codeLanguage}
-                      theme={{ plain: {}, styles: [] }}
-                    >
+                      theme={{plain: {}, styles: []}}>
                       {({
                         className,
                         style,
@@ -146,15 +142,14 @@ export function Hero() {
                             className,
                             'flex overflow-x-auto pb-6',
                           )}
-                          style={style}
-                        >
+                          style={style}>
                           <code className="px-4">
                             {tokens.map((line, lineIndex) => (
-                              <div key={lineIndex} {...getLineProps({ line })}>
+                              <div key={lineIndex} {...getLineProps({line})}>
                                 {line.map((token, tokenIndex) => (
                                   <span
                                     key={tokenIndex}
-                                    {...getTokenProps({ token })}
+                                    {...getTokenProps({token})}
                                   />
                                 ))}
                               </div>
@@ -171,5 +166,5 @@ export function Hero() {
         </div>
       </div>
     </div>
-  )
+  );
 }

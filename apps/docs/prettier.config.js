@@ -1,6 +1,7 @@
+const root = require('../../prettier.config')
+
 /** @type {import('prettier').Options} */
 module.exports = {
-  singleQuote: true,
-  semi: false,
+  ...root,
   plugins: ['prettier-plugin-tailwindcss'],
 }

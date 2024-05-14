@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
 export default function NotFound() {
   return (
@@ -15,11 +15,10 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="mt-8 text-sm font-medium text-slate-900 dark:text-white"
-        >
+          className="mt-8 text-sm font-medium text-slate-900 dark:text-white">
           Go back home
         </Link>
       </div>
     </div>
-  )
+  );
 }

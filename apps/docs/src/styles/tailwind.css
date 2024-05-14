@@ -2,9 +2,14 @@
 @import './prism.css';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import '@elwood/ui/style.css';
 
 @layer base {
   [inert] ::-webkit-scrollbar {
     display: none;
+  }
+
+  body {
+    overflow: hidden;
   }
 }
