@@ -19,12 +19,12 @@ export default {
           'https://github.com/elwood-software/db/raw/main/versions/:version',
       },
       {
-        source: '/docs/',
-        destination: 'https://docs.elwood.software/docs/',
+        source: '/docs',
+        destination: 'https://elwood-docs.vercel.app/docs',
       },
       {
-        source: '/docs/:path*/',
-        destination: 'https://docs.elwood.software/docs/:path*/',
+        source: '/docs/:path*',
+        destination: 'https://elwood-docs.vercel.app/docs/:path*',
       },
     ];
   },
