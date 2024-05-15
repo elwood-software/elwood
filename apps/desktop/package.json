@@ -1,0 +1,14 @@
+{
+  "name": "@elwood/apps-desktop",
+  "private": true,
+  "version": "0.0.0",
+  "main": "main.js",
+  "author": "Elwood Software",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^30.0.6"
+  }
+}
