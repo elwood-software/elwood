@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.1 (2024-05-15)
+
+- Feature: Move database schema to pgtle extension in [elwood-software/db] [PR #13](https://github.com/elwood-software/elwood/pull/13)
+
 ## v0.0.1 (2024-05-14)
 
 - Bug Fix: Create folder not working (and no error message) [#2](https://github.com/elwood-software/elwood/issues/2)

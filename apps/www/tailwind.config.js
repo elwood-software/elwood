@@ -5,10 +5,6 @@ const {resolve, dirname} = require('path');
 module.exports = {
   content: [
     resolve(
-      dirname(require.resolve('@elwood/react')),
-      './**/*.{js,ts,jsx,tsx,mdx}',
-    ),
-    resolve(
       dirname(require.resolve('@elwood/ui')),
       './**/*.{js,ts,jsx,tsx,mdx}',
     ),
