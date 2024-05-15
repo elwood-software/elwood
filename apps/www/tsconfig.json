@@ -1,0 +1,16 @@
+{
+  "exclude": ["node_modules", "next.config.mjs"],
+  "extends": "@elwood/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "next-env.d.ts", ".next/types/**/*.ts"]
+}

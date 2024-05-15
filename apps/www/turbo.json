@@ -1,0 +1,9 @@
+{
+  "extends": ["//"],
+  "globalEnv": [],
+  "pipeline": {
+    "build": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    }
+  }
+}
