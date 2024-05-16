@@ -37,4 +37,4 @@ runs:
         HUSKY_SKIP_HOOKS: "1"
       run: |
         corepack enable
-        pnpm i
+        pnpm i --ignore-scripts
