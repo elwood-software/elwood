@@ -10,20 +10,27 @@ inputs:
     description: "Whether to persist credentials when fetching."
     default: "true"
     required: false
+  working-directory:
+    description: "Working directory to run"
+    default: "."
+    required: false
 
 runs:
   using: composite
   steps:
     - name: Set up pnpm
       uses: pnpm/action-setup@v3
+      with:
+        package_json_file: "${{ inputs.working-directory }}/package.json"
 
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
-        node-version-file: ".node-version"
+        node-version-file: "${{ inputs.working-directory }}/.node-version"
         cache: pnpm
 
     - name: Install dependencies
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         corepack enable
