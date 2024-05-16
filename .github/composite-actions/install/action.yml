@@ -33,6 +33,8 @@ runs:
     - name: Install dependencies
       working-directory: ${{ inputs.working-directory }}
       shell: bash
+      env:
+        HUSKY_SKIP_HOOKS: "1"
       run: |
         corepack enable
         pnpm i
