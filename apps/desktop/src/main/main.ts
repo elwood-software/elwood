@@ -40,7 +40,9 @@ const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
 if (isDebug) {
-  require('electron-debug')();
+  require('electron-debug')({
+    showDevTools: false,
+  });
 }
 
 const installExtensions = async () => {
