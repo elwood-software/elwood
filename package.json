@@ -5,10 +5,9 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter=./packages/* && turbo run build --filter=./apps/*",
+    "build": "turbo run build --filter=./packages/*",
     "clean": "turbo run clean",
-    "dev": "turbo run dev",
-    "dev:pkg": "turbo run dev --filter=./packages/*",
+    "dev": "turbo run dev --filter=./packages/*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format-check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
