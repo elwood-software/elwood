@@ -28,6 +28,7 @@ runs:
       with:
         node-version-file: "${{ inputs.working-directory }}/.node-version"
         cache: pnpm
+        cache-dependency-path: "${{ inputs.working-directory }}/pnpm-lock.yaml"
 
     - name: Install dependencies
       working-directory: ${{ inputs.working-directory }}
