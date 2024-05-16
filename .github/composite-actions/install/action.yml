@@ -10,6 +10,10 @@ inputs:
     description: "Whether to persist credentials when fetching."
     default: "true"
     required: false
+  working-directory:
+    description: "Working directory to run"
+    default: "."
+    required: false
 
 runs:
   using: composite
@@ -24,6 +28,7 @@ runs:
         cache: pnpm
 
     - name: Install dependencies
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         corepack enable
