@@ -1,5 +1,6 @@
 {
   "name": "elwood-desktop",
+  "description": "Elwood Desktop",
   "version": "0.0.0",
   "main": "./dist/main/main.js",
   "scripts": {
