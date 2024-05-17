@@ -159,8 +159,10 @@
       "node_modules",
       "package.json"
     ],
-    "afterSign": "./.erb/scripts/notarize.js",
     "mac": {
+      "notarize": {
+        "teamId": "8GJDBXCC3D"
+      },
       "target": {
         "target": "default",
         "arch": [
@@ -168,7 +170,6 @@
           "x64"
         ]
       },
-      "notarize": false,
       "type": "distribution",
       "hardenedRuntime": true,
       "entitlements": "assets/entitlements.mac.plist",
