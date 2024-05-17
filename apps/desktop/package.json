@@ -209,7 +209,7 @@
     "publish": {
       "provider": "github",
       "owner": "elwood-software",
-      "repo": "elwood"
+      "repo": "desktop"
     }
   },
   "devEngines": {
