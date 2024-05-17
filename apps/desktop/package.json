@@ -209,7 +209,8 @@
     "publish": {
       "provider": "github",
       "owner": "elwood-software",
-      "repo": "desktop"
+      "repo": "desktop",
+      "releaseType": "prerelease"
     }
   },
   "devEngines": {
