@@ -3,8 +3,22 @@ import {assert} from '../_shared/deps.ts';
 import {handler} from './handler.ts';
 
 Deno.serve(async req => {
+  const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
+
   if (req.method === 'OPTIONS') {
     return new Response('ok', {headers: addCorsHeaders({})});
+  }
+
+  if (req.method === 'GET') {
+    const body = {
+      anonKey: SUPABASE_ANON_KEY,
+      name: 'Dunder Mifflin Paper Company',
+    };
+
+    return new Response(JSON.stringify(body), {
+      status: 200,
+      headers: addCorsHeaders({'Content-Type': 'application/json'}),
+    });
   }
 
   try {
