@@ -51,4 +51,3 @@ publish:
   owner: elwood-software
   repo: desktop
   releaseType: prerelease
-  draft: true
