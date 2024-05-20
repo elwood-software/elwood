@@ -13,6 +13,7 @@ import { is } from '@electron-toolkit/utils'
 
 import icon from '../../../resources/icon.png?asset'
 import { Store } from '../store/store'
+import { log, isDebug } from '../util'
 
 let currentMainWindow: BrowserWindow | null = null
 
@@ -23,7 +24,8 @@ export function getCurrentMainWindow(): BrowserWindow | null {
 export async function createMainWindow(store: Store): Promise<BrowserWindow> {
   const theme = store.settings.theme
 
-  console.log('current theme', theme)
+  log.info('Creating main window')
+  log.info(' > theme:', theme)
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -42,6 +44,7 @@ export async function createMainWindow(store: Store): Promise<BrowserWindow> {
   })
 
   mainWindow.on('ready-to-show', () => {
+    log.info('Main window is ready to show')
     mainWindow.show()
   })
 
@@ -55,10 +58,13 @@ export async function createMainWindow(store: Store): Promise<BrowserWindow> {
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
-    mainWindow.loadFile(join(__dirname, '../../renderer/index.html'))
+    mainWindow.loadFile(
+      join(__dirname, isDebug() ? '../../renderer/index.html' : '../renderer/index.html')
+    )
   }
 
-  currentMainWindow = mainWindow
+  log.info('Main window is loading')
 
+  currentMainWindow = mainWindow
   return mainWindow
 }

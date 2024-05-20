@@ -4,10 +4,16 @@
     <meta charset="UTF-8" />
     <title>Elwood</title>
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
+    <!-- <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
-    />
+    /> -->
+    <script>
+      window.addEventListener('error', (err) => {
+        window.elwood.log('error', 'window error rendering', err)
+        document.body.innerHTML = '<h1>Something went wrong</h1>'
+      })
+    </script>
   </head>
   <body class="overflow-hidden w-screen h-screen bg-transparent">
     <div class="text-foreground bg-background" id="root"></div>

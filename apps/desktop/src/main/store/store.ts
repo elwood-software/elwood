@@ -1,13 +1,11 @@
-import type { ipcMain, ipcRenderer } from 'electron'
-import { app } from 'electron'
+import type { ipcMain } from 'electron'
 import { join } from 'node:path'
-import { mkdirSync } from 'node:fs'
-
 import { z } from 'zod'
 
 import { JSONFilePreset } from 'lowdb/node'
 import type { Low } from 'lowdb'
 
+import { getElwoodHomeDir } from '../util'
 import { Settings, Workspaces, SettingsSchema, WorkspacesSchema } from './schema'
 
 type Stores = typeof Settings | typeof Workspaces
@@ -30,15 +28,13 @@ export class Store {
     [key in StoreName]: Low<z.infer<(typeof Stores)[key]>>
   }> = {}
 
-  settings: SettingsSchema = {}
-  workspaces: WorkspacesSchema = {}
+  settings: Partial<SettingsSchema> = {}
+  workspaces: Partial<WorkspacesSchema> = {}
 
   constructor() {}
 
   async setup() {
-    let dir = join(app.getPath('home'), '.elwood')
-
-    mkdirSync(dir, { recursive: true })
+    let dir = getElwoodHomeDir()
 
     for (const store in Stores) {
       const defaults = Stores[store].safeParse({}).data
@@ -54,10 +50,10 @@ export class Store {
         Object.defineProperty(this.settings, key, {
           enumerable: true,
           get: () => {
-            return this.dbs.settings.data[key]
+            return this.dbs[store].data[key]
           },
           set(value) {
-            this.dbs.settings.update(() => {
+            this.dbs[store].update(() => {
               return {
                 [key]: value
               }

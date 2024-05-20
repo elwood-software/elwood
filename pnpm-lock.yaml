@@ -35,12 +35,6 @@ importers:
       electron-updater:
         specifier: ^6.1.7
         version: 6.1.8
-      lowdb:
-        specifier: ^7.0.1
-        version: 7.0.1
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^2.0.0
@@ -81,6 +75,9 @@ importers:
       electron-builder:
         specifier: ^24.9.1
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
+      electron-log:
+        specifier: ^5.1.4
+        version: 5.1.4
       electron-vite:
         specifier: ^2.0.0
         version: 2.2.0(@swc/core@1.5.7)(vite@5.2.11(@types/node@18.19.33)(sass@1.77.1)(terser@5.31.0))
@@ -90,6 +87,9 @@ importers:
       eslint-plugin-react:
         specifier: ^7.33.2
         version: 7.34.1(eslint@8.57.0)
+      lowdb:
+        specifier: ^7.0.1
+        version: 7.0.1
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -114,6 +114,9 @@ importers:
       vite:
         specifier: ^5.0.12
         version: 5.2.11(@types/node@18.19.33)(sass@1.77.1)(terser@5.31.0)
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
 
   apps/docs:
     dependencies:
@@ -4867,6 +4870,10 @@ packages:
     resolution: {integrity: sha512-yZSgVHft5dNVlo31qmJAe4BVKQfFdwpRw7sFp1iQglDRCDD6r22zfRJuZlhtB5gp9FHUxCMEoWGq10SkCnMAIg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
+
+  electron-log@5.1.4:
+    resolution: {integrity: sha512-P0RSXnwT3z+e89Z5uAcZDeN85/QjIgv764a93kqCi+wh2Jm22CCbc3AGDt4S8rsxAHWHB4Q0PGsQl3fw1AN0kQ==}
+    engines: {node: '>= 14'}
 
   electron-publish@24.13.1:
     resolution: {integrity: sha512-2ZgdEqJ8e9D17Hwp5LEq5mLQPjqU3lv/IALvgp+4W8VeNhryfGhYEQC/PgDPMrnWUp+l60Ou5SJLsu+k4mhQ8A==}
@@ -14070,6 +14077,8 @@ snapshots:
     transitivePeerDependencies:
       - electron-builder-squirrel-windows
       - supports-color
+
+  electron-log@5.1.4: {}
 
   electron-publish@24.13.1:
     dependencies:

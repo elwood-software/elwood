@@ -4,10 +4,13 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { createStoresIpcRenderer } from '../main/store/renderer-api'
 
-export type Channels = 'app' | 'workspace'
+export type Channels = 'app' | 'workspace' | 'store'
 
 export const api = {
   store: createStoresIpcRenderer(ipcRenderer),
+  log(level: 'debug' | 'info' | 'error', message: string, data?: any): void {
+    ipcRenderer.send('electron-log', { level, message, data })
+  },
   ipc: {
     send(channel: Channels, ...args: unknown[]): void {
       ipcRenderer.send(channel, ...args)
