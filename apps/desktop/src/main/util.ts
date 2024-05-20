@@ -1,13 +1,32 @@
-/* eslint import/prefer-default-export: off */
-import { URL } from 'url';
-import path from 'path';
+export async function installExtensions(): Promise<void> {
+  const installer = require('electron-devtools-installer')
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS
+  const extensions = ['REACT_DEVELOPER_TOOLS']
 
-export function resolveHtmlPath(htmlFileName: string) {
-  if (process.env.NODE_ENV === 'development') {
-    const port = process.env.PORT || 1212;
-    const url = new URL(`http://localhost:${port}`);
-    url.pathname = htmlFileName;
-    return url.href;
+  return installer
+    .default(
+      extensions.map((name) => installer[name]),
+      forceDownload
+    )
+    .catch(console.log)
+}
+
+export function isDebug(cb?: () => void): boolean {
+  if (cb) {
+    if (isDebug()) {
+      cb()
+    }
   }
-  return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
+
+  return process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true'
+}
+
+export function isProduction(cb?: () => void): boolean {
+  if (cb) {
+    if (isProduction()) {
+      cb()
+    }
+  }
+
+  return process.env.NODE_ENV === 'production'
 }

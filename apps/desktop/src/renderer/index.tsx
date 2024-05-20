@@ -1,13 +1,26 @@
-import { createRoot } from 'react-dom/client';
-import App from './app';
+import { createRoot } from 'react-dom/client'
+import { ElwoodThemeProvider } from '@elwood/ui'
 
-const container = document.getElementById('root') as HTMLElement;
-const root = createRoot(container);
-root.render(<App />);
+import App from './app/app'
+import Workspace from './workspace/workspace'
 
-// calling IPC exposed from preload script
-window.electron.ipcRenderer.once('ipc-example', (arg) => {
-  // eslint-disable-next-line no-console
-  console.log(arg);
-});
-window.electron.ipcRenderer.sendMessage('ipc-example', ['ping']);
+import './global.css'
+import '@elwood/ui/style.css'
+
+const container = document.getElementById('root') as HTMLElement
+const root = createRoot(container)
+const searchParams = new URLSearchParams(window.location.search)
+
+if (searchParams.has('workspace')) {
+  root.render(
+    <ElwoodThemeProvider>
+      <Workspace id={searchParams.get('workspace') as string} />
+    </ElwoodThemeProvider>
+  )
+} else {
+  root.render(
+    <ElwoodThemeProvider>
+      <App />
+    </ElwoodThemeProvider>
+  )
+}
