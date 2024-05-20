@@ -2,10 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export function Welcome() {
-  const firstTime = window.elwood.store.get({
-    store: 'settings',
-    name: 'is_first_time'
-  })
+  console.log(window.elwood.store.settings.get('theme'))
 
   return (
     <div className="flex items-center justify-center h-screen">
