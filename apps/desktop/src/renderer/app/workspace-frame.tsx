@@ -1,3 +1,8 @@
+import React from 'react'
+import { useParams } from 'react-router-dom'
+
 export function WorkspaceFrame() {
-  return <div>poop</div>;
+  const params = useParams()
+
+  return <div>poop {params.id}</div>
 }

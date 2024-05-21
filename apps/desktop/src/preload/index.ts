@@ -15,6 +15,9 @@ export const api = {
     send(channel: Channels, ...args: unknown[]): void {
       ipcRenderer.send(channel, ...args)
     },
+    sendSync(channel: Channels, ...args: unknown[]): unknown {
+      return ipcRenderer.sendSync(`${channel}-sync`, ...args)
+    },
     on(channel: Channels, func: (...args: unknown[]) => void): () => void {
       const subscription = (_event: IpcRendererEvent, ...args: unknown[]): void => func(...args)
       ipcRenderer.on(channel, subscription)

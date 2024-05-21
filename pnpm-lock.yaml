@@ -28,10 +28,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^3.0.0
-        version: 3.0.1(electron@28.3.1)
+        version: 3.0.1(electron@30.0.6)
       '@electron-toolkit/utils':
         specifier: ^3.0.0
-        version: 3.0.0(electron@28.3.1)
+        version: 3.0.0(electron@30.0.6)
       electron-updater:
         specifier: ^6.1.7
         version: 6.1.8
@@ -45,15 +45,24 @@ importers:
       '@electron-toolkit/tsconfig':
         specifier: ^1.0.1
         version: 1.0.1(@types/node@18.19.33)
+      '@elwood/common':
+        specifier: workspace:*
+        version: link:../../packages/common
       '@elwood/js':
         specifier: workspace:*
         version: link:../../packages/js
       '@elwood/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@elwood/typescript-config':
+        specifier: workspace:*
+        version: link:../../config/typescript
       '@elwood/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@tanstack/react-query':
+        specifier: ^5.36.2
+        version: 5.36.2(react@18.3.1)
       '@types/node':
         specifier: ^18.19.9
         version: 18.19.33
@@ -70,8 +79,8 @@ importers:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
       electron:
-        specifier: ^28.2.0
-        version: 28.3.1
+        specifier: ^30.0.6
+        version: 30.0.6
       electron-builder:
         specifier: ^24.9.1
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
@@ -4895,8 +4904,8 @@ packages:
       '@swc/core':
         optional: true
 
-  electron@28.3.1:
-    resolution: {integrity: sha512-aF9fONuhVDJlctJS7YOw76ynxVAQdfIWmlhRMKits24tDcdSL0eMHUS0wWYiRfGWbQnUKB6V49Rf17o32f4/fg==}
+  electron@30.0.6:
+    resolution: {integrity: sha512-PkhEPFdpYcTzjAO3gMHZ+map7g2+xCrMDedo/L1i0ir2BRXvAB93IkTJX497U6Srb/09r2cFt+k20VPNVCdw3Q==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -9924,17 +9933,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron-toolkit/preload@3.0.1(electron@28.3.1)':
+  '@electron-toolkit/preload@3.0.1(electron@30.0.6)':
     dependencies:
-      electron: 28.3.1
+      electron: 30.0.6
 
   '@electron-toolkit/tsconfig@1.0.1(@types/node@18.19.33)':
     dependencies:
       '@types/node': 18.19.33
 
-  '@electron-toolkit/utils@3.0.0(electron@28.3.1)':
+  '@electron-toolkit/utils@3.0.0(electron@30.0.6)':
     dependencies:
-      electron: 28.3.1
+      electron: 30.0.6
 
   '@electron/asar@3.2.10':
     dependencies:
@@ -14121,10 +14130,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@28.3.1:
+  electron@30.0.6:
     dependencies:
       '@electron/get': 2.0.3
-      '@types/node': 18.19.33
+      '@types/node': 20.12.12
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color

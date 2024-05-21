@@ -1,9 +1,11 @@
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { type RouteObject } from 'react-router-dom';
+import React from 'react'
+import { RouterProvider, createHashRouter } from 'react-router-dom'
+import { type RouteObject } from 'react-router-dom'
 
-import { Layout } from './layout';
-import { WorkspaceFrame } from './workspace-frame';
-import { Welcome } from './welcome';
+import { Layout } from './layout'
+import { WorkspaceFrame } from './workspace-frame'
+import { AuthWorkspace } from './auth-workspace'
+import { Welcome } from './welcome'
 
 export default function App() {
   const routes: RouteObject[] = [
@@ -13,7 +15,11 @@ export default function App() {
         {
           path: '/',
           element: <Welcome />,
-          index: true,
+          index: true
+        },
+        {
+          path: '/auth-workspace',
+          element: <AuthWorkspace />
         },
         {
           path: '/workspace',
@@ -21,14 +27,14 @@ export default function App() {
           children: [
             {
               path: '/workspace/:id',
-              element: <WorkspaceFrame />,
-            },
-          ],
-        },
-      ],
-    },
-  ];
-  const router = createMemoryRouter(routes);
+              element: <WorkspaceFrame />
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  const router = createHashRouter(routes)
 
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />
 }

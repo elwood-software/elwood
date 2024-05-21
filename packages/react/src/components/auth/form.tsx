@@ -1,7 +1,10 @@
 import {Button, Input} from '@elwood/ui';
+import {FormEventHandler} from 'react';
 
 export interface AuthFormProps {
-  loginAction: FormProps['action'];
+  loginAction?: (data: FormData) => Promise<void>;
+  onSubmit?: FormEventHandler;
+  onChange?: (name: string, value: string) => void;
   loading: boolean;
   errors?: string[];
   hideEmail?: boolean;
@@ -9,11 +12,14 @@ export interface AuthFormProps {
 }
 
 export function AuthForm(props: AuthFormProps): JSX.Element {
-  const {loginAction, errors, loading} = props;
+  const {loginAction, errors, loading, onSubmit} = props;
 
   return (
     <div className="bg-sidebar p-12 rounded-lg w-full max-w-sm bg-sidebar border">
-      <Form action={loginAction} className="space-y-6">
+      <Form
+        action={loginAction as FormProps['action']}
+        className="space-y-6"
+        onSubmit={onSubmit}>
         {props.hideEmail ? (
           <input type="hidden" name="email" value={props.email} />
         ) : (
@@ -31,6 +37,7 @@ export function AuthForm(props: AuthFormProps): JSX.Element {
                 placeholder="awesome@elwood.software"
                 required
                 type="email"
+                onChange={e => props.onChange?.('email', e.target.value)}
               />
             </div>
           </div>
@@ -52,6 +59,7 @@ export function AuthForm(props: AuthFormProps): JSX.Element {
               placeholder="very_secret"
               required
               type="password"
+              onChange={e => props.onChange?.('password', e.target.value)}
             />
           </div>
         </div>

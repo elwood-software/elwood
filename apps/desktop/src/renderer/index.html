@@ -14,9 +14,15 @@
         document.body.innerHTML = '<h1>Something went wrong</h1>'
       })
     </script>
+    <style type="text/css">
+      html,
+      body {
+        background-color: transparent;
+      }
+    </style>
   </head>
   <body class="overflow-hidden w-screen h-screen bg-transparent">
-    <div class="text-foreground bg-background" id="root"></div>
+    <div class="w-screen h-screen" id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>

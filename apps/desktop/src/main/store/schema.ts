@@ -4,7 +4,8 @@ import { z } from 'zod'
 export const Settings = z.object({
   is_first_time: z.boolean().default(true),
   theme: z.string().default(nativeTheme.shouldUseDarkColors ? 'dark' : 'light'),
-  last_opened_at: z.string().default(new Date().toISOString())
+  last_opened_at: z.string().default(new Date().toISOString()),
+  last_app_path: z.string().default('')
 })
 
 export type SettingsSchema = z.infer<typeof Settings>

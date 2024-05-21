@@ -51,3 +51,8 @@ publish:
   owner: elwood-software
   repo: desktop
   releaseType: prerelease
+protocols:
+  - name: Elwood Desktop
+    schemes:
+      - elwood
+      - elwood-dev

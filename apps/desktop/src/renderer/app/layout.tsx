@@ -1,12 +1,13 @@
-import { Outlet } from 'react-router-dom';
+import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 export function Layout() {
   return (
-    <div className="grid grid-cols-[80px_auto] w-full">
-      <div className="bg-red-200 pt-10">menu</div>
-      <div>
+    <div className="grid grid-cols-[80px_auto] w-full h-full">
+      <div className="pt-10 drag">menu</div>
+      <div className="bg-background">
         <Outlet />
       </div>
     </div>
-  );
+  )
 }

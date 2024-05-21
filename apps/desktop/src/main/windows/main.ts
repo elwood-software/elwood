@@ -22,19 +22,18 @@ export function getCurrentMainWindow(): BrowserWindow | null {
 }
 
 export async function createMainWindow(store: Store): Promise<BrowserWindow> {
-  const theme = store.settings.theme
-
   log.info('Creating main window')
-  log.info(' > theme:', theme)
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
+    vibrancy: 'sidebar',
     autoHideMenuBar: true,
     titleBarStyle: 'hiddenInset',
-    backgroundColor: theme === 'dark' ? '#0C0A09' : '#fff',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    transparent: true,
     frame: false,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
