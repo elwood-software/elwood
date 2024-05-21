@@ -20,7 +20,7 @@ export function Sidebar(props: SidebarProps) {
             <Link
               to={`/workspace/${workspace.id}`}
               key={`SidebarNavWorkspace-${workspace.id}`}
-              className="block w-full pb-[50%] rounded-lg relative bg-background/50 no-drag"
+              className="block w-full pb-[50%] rounded-lg relative bg-background/50 no-drag border"
             >
               <div className="opacity-0" aria-hidden>
                 {nameParts.join('')}

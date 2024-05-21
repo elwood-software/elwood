@@ -14,18 +14,16 @@ export function Welcome() {
   useEffect(() => {
     const lastActiveId = window.elwood.store.workspaces.get('last_active_id')
 
-    console.log(lastActiveId)
-
     if (lastActiveId) {
       navigate(`/workspace/${lastActiveId}`)
     }
   }, [])
 
-  function goToWorkspaceAuth(anonKey: string, discoverData: JsonObject) {
+  function goToWorkspaceAuth(anonKey: string, workspaceName: string = 'New Workspace') {
     const workspaceId = window.elwood.ipc.sendSync('workspace', 'add', {
       url: value,
       anonKey,
-      discoverData
+      name: workspaceName
     })
 
     if (!workspaceId) {
@@ -38,23 +36,27 @@ export function Welcome() {
   const { isPending, mutate } = useMutation({
     async mutationFn() {
       const url = new URL(value)
-      url.pathname = '/functions/v1/elwood'
+      url.pathname = '/functions/v1/elwood/discover'
 
       try {
         const response = await fetch(url.toString(), {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            action: 'discover'
-          })
+          }
         })
 
-        const data = await response.json()
+        const data = (await response.json()) as {
+          anon_key: string
+          workspace_name: { default: string }
+        }
 
-        goToWorkspaceAuth(data.anonKey, data)
-      } catch (_) {
+        console.log(data)
+
+        goToWorkspaceAuth(data.anon_key, data.workspace_name.default)
+      } catch (err) {
+        console.log(err)
+
         setShowAnonKey(true)
         return
       }
@@ -65,7 +67,7 @@ export function Welcome() {
     e.preventDefault()
 
     if (anonKeyValue) {
-      goToWorkspaceAuth(anonKeyValue, {})
+      goToWorkspaceAuth(anonKeyValue)
       return
     }
 

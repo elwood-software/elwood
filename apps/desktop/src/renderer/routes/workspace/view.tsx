@@ -3,7 +3,6 @@ import { createHashRouter } from 'react-router-dom'
 import { dashboardRoutes, Router, ElwoodProvider, AuthForm } from '@elwood/react'
 import { ElwoodClient, User, createClient } from '@elwood/js'
 import { Spinner } from '@elwood/ui'
-import { useMutation } from '@tanstack/react-query'
 
 export type WorkspaceProps = {
   id: string
@@ -15,6 +14,7 @@ type Values = {
 }
 
 export default function Workspace(props: WorkspaceProps) {
+  const [workspaceName, setWorkspaceName] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [client, setClient] = useState<ElwoodClient | null>(null)
   const [user, setUser] = useState<User | null>(null)
@@ -29,7 +29,10 @@ export default function Workspace(props: WorkspaceProps) {
 
     if (!info) {
       setError('Workspace not found')
+      return
     }
+
+    setWorkspaceName(info.name)
 
     const client = createClient(info.url, info.anonKey)
 
@@ -67,7 +70,13 @@ export default function Workspace(props: WorkspaceProps) {
 
   if (client && !user) {
     return (
-      <div className="size-full flex items-center justify-center">
+      <div className="size-full flex flex-col items-center justify-center">
+        <header className="mb-12">
+          <h1 className="flex flex-col">
+            <span className="text-muted-foreground text-xl">Login to</span>
+            <span className="bold text-3xl">{workspaceName}</span>
+          </h1>
+        </header>
         <AuthForm
           loading={isPending}
           onSubmit={onSubmit}
@@ -85,16 +94,11 @@ export default function Workspace(props: WorkspaceProps) {
     )
   }
 
-  const router = createHashRouter([
-    ...dashboardRoutes,
-    {
-      path: '/'
-    }
-  ])
+  const router = createHashRouter([...dashboardRoutes])
 
   return (
     <div className="flex flex-row w-screen h-screen">
-      <ElwoodProvider workspaceName="poop" client={client}>
+      <ElwoodProvider workspaceName={workspaceName} client={client}>
         <Router router={router} />
       </ElwoodProvider>
     </div>

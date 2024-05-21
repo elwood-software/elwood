@@ -50,7 +50,7 @@ publish:
   provider: github
   owner: elwood-software
   repo: desktop
-  releaseType: prerelease
+  releaseType: draft
 protocols:
   - name: Elwood Desktop
     schemes:

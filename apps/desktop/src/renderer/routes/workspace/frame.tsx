@@ -40,8 +40,6 @@ export function WorkspaceFrame() {
       setIsLoading(false)
       webview.style.display = 'inline-flex'
       window.elwood.log('debug', 'webview loaded', { id: webViewId })
-
-      webview.openDevTools()
     })
 
     webview.addEventListener('did-fail-load', (err) => {
@@ -67,7 +65,7 @@ export function WorkspaceFrame() {
   return (
     <div className="w-full h-screen" ref={wrapper}>
       {isLoading && (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center size-full">
           <Spinner />
         </div>
       )}

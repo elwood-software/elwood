@@ -38,7 +38,7 @@ export function useRenderedBlob(
       const [_, pPrefix] = queryKey;
       const [pBucketId, ...pFilePath] = pPrefix.split('/');
       const r = await supabase.functions.invoke<UseRenderedBlobResultData>(
-        'render',
+        'elwood/render',
         {
           body: {
             bucket: pBucketId,

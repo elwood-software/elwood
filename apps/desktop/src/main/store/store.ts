@@ -1,4 +1,4 @@
-import type { ipcMain } from 'electron'
+import { ipcMain } from 'electron'
 import { join } from 'node:path'
 import { z } from 'zod'
 
@@ -54,12 +54,14 @@ export class Store {
           get: () => {
             return this.dbs[store].data[key]
           },
-          set(value) {
+          set: (value) => {
             this.dbs[store]
               .update((current) => {
                 current[key] = value
               })
-              .then(() => {})
+              .then(() => {
+                ipcMain.emit('electron-store-update', { store, key, value })
+              })
           }
         })
       }

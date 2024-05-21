@@ -19,7 +19,7 @@ export function attachIpc(store: Store, ipc: typeof ipcMain): void {
 
     switch (type) {
       case 'add': {
-        log.debug('Adding workspace', data.url, data.anonKey, data.discoverData.name)
+        log.debug('Adding workspace', data.url, data.anonKey, data.name)
 
         const workspaceId = randomUUID()
 
@@ -28,11 +28,13 @@ export function attachIpc(store: Store, ipc: typeof ipcMain): void {
             id: workspaceId,
             url: data.url,
             anonKey: data.anonKey,
-            name: data.discoverData.name
+            name: data.name
           }
         })
 
         log.debug('Workspace added', workspaceId)
+
+        store.workspaces.last_active_id = workspaceId
 
         event.returnValue = workspaceId
 

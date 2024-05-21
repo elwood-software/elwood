@@ -3,12 +3,16 @@ import { resolve } from 'node:path'
 
 import { createMainWindow, getCurrentMainWindow } from './windows/main'
 import { createStore, attachStoreToIpc } from './store/store'
-import { log } from './util'
+import { log, isDebug } from './util'
 import { attachIpc } from './ipc'
 
 log.info('Starting Elwood')
 
-app.setAsDefaultProtocolClient('elwood', process.execPath, [resolve(process.argv[1])])
+app.setAsDefaultProtocolClient(
+  'elwood',
+  process.execPath,
+  isDebug() ? [resolve(process.argv[1])] : undefined
+)
 
 const gotTheLock = app.requestSingleInstanceLock()
 

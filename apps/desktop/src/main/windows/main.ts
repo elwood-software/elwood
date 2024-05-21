@@ -19,26 +19,47 @@ export function getCurrentMainWindow(): BrowserWindow | null {
   return currentMainWindow
 }
 
-export async function createMainWindow(_store: Store): Promise<BrowserWindow> {
+export async function createMainWindow(store: Store): Promise<BrowserWindow> {
   log.info('Creating main window')
+
+  const { last_width, last_height, last_x, last_y } = store.settings
+  const optional = {}
+
+  if (last_x || last_y) {
+    optional['x'] = last_x
+    optional['y'] = last_y
+  }
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 1024,
+    width: last_width,
+    height: last_height,
     show: false,
     vibrancy: 'sidebar',
     autoHideMenuBar: true,
     titleBarStyle: 'hiddenInset',
     backgroundColor: 'rgba(0, 0, 0, 0)',
     transparent: true,
-    frame: false,
+    frame: true,
     ...(process.platform === 'linux' ? { icon } : {}),
+    ...optional,
     webPreferences: {
       webviewTag: true,
       preload: getRendererPreloadPath(),
       sandbox: false
     }
+  })
+
+  mainWindow.on('moved', () => {
+    const [x, y] = mainWindow.getPosition()
+    store.settings.last_x = x
+    store.settings.last_y = y
+  })
+
+  mainWindow.on('resized', () => {
+    const { width, height } = mainWindow.getBounds()
+    store.settings.last_width = width
+    store.settings.last_height = height
   })
 
   mainWindow.on('ready-to-show', () => {
