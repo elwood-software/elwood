@@ -1,8 +1,7 @@
 import { ipcMain } from 'electron'
+import { randomUUID } from 'node:crypto'
 import { log } from './util'
-
-import { getCurrentMainWindow } from './windows/main'
-import { createWorkspaceWindow } from './windows/workspace'
+import type { Store } from './store/store'
 
 export type LogEventData = {
   level: string
@@ -10,7 +9,7 @@ export type LogEventData = {
   data: any
 }
 
-export function attachIpc(ipc: typeof ipcMain): void {
+export function attachIpc(store: Store, ipc: typeof ipcMain): void {
   ipc.on('electron-log', async (_event, data: LogEventData) => {
     log[data.level](`[RENDER] ${data.message}`, data.data)
   })
@@ -20,19 +19,23 @@ export function attachIpc(ipc: typeof ipcMain): void {
 
     switch (type) {
       case 'add': {
-        const id = '1'
+        log.debug('Adding workspace', data.url, data.anonKey, data.discoverData.name)
 
-        const win = getCurrentMainWindow()!
-        const view = await createWorkspaceWindow(id, win)
+        const workspaceId = randomUUID()
 
-        // const { width, height } = win!.getBounds()
+        await store.merge('workspaces', 'workspaces', {
+          [workspaceId]: {
+            id: workspaceId,
+            url: data.url,
+            anonKey: data.anonKey,
+            name: data.discoverData.name
+          }
+        })
 
-        // view.setBackgroundColor('#fff')
-        // view.setVisible(true)
+        log.debug('Workspace added', workspaceId)
 
-        // console.log(win.contentView.children)
+        event.returnValue = workspaceId
 
-        event.returnValue = '1'
         break
       }
 

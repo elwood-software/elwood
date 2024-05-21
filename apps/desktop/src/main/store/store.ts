@@ -4,8 +4,9 @@ import { z } from 'zod'
 
 import { JSONFilePreset } from 'lowdb/node'
 import type { Low } from 'lowdb'
+import { JsonObject, invariant } from '@elwood/common'
 
-import { getElwoodHomeDir } from '../util'
+import { getElwoodHomeDir, log } from '../util'
 import { Settings, Workspaces, SettingsSchema, WorkspacesSchema } from './schema'
 
 type Stores = typeof Settings | typeof Workspaces
@@ -28,8 +29,8 @@ export class Store {
     [key in StoreName]: Low<z.infer<(typeof Stores)[key]>>
   }> = {}
 
-  settings: Partial<SettingsSchema> = {}
-  workspaces: Partial<WorkspacesSchema> = {}
+  settings: SettingsSchema = Settings.safeParse({}).data!
+  workspaces: WorkspacesSchema = Workspaces.safeParse({}).data!
 
   constructor() {}
 
@@ -44,26 +45,39 @@ export class Store {
         defaults
       )
 
-      this.dbs[store].write()
+      await this.dbs[store].write()
 
-      Object.keys(defaults).forEach((key) => {
-        Object.defineProperty(this.settings, key, {
+      for (const key in defaults) {
+        Object.defineProperty(this[store], key, {
           enumerable: true,
+          configurable: true,
           get: () => {
             return this.dbs[store].data[key]
           },
           set(value) {
-            this.dbs[store].update(() => {
-              return {
-                [key]: value
-              }
-            })
+            this.dbs[store]
+              .update((current) => {
+                current[key] = value
+              })
+              .then(() => {})
           }
         })
-      })
+      }
     }
 
     return this
+  }
+
+  async merge(store: StoreName, key: string, value: JsonObject) {
+    const db = this.dbs[store]
+    invariant(db, `Store ${store} does not exist`)
+
+    await db.update((current) => {
+      current[key] = {
+        ...current[key],
+        ...value
+      }
+    })
   }
 }
 

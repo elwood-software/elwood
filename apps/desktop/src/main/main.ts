@@ -8,8 +8,6 @@ import { attachIpc } from './ipc'
 
 log.info('Starting Elwood')
 
-attachIpc(ipcMain)
-
 app.setAsDefaultProtocolClient('elwood', process.execPath, [resolve(process.argv[1])])
 
 const gotTheLock = app.requestSingleInstanceLock()
@@ -37,6 +35,8 @@ if (!gotTheLock) {
     log.info('App is ready')
 
     const store = await createStore()
+
+    attachIpc(store, ipcMain)
     attachStoreToIpc(store, ipcMain)
 
     log.info('Store is ready')
@@ -45,7 +45,7 @@ if (!gotTheLock) {
 
     log.info('Main window is ready')
 
-    app.on('open-url', (event, url) => {
+    app.on('open-url', (_event, url) => {
       console.log(url)
     })
 

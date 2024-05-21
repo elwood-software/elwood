@@ -1,11 +1,14 @@
 import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 import { type RouteObject } from 'react-router-dom'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
+import { WorkspaceManagerProvider } from '../hooks/workspace-manager'
 import { Layout } from './layout'
-import { WorkspaceFrame } from './workspace-frame'
-import { AuthWorkspace } from './auth-workspace'
+import { WorkspaceFrame } from './workspace/frame'
 import { Welcome } from './welcome'
+
+const queryClient = new QueryClient()
 
 export default function App() {
   const routes: RouteObject[] = [
@@ -16,10 +19,6 @@ export default function App() {
           path: '/',
           element: <Welcome />,
           index: true
-        },
-        {
-          path: '/auth-workspace',
-          element: <AuthWorkspace />
         },
         {
           path: '/workspace',
@@ -34,7 +33,13 @@ export default function App() {
       ]
     }
   ]
-  const router = createHashRouter(routes)
+  const router = createHashRouter(routes, {})
 
-  return <RouterProvider router={router} />
+  return (
+    <WorkspaceManagerProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </WorkspaceManagerProvider>
+  )
 }

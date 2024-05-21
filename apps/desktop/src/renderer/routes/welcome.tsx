@@ -1,8 +1,9 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
+import type { JsonObject } from '@elwood/common'
 
-import { Logo, Button, Input, Card } from '@elwood/ui'
+import { Logo, Button, Input } from '@elwood/ui'
 
 export function Welcome() {
   const navigate = useNavigate()
@@ -10,13 +11,28 @@ export function Welcome() {
   const [anonKeyValue, setAnonKeyValue] = useState('')
   const [showAnonKey, setShowAnonKey] = useState(false)
 
-  function goToWorkspaceAuth() {
-    const params = new URLSearchParams({
+  useEffect(() => {
+    const lastActiveId = window.elwood.store.workspaces.get('last_active_id')
+
+    console.log(lastActiveId)
+
+    if (lastActiveId) {
+      navigate(`/workspace/${lastActiveId}`)
+    }
+  }, [])
+
+  function goToWorkspaceAuth(anonKey: string, discoverData: JsonObject) {
+    const workspaceId = window.elwood.ipc.sendSync('workspace', 'add', {
       url: value,
-      anonKey: anonKeyValue
+      anonKey,
+      discoverData
     })
 
-    navigate(`/auth-workspace?${params.toString()}`)
+    if (!workspaceId) {
+      throw new Error('Failed to add workspace')
+    }
+
+    navigate(`/workspace/${workspaceId}`)
   }
 
   const { isPending, mutate } = useMutation({
@@ -37,8 +53,7 @@ export function Welcome() {
 
         const data = await response.json()
 
-        setAnonKeyValue(data.anonKey)
-        goToWorkspaceAuth()
+        goToWorkspaceAuth(data.anonKey, data)
       } catch (_) {
         setShowAnonKey(true)
         return
@@ -50,28 +65,24 @@ export function Welcome() {
     e.preventDefault()
 
     if (anonKeyValue) {
-      goToWorkspaceAuth()
+      goToWorkspaceAuth(anonKeyValue, {})
       return
     }
 
     mutate()
   }
 
-  function addTest() {
-    const r = window.elwood.ipc.sendSync('workspace', 'add', {
-      poop: 1
-    })
-
-    console.log(r)
-  }
-
   return (
     <div className="bg-background/75 text-foreground">
       <div className="flex flex-col items-center justify-center h-screen p-12">
-        <Logo className="fill-foreground w-3/4 max-h-[40vh] mb-12" />
-        <Card className="w-full shadow-xl">
-          <div className="text-sm mb-3">Enter your Supabase API URL to get started...</div>
-          <form onSubmit={onSubmit} className="flex space-x-6 items-center">
+        <Logo className="fill-foreground size-[10vh] mb-6" />
+        <h1 className="text-3xl font-bold">Hello, Welcome to Elwood</h1>
+
+        <div className="w-full shadow-xl mt-12">
+          <div className="text-sm mb-3 ml-6 sr-only">
+            Enter your Supabase API URL to get started...
+          </div>
+          <form onSubmit={onSubmit} className="flex space-x-3 items-center">
             <Input
               required={true}
               placeholder="https://fasdakoaedkad.supabase.co"
@@ -94,12 +105,10 @@ export function Welcome() {
               Continue
             </Button>
           </form>
-        </Card>
-        <div className="text-xs opacity-20 mt-3">
+        </div>
+        <div className="fixed bottom-0 left-0 w-full text-center text-xs opacity-20 pb-3">
           &copy; {new Date().getFullYear()} Elwood Technology, LLC
         </div>
-
-        <button onClick={addTest}>Add Test</button>
       </div>
     </div>
   )

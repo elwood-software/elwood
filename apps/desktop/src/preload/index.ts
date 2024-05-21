@@ -1,14 +1,19 @@
-console.log('aaaa')
-
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { createStoresIpcRenderer } from '../main/store/renderer-api'
+import { getRendererHTMLPath, getRendererPreloadPath } from '../main/util'
 
 export type Channels = 'app' | 'workspace' | 'store'
 
 export const api = {
+  renderer: {
+    html: getRendererHTMLPath(),
+    preload: getRendererPreloadPath()
+  },
+
   store: createStoresIpcRenderer(ipcRenderer),
   log(level: 'debug' | 'info' | 'error', message: string, data?: any): void {
+    console.log('log', level, message, data)
     ipcRenderer.send('electron-log', { level, message, data })
   },
   ipc: {

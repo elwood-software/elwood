@@ -10,20 +10,19 @@ export const Settings = z.object({
 
 export type SettingsSchema = z.infer<typeof Settings>
 
-export const Workspaces = z
-  .object({
-    last_active_id: z.string(),
-    workspaces: z
-      .array(
-        z.object({
-          id: z.string(),
-          name: z.string(),
-          url: z.string(),
-          anonKey: z.string()
-        })
-      )
-      .default([])
-  })
-  .partial()
+export const Workspaces = z.object({
+  last_active_id: z.nullable(z.string()).default(null),
+  workspaces: z
+    .record(
+      z.string().uuid(),
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        url: z.string(),
+        anonKey: z.string()
+      })
+    )
+    .default({})
+})
 
 export type WorkspacesSchema = z.infer<typeof Workspaces>

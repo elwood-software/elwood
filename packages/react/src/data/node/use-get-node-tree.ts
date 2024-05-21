@@ -36,5 +36,6 @@ export async function getNodeTree(
   const result = await supabase.rpc('elwood_get_node_tree', {
     p_path: input.path,
   });
+
   return result.data as GetNodeTreeResult;
 }

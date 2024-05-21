@@ -1,4 +1,3 @@
-import { app } from 'electron'
 import { join } from 'node:path'
 import { mkdirSync } from 'node:fs'
 import logger from 'electron-log/main'
@@ -16,7 +15,20 @@ export const log = {
   logger
 }
 
+export function getRendererHTMLPath(): string {
+  if (process.env['ELECTRON_RENDERER_URL']) {
+    return process.env['ELECTRON_RENDERER_URL']
+  }
+
+  return join(__dirname, isDebug() ? '../renderer/index.html' : '../renderer/index.html')
+}
+
+export function getRendererPreloadPath(): string {
+  return join(__dirname, '../preload/index.mjs')
+}
+
 export function getElwoodHomeDir(...child: string[]): string {
+  const { app } = require('electron')
   const dir = join(app.getPath('home'), '.elwood', ...child)
   mkdirSync(dir, { recursive: true })
   return dir

@@ -8,12 +8,10 @@
  */
 
 import { shell, BrowserWindow } from 'electron'
-import { join } from 'path'
-import { is } from '@electron-toolkit/utils'
 
 import icon from '../../../resources/icon.png?asset'
 import { Store } from '../store/store'
-import { log, isDebug } from '../util'
+import { log, getRendererHTMLPath, getRendererPreloadPath } from '../util'
 
 let currentMainWindow: BrowserWindow | null = null
 
@@ -21,13 +19,13 @@ export function getCurrentMainWindow(): BrowserWindow | null {
   return currentMainWindow
 }
 
-export async function createMainWindow(store: Store): Promise<BrowserWindow> {
+export async function createMainWindow(_store: Store): Promise<BrowserWindow> {
   log.info('Creating main window')
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1024,
+    height: 1024,
     show: false,
     vibrancy: 'sidebar',
     autoHideMenuBar: true,
@@ -37,7 +35,8 @@ export async function createMainWindow(store: Store): Promise<BrowserWindow> {
     frame: false,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.mjs'),
+      webviewTag: true,
+      preload: getRendererPreloadPath(),
       sandbox: false
     }
   })
@@ -54,12 +53,12 @@ export async function createMainWindow(store: Store): Promise<BrowserWindow> {
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+  const url = getRendererHTMLPath()
+
+  if (url.startsWith('http')) {
+    mainWindow.loadURL(url)
   } else {
-    mainWindow.loadFile(
-      join(__dirname, isDebug() ? '../../renderer/index.html' : '../renderer/index.html')
-    )
+    mainWindow.loadFile(url)
   }
 
   log.info('Main window is loading')
