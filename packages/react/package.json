@@ -7,7 +7,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --external react",
     "clean": "rm -rf dist",
@@ -26,7 +28,7 @@
     "@elwood/js": "workspace:*",
     "@elwood/ui": "workspace:*",
     "@remix-run/router": "^1.16.1",
-    "@tanstack/react-query": "^5.36.2",
+    "@tanstack/react-query": "^5.37.1",
     "@uppy/core": "^3.11.3",
     "@uppy/dashboard": "^3.8.3",
     "@uppy/react": "^3.3.1",
