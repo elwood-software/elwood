@@ -66,7 +66,7 @@ export function useUploadButton(input: UseUploadButtonInput): JSX.Element {
   return (
     <>
       <input
-        className="fixed -top-96 -left-96"
+        className="fixed -top-[9999rem] -left-[9999rem]"
         multiple
         name={`UploadFileInput-${prefixAsString}`}
         onChange={onChange}

@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@elwood/common": "workspace:*",
+    "@elwood/js": "workspace:*",
+    "@elwood/react": "workspace:*",
     "@elwood/ui": "workspace:*",
     "@supabase/ssr": "^0.3.0",
     "autoprefixer": "^10.4.19",
@@ -21,6 +23,7 @@
     "postcss": "^8.4.38",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.23.1",
     "react-use": "^17.5.0",
     "tailwindcss": "^3.4.3",
     "zod": "^3.23.8"

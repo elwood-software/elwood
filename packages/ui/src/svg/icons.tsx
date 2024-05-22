@@ -59,6 +59,7 @@ export {
   BellRingIcon,
   ListIcon,
   XIcon,
+  ExternalLinkIcon,
 } from 'lucide-react';
 
 export const Icons: Record<string, LucideIcon> = {

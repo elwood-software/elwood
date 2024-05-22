@@ -4,7 +4,7 @@ import {MainLayout} from '@/components/layouts/main';
 import {PageLayout} from '@/components/layouts/page';
 import {useProviderContext} from '@/hooks/use-provider-context';
 
-const Home = lazy(() => import('./home'));
+import Home from './home';
 
 const NodeLayout = lazy(() => import('./node/layout'));
 const Tree = lazy(() => import('./node/tree'));
@@ -23,11 +23,7 @@ export const dashboardRoutes: RouteObject[] = [
       {
         path: '/',
         index: true,
-        element: (
-          <Suspense fallback={mainFallback}>
-            <Home />
-          </Suspense>
-        ),
+        element: <Home />,
       },
       {
         path: '/bookmarks',

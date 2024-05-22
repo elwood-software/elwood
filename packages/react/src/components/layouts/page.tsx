@@ -28,7 +28,7 @@ export function PageLayout(
 
   return (
     <>
-      <div className="flex flex-col min-h-0 h-screen w-full">
+      <div className="flex flex-col min-h-0 h-full w-full">
         {showHeader ? (
           <header className="flex items-center justify-between px-8 pt-4">
             <div>{headerLeft}</div>
