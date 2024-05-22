@@ -2,6 +2,7 @@
 
 export * from './components/auth/form';
 export * from './components/layouts/main';
+export * from './components/layouts/page';
 export * from './components/render';
 
 export * from './provider';

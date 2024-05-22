@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --splash-shadow: 0px 0px 121px 34px rgba(79, 72, 122, 0.5);
+}
+
+.dark {
+  --splash-shadow: 0px 0px 121px 34px rgba(79, 72, 122, 0.2);
+}
