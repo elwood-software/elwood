@@ -7,9 +7,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "files": ["dist/**"],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --external react",
     "clean": "rm -rf dist",
@@ -23,8 +21,8 @@
   },
   "dependencies": {
     "@elwood/common": "workspace:*",
-    "@supabase/postgrest-js": "^1.15.2",
-    "@supabase/supabase-js": "^2.43.2"
+    "@supabase/postgrest-js": "1.15.2",
+    "@supabase/supabase-js": "2.43.2"
   },
   "devDependencies": {
     "@elwood/eslint-config": "workspace:*",
