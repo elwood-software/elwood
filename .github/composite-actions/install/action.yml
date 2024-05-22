@@ -28,10 +28,13 @@ runs:
       with:
         node-version-file: "${{ inputs.working-directory }}/.node-version"
         cache: pnpm
+        cache-dependency-path: "${{ inputs.working-directory }}/pnpm-lock.yaml"
 
     - name: Install dependencies
       working-directory: ${{ inputs.working-directory }}
       shell: bash
+      env:
+        HUSKY_SKIP_HOOKS: "1"
       run: |
         corepack enable
-        pnpm i
+        pnpm i --ignore-scripts

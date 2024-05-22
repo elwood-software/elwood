@@ -31,5 +31,7 @@ export async function getNode(
 ): Promise<GetNodeResult | null> {
   const result = await supabase.rpc('elwood_get_node', {p_path: input.path});
 
+  console.log(result);
+
   return result.data as GetNodeResult | null;
 }

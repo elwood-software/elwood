@@ -5,10 +5,9 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter=./packages/* && turbo run build --filter=./apps/*",
+    "build": "turbo run build --filter=./packages/*",
     "clean": "turbo run clean",
-    "dev": "turbo run dev",
-    "dev:pkg": "turbo run dev --filter=./packages/*",
+    "dev": "turbo run dev --filter=./packages/*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format-check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
@@ -16,8 +15,7 @@
     "type-check": "turbo run type-check",
     "reset": "pnpm -s dlx rimraf -g **/.turbo **/dist **/node_modules ./node_modules **/tsconfig.tsbuildinfo **/*.zip **/*.log **/.DS_Store **/.next",
     "gen-db-types": "supabase gen types typescript --local > packages/common/src/types/database.d.ts",
-    "seed-storage": "./scripts/seed-storage.ts",
-    "prepare": "husky"
+    "seed-storage": "./scripts/seed-storage.ts"
   },
   "devDependencies": {
     "husky": "^9.0.11",
@@ -26,7 +24,7 @@
     "prettier-plugin-tailwindcss": "^0.5.14",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@9.1.1",
+  "packageManager": "pnpm@9.1.2",
   "engines": {
     "node": ">=20"
   },

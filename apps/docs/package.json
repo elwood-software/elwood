@@ -2,6 +2,7 @@
   "name": "@elwood/apps-docs",
   "version": "0.1.0",
   "private": true,
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -46,6 +47,6 @@
     "eslint-plugin-next": "^0.0.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
-    "sharp": "0.33.3"
+    "sharp": "0.33.4"
   }
 }

@@ -37,7 +37,7 @@ export default function AuthPage(): JSX.Element {
         email={undefined}
         errors={state.message ?? []}
         loading={loginIsLoading}
-        loginAction={loginAction}
+        loginAction={loginAction as () => Promise<void>}
       />
     </div>
   );

@@ -17,6 +17,7 @@ export type QueryCreator = KQueryCreator<DatabaseTables>;
 
 export type DatabaseTables = {
   access: AccessTable;
+  setting: SettingsTable;
 };
 
 export type AccessTable = {
@@ -39,3 +40,14 @@ export type AccessTable = {
 export type Access = Selectable<AccessTable>;
 export type NewAccess = Insertable<AccessTable>;
 export type UpdateAccess = Updateable<AccessTable>;
+
+export type SettingsTable = {
+  name: string;
+  value: string;
+  created_at: ColumnType<Date, never, never>;
+  updated_at: ColumnType<Date, never, never>;
+};
+
+export type Setting = Selectable<SettingsTable>;
+export type NewSetting = Insertable<SettingsTable>;
+export type UpdateSetting = Updateable<SettingsTable>;

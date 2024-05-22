@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Elwood</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+    /> -->
+    <script>
+      const log = typeof window.elwood === 'undefined' ? console.log : window.elwood.log
+
+      window.addEventListener('error', (err) => {
+        log('error', 'window error rendering', err)
+        document.body.style.visibility = 'visible'
+        document.body.innerHTML = document.getElementById('fatal-error-template').innerHTML
+
+        if (typeof err != undefined) {
+          document.getElementById('error-message').innerText =
+            `Error: ${err.message}\nLine Number: ${err.lineno}\nFile: ${err.filename}`
+        }
+
+        document.querySelector('.fatal-error .btn').addEventListener('click', (e) => {
+          e.preventDefault()
+          window.location = window.location
+        })
+      })
+    </script>
+    <style type="text/css">
+      html,
+      body {
+        background-color: transparent;
+      }
+      .fatal-error {
+        background-color: #dc2626;
+        color: #450a0a;
+        position: fixed;
+        z-index: 99999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .fatal-error svg {
+        width: 15vw;
+        height: 15vh;
+        margin-bottom: 1rem;
+      }
+      .fatal-error h1 {
+        font-size: xx-large;
+        font-weight: bold;
+      }
+      .fatal-error p {
+        font-size: large;
+        text-align: center;
+        max-width: 75vw;
+        margin-bottom: 2rem;
+      }
+      .fatal-error .btn {
+        background-color: #450a0a;
+        color: #fecaca;
+        padding: 1rem 2rem;
+        border-radius: 0.25rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+      #error-message {
+        border: solid 1px #450a0a;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        font-size: small;
+        margin-top: 2rem;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body class="overflow-hidden w-screen h-screen bg-transparent">
+    <div class="w-screen h-screen" id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+
+    <template id="fatal-error-template">
+      <div class="fatal-error just">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-circle-x"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="m15 9-6 6" />
+          <path d="m9 9 6 6" />
+        </svg>
+        <h1>Fatal Error</h1>
+        <p>
+          We are very embarrassed, but an error occurred while we tried to load the application. We
+          have sent a report to our team, but if you'd like to send more information to help us
+          debug, we would be eternally grateful.
+        </p>
+        <p>
+          <a class="btn" href="#">Reload</a>
+        </p>
+
+        <div id="error-message"></div>
+      </div>
+    </template>
+  </body>
+</html>

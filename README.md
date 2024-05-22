@@ -15,13 +15,13 @@
 - [x] Real-time, multi-user collaboration
 - [x] Simple user management
 - [x] File previews for images, videos, and documents (text, pdf, markdown)
+- [x] Desktop app
+- [ ] Mobile app
 - [ ] Public link sharing
 - [ ] Role-based access control (RBAC)
 - [ ] Unified search with external providers (S3, Dropbox, Box, Google Drive, etc)
 - [ ] AI chat based file manager assistant
 - [ ] Zero knowledge, end-to-end encrypted file storage
-- [ ] Desktop app
-- [ ] Mobile app
 
 <p>Elwood is currently in public <strong>BETA</strong>. We are actively developing and improving the code & documentation. If you have any questions, please reach out to us at <a href="mailto:hello@elwood.software">hello@elwood.software</a>.</p>
 

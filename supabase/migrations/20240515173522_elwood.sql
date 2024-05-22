@@ -30,3 +30,7 @@ lateral (
 ) resp(contents);
 
 create extension "elwood-supabase";
+
+
+insert into elwood.setting (name, value) values ('workspace_name', json_build_object('default', 'Dunder Mifflin Paper Company'))
+ON CONFLICT (name) DO UPDATE SET value = json_build_object('default', 'Dunder Mifflin Paper Company');
