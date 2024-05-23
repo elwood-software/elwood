@@ -10,7 +10,7 @@ export default function Page() {
     <div className="m-auto container min-h-screen flex flex-col">
       <main className="flex-grow">
         <header className="flex flex-col items-center justify-center">
-          <h1 className="size-24 mt-24">
+          <h1 className="size-24 md:mt-12 mt-24">
             <Link href="/">
               <Logo className="size-full fill-brand dark:fill-current" />
               <span className="sr-only">Elwood</span>
@@ -29,7 +29,7 @@ export default function Page() {
               variant="default"
               size="lg"
               href="/desktop/download"
-              className="w-full md:w-auto">
+              className="w-full md:w-auto hidden md:inline-flex">
               Download for Desktop
             </Button>
             <Button
@@ -63,14 +63,14 @@ export default function Page() {
               <ExternalLinkIcon className="size-[1em] inline ml-1" />
             </Link>
           </header>
-          <div className="h-[50vh] w-full flex flex-row overflow-hidden relative">
+          <div className="h-[80vh] w-full flex flex-row overflow-hidden relative">
             <NotMobile>
               <Demo />
             </NotMobile>
           </div>
         </div>
       </main>
-      <footer className="text-center text-muted-foreground text-xs py-2">
+      <footer className="text-center text-muted-foreground/50 text-xs pb-2 pt-12">
         &copy; The Elwood Technology Company
       </footer>
     </div>

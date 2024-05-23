@@ -10,6 +10,7 @@ import {Spinner} from '@elwood/ui';
 import {ProviderContext, type ProviderContextValue} from '@/context';
 import {NoAccess} from '@/components/no-access';
 import {defaultRenders} from '@/renderer/default-renderers';
+import {MainLayout} from '@/components/layouts/main';
 
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
@@ -85,7 +86,7 @@ export function ElwoodProvider(
   }
 
   if (member === null) {
-    return <Spinner full />;
+    return <MainLayout title={props.workspaceName} loading={true} />;
   }
 
   return (
