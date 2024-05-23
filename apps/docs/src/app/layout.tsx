@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import {Providers} from '@/app/providers';
 import {Layout} from '@/components/Layout';
 
+import '@elwood/ui/style.css';
 import '@/styles/tailwind.css';
 
 const inter = Inter({

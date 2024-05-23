@@ -8,6 +8,11 @@ export const navigation = [
     ],
   },
   {
+    title: 'Desktop',
+
+    links: [{title: 'Install', href: '/docs/desktop'}],
+  },
+  {
     title: 'Development',
 
     links: [

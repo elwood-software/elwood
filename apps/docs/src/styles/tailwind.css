@@ -2,9 +2,12 @@
 @import './prism.css';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import '@elwood/ui/style.css';
 
 @layer base {
+  * {
+    @apply border-border;
+  }
+
   [inert] ::-webkit-scrollbar {
     display: none;
   }

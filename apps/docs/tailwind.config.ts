@@ -34,6 +34,7 @@ export default {
       maxWidth: {
         '8xl': '88rem',
       },
+      colors: themeExtend.colors,
     },
   },
   plugins: [...Array.from(plugins as PluginCreator<any>[]), typographyPlugin],
