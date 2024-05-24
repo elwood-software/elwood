@@ -1,5 +1,8 @@
-CREATE SCHEMA IF NOT EXISTS "local_only";
+insert into elwood.setting (name, value) values ('workspace_name', json_build_object('default', 'Dunder Mifflin Paper Company'))
+ON CONFLICT (name) DO UPDATE SET value = json_build_object('default', 'Dunder Mifflin Paper Company');
 
+
+CREATE SCHEMA IF NOT EXISTS "local_only";
 
 CREATE OR REPLACE FUNCTION "local_only".create_user(
   user_id uuid, 
@@ -91,7 +94,10 @@ DECLARE
     user_id_two uuid;
     user_id_three uuid;
     user_id_four uuid;
+    x uuid;
 BEGIN
+
+  truncate table auth.users CASCADE;
 
   -- create super admin
   user_id := local_only.create_user('48ee2fe0-e702-4ff1-a5e8-7461ef8711e0', 'super_admin@elwood.local', 'admin', 'super_admin');
@@ -105,8 +111,12 @@ BEGIN
   user_id_three := local_only.create_user('fe636a7f-e263-4392-9366-5a86e9b75846', 'member@elwood.local', 'member', '');
   INSERT INTO elwood.member ("user_id", "username", "display_name") VALUES (user_id_three, 'member', 'Basic Member');
 
+  -- create member
+  user_id_four := local_only.create_user(gen_random_uuid(), 'member_ro@elwood.local', 'member_ro', '');
+  INSERT INTO elwood.member ("user_id", "username", "display_name", "role") VALUES (user_id_four, 'member_ro', 'Basic RO Member', 'MEMBER_RO');
+
   -- not a member
-  user_id_three := local_only.create_user(gen_random_uuid(), 'no_member@elwood.local', 'no_member', '');
+  x := local_only.create_user(gen_random_uuid(), 'no_member@elwood.local', 'no_member', '');
 
 
 END $$;
@@ -159,7 +169,7 @@ CREATE POLICY "select_for_objects"
 ON storage.objects
 FOR SELECT
 USING (
-  auth.role() = 'authenticated'
+  auth.role() = 'authenticated' 
 );
 
 DROP POLICY IF EXISTS "insert_for_objects" on "storage"."objects";
@@ -167,5 +177,5 @@ CREATE POLICY "insert_for_objects"
 ON storage.objects
 FOR INSERT
 WITH CHECK (
-  auth.role() = 'authenticated'
+  auth.role() = 'authenticated' AND elwood.is_a_member(true)
 );

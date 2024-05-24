@@ -80,6 +80,9 @@ export function useSidebarFooter(): JSX.Element {
             name: item.name,
             size: item.data.size,
             type: item.data.type,
+            error: uploadErrorIds.includes(item.id)
+              ? 'Unable to upload file.'
+              : undefined,
           };
         }),
       }));
@@ -95,9 +98,10 @@ export function useSidebarFooter(): JSX.Element {
 
     function onError(file: unknown, error: Error): void {
       const id = (file as {id: string}).id;
+      const state = uploadManager?.getFile(id);
 
       if (!uploadErrorIds.includes(id)) {
-        toast(`Upload error: ${error.message}`, {
+        toast(`Unable to upload file "${state?.name ?? 'unknown'}"`, {
           type: 'error',
           duration: 5000,
         });

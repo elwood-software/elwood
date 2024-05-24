@@ -19,7 +19,12 @@ export interface UseCreateFolderButtonInput
 export function useCreateFolderButton(
   input: UseCreateFolderButtonInput,
 ): JSX.Element {
-  const {prefix, children = 'Create Folder', ...buttonProps} = input;
+  const {
+    prefix,
+    children = 'Create Folder',
+    onOpenFolder,
+    ...buttonProps
+  } = input;
   const [isLoading, setIsLoading] = useState(false);
   const action = useCreateNode();
   const [createdNodes, setCreatedNodes] = useState<GetNodeResult[]>([]);
@@ -50,7 +55,7 @@ export function useCreateFolderButton(
             if (toastId) {
               toast.dismiss(toastId);
             }
-            input.onOpenFolder([...result.node.prefix, value].join('/'));
+            onOpenFolder([...result.node.prefix, value].join('/'));
           },
         },
       });
