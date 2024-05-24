@@ -4,7 +4,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
     "build": "tsup",
     "watch": "tsup --watch",
@@ -26,6 +28,6 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@types/react": "^18.3.2"
+    "@types/react": "^18.3.3"
   }
 }

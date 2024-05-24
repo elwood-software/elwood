@@ -15,25 +15,27 @@ export function MainLayout(
   const {children} = props;
 
   return (
-    <>
-      <div className="bg-sidebar border-r w-[300px] flex-shrink-0 flex flex-col justify-between">
-        <header className="flex items-center justify-between text-lg border-b px-6 py-4">
-          <div className="flex-grow font-bold">{props.title}</div>
-          {props.titleActions}
-        </header>
-        <div className="flex-grow overflow-auto px-6">{props.sidebar}</div>
-        {props.sidebarFooter ? (
-          <footer className="flex flex-col">{props.sidebarFooter}</footer>
-        ) : null}
-      </div>
-
-      {children ? (
-        children
-      ) : (
-        <div className="flex items-center justify-center w-full">
-          <Spinner />
+    <div className="w-full h-full grid grid-rows-[60px_auto]">
+      <header className="flex items-center justify-between text-lg border-b px-6 py-2">
+        <div className="flex-grow font-bold">{props.title}</div>
+        {props.titleActions}
+      </header>
+      <div className="flex flex-row w-full h-full">
+        <div className="bg-sidebar border-r w-[300px] flex-shrink-0 flex flex-col justify-between">
+          <div className="flex-grow overflow-auto px-6">{props.sidebar}</div>
+          {props.sidebarFooter ? (
+            <footer className="flex flex-col">{props.sidebarFooter}</footer>
+          ) : null}
         </div>
-      )}
-    </>
+
+        {children ? (
+          children
+        ) : (
+          <div className="flex items-center justify-center w-full">
+            <Spinner />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
