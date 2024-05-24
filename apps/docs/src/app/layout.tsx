@@ -3,6 +3,7 @@ import {Inter} from 'next/font/google';
 import localFont from 'next/font/local';
 import {cookies} from 'next/headers';
 import clsx from 'clsx';
+import {Analytics} from '@vercel/analytics/react';
 
 import {Providers} from '@/app/providers';
 import {Layout} from '@/components/Layout';
@@ -49,6 +50,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <Providers>
           <Layout>{children}</Layout>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
