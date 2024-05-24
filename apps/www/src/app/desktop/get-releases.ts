@@ -1,10 +1,8 @@
-import {type NextRequest} from 'next/server';
 import type {JsonObject} from '@elwood/common';
 
 type Platform = 'mac' | 'win' | 'linux';
 
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
+export async function getReleases(searchParams: URLSearchParams) {
   const p = (searchParams.get('p') ?? 'mac') as Platform;
   const a = searchParams.get('a') ?? 'default';
   const f = searchParams.get('f') ?? 'zip';
@@ -67,18 +65,11 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  if (request.headers.get('accept') === 'application/json') {
-    return Response.json({
-      v: body[0].tag_name,
-      urls,
-    });
-  }
-
   const url = urls[p][a][f] ?? null;
 
-  if (url) {
-    return Response.redirect(url, 302);
-  }
-
-  return Response.redirect('/desktop?error=unknown', 302);
+  return {
+    url,
+    v: body[0].tag_name,
+    urls,
+  };
 }

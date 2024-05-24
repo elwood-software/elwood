@@ -8,6 +8,7 @@ import {
 import {Button, type ButtonProps, type ButtonButtonProps} from '@elwood/ui';
 import {noOp} from '@elwood/common';
 import {useProviderContext} from '../use-provider-context';
+import {useIsCurrentMemberReadOnly} from '../use-current-member';
 
 export interface UseUploadButtonInput
   extends Omit<ButtonProps, 'prefix' | 'href' | 'onClick' | 'type' | 'ref'> {
@@ -19,6 +20,7 @@ export function useUploadButton(input: UseUploadButtonInput): JSX.Element {
   const ref = useRef<HTMLInputElement>(null);
   const {uploadManager} = useProviderContext();
   const [isLoading, setIsLoading] = useState(false);
+  const isReadOnly = useIsCurrentMemberReadOnly();
   const prefixAsString = prefix.join('/');
 
   useEffect(() => {
@@ -61,6 +63,11 @@ export function useUploadButton(input: UseUploadButtonInput): JSX.Element {
     uploadManager?.upload().then(noOp).catch(noOp).finally(noOp);
 
     setIsLoading(false);
+  }
+
+  // if the member role ends in _RO, don't let them upload
+  if (isReadOnly) {
+    return <></>;
   }
 
   return (

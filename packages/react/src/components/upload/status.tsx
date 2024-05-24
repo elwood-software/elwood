@@ -11,7 +11,7 @@ export interface UploadStatusProps {
 }
 
 export function UploadStatus(props: UploadStatusProps): JSX.Element {
-  const {activeUploadName = '', activeUploads = 0, totalUploads = 0} = props;
+  const {activeUploadName = '', activeUploads = 0, totalUploads = 1} = props;
 
   const active =
     activeUploads > 1
@@ -32,7 +32,7 @@ export function UploadStatus(props: UploadStatusProps): JSX.Element {
           variant="secondary"
           className={uploadClassName}
           onClick={props.onUploadsClick}>
-          <span className="absolute -top-2 -left-2 flex border-4 border-background rounded-full z-10">
+          <span className="flex border-4 border-background rounded-full z-10">
             <span className="flex h-5 w-5">
               {activeUploads > 0 && (
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-75" />

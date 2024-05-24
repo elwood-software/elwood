@@ -9,6 +9,7 @@ import {
 import {invariant, type GetNodeResult} from '@elwood/common';
 import {CreateFolderDialog} from '@/components/files/create-folder-dialog';
 import {useCreateNode} from '@/data/node/use-create-node';
+import {useIsCurrentMemberReadOnly} from '../use-current-member';
 
 export interface UseCreateFolderButtonInput
   extends Omit<ButtonProps, 'prefix' | 'href' | 'onClick' | 'type' | 'ref'> {
@@ -19,12 +20,18 @@ export interface UseCreateFolderButtonInput
 export function useCreateFolderButton(
   input: UseCreateFolderButtonInput,
 ): JSX.Element {
-  const {prefix, children = 'Create Folder', ...buttonProps} = input;
+  const {
+    prefix,
+    children = 'Create Folder',
+    onOpenFolder,
+    ...buttonProps
+  } = input;
   const [isLoading, setIsLoading] = useState(false);
   const action = useCreateNode();
   const [createdNodes, setCreatedNodes] = useState<GetNodeResult[]>([]);
   const [value, setValue] = useState('');
   const toast = useSonnerFn();
+  const isReadOnly = useIsCurrentMemberReadOnly();
 
   async function onSubmit(e: FormEvent): Promise<void> {
     e.preventDefault();
@@ -50,7 +57,7 @@ export function useCreateFolderButton(
             if (toastId) {
               toast.dismiss(toastId);
             }
-            input.onOpenFolder([...result.node.prefix, value].join('/'));
+            onOpenFolder([...result.node.prefix, value].join('/'));
           },
         },
       });
@@ -61,6 +68,11 @@ export function useCreateFolderButton(
     } finally {
       setIsLoading(false);
     }
+  }
+
+  // if the member role ends in _RO, don't let them upload
+  if (isReadOnly) {
+    return <></>;
   }
 
   return (

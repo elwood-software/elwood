@@ -160,7 +160,7 @@ export type Database = {
           created_at: string | null;
           display_name: string | null;
           id: string | null;
-          role: 'ADMIN' | 'MANAGER' | 'MEMBER' | null;
+          role: 'ADMIN' | 'MANAGER' | 'MEMBER' | 'MEMBER_RO' | null;
           type: Database['public']['Enums']['elwood_member_type'] | null;
           updated_at: string | null;
           user_id: string | null;
@@ -171,7 +171,7 @@ export type Database = {
           created_at?: string | null;
           display_name?: string | null;
           id?: string | null;
-          role?: 'ADMIN' | 'MANAGER' | 'MEMBER' | null;
+          role?: 'ADMIN' | 'MANAGER' | 'MEMBER' | 'MEMBER_RO' | null;
           type?: Database['public']['Enums']['elwood_member_type'] | null;
           updated_at?: string | null;
           user_id?: string | null;
@@ -182,7 +182,7 @@ export type Database = {
           created_at?: string | null;
           display_name?: string | null;
           id?: string | null;
-          role?: 'ADMIN' | 'MANAGER' | 'MEMBER' | null;
+          role?: 'ADMIN' | 'MANAGER' | 'MEMBER' | 'MEMBER_RO' | null;
           type?: Database['public']['Enums']['elwood_member_type'] | null;
           updated_at?: string | null;
           user_id?: string | null;
