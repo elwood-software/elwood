@@ -35,6 +35,8 @@ export type ButtonProps = (ButtonButtonProps | ButtonAnchorProps) & {
     | 'brand'
     | 'destructive'
     | 'outline'
+    | 'outline-secondary'
+    | 'outline-muted'
     | 'secondary'
     | 'ghost'
     | 'link';
@@ -55,6 +57,10 @@ export const buttonVariants = cva(
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
           'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        'outline-secondary':
+          'border border-secondary bg-background hover:bg-accent hover:text-accent-foreground',
+        'outline-muted':
+          'border border-muted text-muted-foreground bg-background hover:bg-accent hover:text-accent-foreground',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',

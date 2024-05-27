@@ -4,6 +4,9 @@ module.exports = {
   content: ['./src/**/*.{ts,tsx}'],
   prefix: '',
   theme: {
+    fontFamily: {
+      sans: '-apple-system, "system-ui", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+    },
     container: {
       center: true,
       padding: '2rem',
@@ -72,5 +75,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('tailwindcss/plugin')(({addVariant}) => {
+      addVariant('search-cancel', '&::-webkit-search-cancel-button');
+    }),
+  ],
 };

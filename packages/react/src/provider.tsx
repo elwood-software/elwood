@@ -11,6 +11,7 @@ import {ProviderContext, type ProviderContextValue} from '@/context';
 import {NoAccess} from '@/components/no-access';
 import {defaultRenders} from '@/renderer/default-renderers';
 import {MainLayout} from '@/components/layouts/main';
+import {Header} from './components/header/header';
 
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
@@ -86,7 +87,12 @@ export function ElwoodProvider(
   }
 
   if (member === null) {
-    return <MainLayout title={props.workspaceName} loading={true} />;
+    return (
+      <MainLayout
+        header={<Header workspaceName={props.workspaceName} />}
+        loading={true}
+      />
+    );
   }
 
   return (

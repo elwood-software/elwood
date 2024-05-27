@@ -3,6 +3,7 @@ import {type RouteObject} from 'react-router-dom';
 import {MainLayout} from '@/components/layouts/main';
 import {PageLayout} from '@/components/layouts/page';
 import {useProviderContext} from '@/hooks/use-provider-context';
+import {Header} from '@/components/header/header';
 
 import Home from './home';
 
@@ -80,5 +81,7 @@ export const dashboardRoutes: RouteObject[] = [
 
 function MainFallback(): JSX.Element {
   const {workspaceName} = useProviderContext();
-  return <MainLayout title={workspaceName} loading />;
+  return (
+    <MainLayout header={<Header workspaceName={workspaceName} />} loading />
+  );
 }

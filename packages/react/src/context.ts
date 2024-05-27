@@ -10,6 +10,7 @@ export interface ProviderContextValue {
   uploadManager: Uppy | null;
   member: MemberRecord;
   renderers?: Renderer[];
+  onLogout(): void;
 }
 
 export const ProviderContext = createContext<ProviderContextValue | null>(null);

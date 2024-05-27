@@ -9,7 +9,6 @@ import {useProviderContext} from '@/hooks/use-provider-context';
 
 export default function FilesHome(): JSX.Element {
   const {member} = useProviderContext();
-  const MainLayout = useMainLayout();
 
   const query = useGetNode({path: []});
   const buckets = toArray(query.data?.children);
@@ -40,8 +39,9 @@ export default function FilesHome(): JSX.Element {
     </ul>
   );
 
-  return (
-    <MainLayout sidebar={sidebar}>
+  return useMainLayout({
+    sidebar,
+    children: (
       <PageLayout largeTitle={`Hello, ${member.display_name ?? ''}`}>
         <div className="py-6">
           <div>
@@ -51,6 +51,6 @@ export default function FilesHome(): JSX.Element {
           </div>
         </div>
       </PageLayout>
-    </MainLayout>
-  );
+    ),
+  });
 }

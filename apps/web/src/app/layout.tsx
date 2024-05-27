@@ -4,7 +4,7 @@ import {cookies} from 'next/headers';
 import {ElwoodThemeProvider} from '@elwood/ui';
 
 import './global.css';
-import '@elwood/ui/style.css';
+import '@elwood/ui/dist/style.css';
 
 export const metadata: Metadata = {
   title: 'Elwood',

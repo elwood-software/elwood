@@ -59,6 +59,7 @@ export {
   BellRingIcon,
   ListIcon,
   XIcon,
+  SearchIcon,
   ExternalLinkIcon,
 } from 'lucide-react';
 

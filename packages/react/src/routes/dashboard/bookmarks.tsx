@@ -9,7 +9,6 @@ import {createNodeLink} from '@/components/link';
 export default function Bookmarks(): JSX.Element {
   useTitle('Bookmarks | Elwood');
 
-  const MainLayout = useMainLayout({showBucketsSidebar: true});
   const query = useFollows({type: 'SAVE'});
   const items = toArray(query.data).map(item => {
     const parts = (item.object_name ?? '').split('/');
@@ -55,13 +54,14 @@ export default function Bookmarks(): JSX.Element {
     }),
   }));
 
-  return (
-    <MainLayout>
+  return useMainLayout({
+    showBucketsSidebar: true,
+    children: (
       <PageLayout largeTitle="Bookmarks">
         <div className="border rounded">
           <FilesTable nodes={nodes} />
         </div>
       </PageLayout>
-    </MainLayout>
-  );
+    ),
+  });
 }
