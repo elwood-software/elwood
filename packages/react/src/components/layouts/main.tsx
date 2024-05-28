@@ -15,7 +15,7 @@ export function MainLayout(
 
   return (
     <div className="w-full h-full grid grid-rows-[60px_auto]">
-      <div className="border-b h-full">{props.header}</div>
+      <div className="border-b h-full bg-black">{props.header}</div>
       <div className="flex flex-row w-full h-full">
         <div className="bg-sidebar border-r w-[300px] flex-shrink-0 flex flex-col justify-between">
           <div className="flex-grow overflow-auto px-6">{props.sidebar}</div>

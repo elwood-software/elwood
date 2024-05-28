@@ -6,8 +6,8 @@ import {useProviderContext} from '@/hooks/use-provider-context';
 import {Header} from '@/components/header/header';
 
 import Home from './home';
+import NodeLayout from './node/layout';
 
-const NodeLayout = lazy(() => import('./node/layout'));
 const Tree = lazy(() => import('./node/tree'));
 const Blob = lazy(() => import('./node/blob'));
 const Create = lazy(() => import('./node/new'));
