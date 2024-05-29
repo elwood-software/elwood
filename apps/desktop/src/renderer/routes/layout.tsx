@@ -8,7 +8,7 @@ export function Layout() {
 
   return (
     <div className="grid grid-cols-[80px_auto] w-full h-full">
-      <div className="pt-10 px-3 drag bg-background/75">{sidebar}</div>
+      <div className="pt-10 px-3 drag bg-background/75 border-r">{sidebar}</div>
       <div className="bg-background">
         <Outlet />
       </div>

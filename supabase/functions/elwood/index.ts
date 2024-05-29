@@ -5,11 +5,13 @@ import {addCorsHeaders} from '../_shared/cors.ts';
 
 import * as discover from './handlers/discover.ts';
 import * as render from './handlers/render.ts';
+import * as search from './handlers/search.ts';
 
 const router = new Router();
 
 router.get('/elwood/discover', discover.handler);
 router.post('/elwood/render', render.handler);
+router.post('/elwood/search', search.handler);
 
 const app = new Application();
 

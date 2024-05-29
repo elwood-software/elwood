@@ -5,8 +5,8 @@ import {useSearchParams} from 'next/navigation';
 
 import {type ElwoodClient} from '@elwood/js';
 import {Render, useRenderers} from '@elwood/react';
-import {ElwoodProvider} from '@elwood/react';
 import {createClient} from '@/utils/supabase/client';
+import {Provider} from '../../../provider';
 import {default as PageLoading} from './loading';
 
 export default function RenderIframePage(): JSX.Element {
@@ -40,7 +40,7 @@ export default function RenderIframePage(): JSX.Element {
   }
 
   return (
-    <ElwoodProvider workspaceName="Hello" client={client}>
+    <Provider client={client}>
       <Render
         iframe={true}
         path={path}
@@ -48,6 +48,6 @@ export default function RenderIframePage(): JSX.Element {
         renderer={renderer}
         rendererParams={{}}
       />
-    </ElwoodProvider>
+    </Provider>
   );
 }

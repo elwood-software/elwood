@@ -14,7 +14,5 @@ export default async function AuthenticatedLayout(
     return <AuthPage />;
   }
 
-  return (
-    <div className="flex flex-row w-screen h-screen">{props.children}</div>
-  );
+  return <>{props.children}</>;
 }

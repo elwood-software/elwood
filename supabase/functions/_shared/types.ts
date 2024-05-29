@@ -18,6 +18,8 @@ export type QueryCreator = KQueryCreator<DatabaseTables>;
 export type DatabaseTables = {
   access: AccessTable;
   setting: SettingsTable;
+  objects: ObjectsTable;
+  buckets: BucketsTable;
 };
 
 export type AccessTable = {
@@ -51,3 +53,18 @@ export type SettingsTable = {
 export type Setting = Selectable<SettingsTable>;
 export type NewSetting = Insertable<SettingsTable>;
 export type UpdateSetting = Updateable<SettingsTable>;
+
+export type BucketsTable = {
+  id: string;
+  name: string;
+};
+
+export type ObjectsTable = {
+  id: string;
+  bucket_id: string;
+  name: string;
+};
+
+export type Object = Selectable<ObjectsTable>;
+export type NewObject = Insertable<ObjectsTable>;
+export type UpdateObject = Updateable<ObjectsTable>;

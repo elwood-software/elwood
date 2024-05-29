@@ -29,6 +29,7 @@ export const Main: Story = {
             Click me
           </Button>
           <HeaderUserMenu
+            avatarUrl={null}
             name="Travis Kuhl"
             userName="travis"
             items={[

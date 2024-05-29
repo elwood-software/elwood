@@ -13,7 +13,7 @@
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
-    "@algolia/autocomplete-core": "^1.17.1",
+    "@algolia/autocomplete-core": "^1.17.2",
     "@elwood/ui": "workspace:*",
     "@headlessui/react": "^2.0.4",
     "@markdoc/markdoc": "^0.4.0",

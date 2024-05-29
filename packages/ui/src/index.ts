@@ -2,6 +2,8 @@ export * from './components/button/button';
 export * from './components/avatar/avatar';
 export * from './components/tooltip/tooltip';
 export * from './components/dropdown-menu/drop-menu';
+export * as DropdownMenuBase from './components/dropdown-menu/dropdown-menu-base';
+
 export * from './components/alert-dialog/alert-dialog';
 export * from './components/progress/progress';
 export * from './components/spinner/spinner';

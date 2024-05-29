@@ -98,7 +98,7 @@ export default function Workspace(props: WorkspaceProps) {
 
   return (
     <div className="flex flex-row w-screen h-screen">
-      <ElwoodProvider workspaceName={workspaceName} client={client}>
+      <ElwoodProvider workspaceName={workspaceName} client={client} onLogout={() => {}}>
         <Router router={router} />
       </ElwoodProvider>
     </div>

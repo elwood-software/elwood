@@ -1,17 +1,24 @@
-import {useState, type PropsWithChildren, useMemo} from 'react';
+import {useState, type PropsWithChildren, useMemo, useEffect} from 'react';
+import {useDebounce} from 'react-use';
+import {
+  FolderIcon,
+  FileIcon,
+  useTheme,
+  Button,
+  BookMarkedIcon,
+} from '@elwood/ui';
 
 import {useProviderContext} from '@/hooks/use-provider-context';
 import {MainLayout, type MainLayoutProps} from '@/components/layouts/main';
 
 import {Link} from '@/components/link';
 import {Header, HeaderProps} from '@/components/header/header';
-
+import {HeaderSearch, HeaderSearchProps} from '@/components/header/search';
 import {HeaderUserMenu} from '@/components/header/user-menu';
 
+import {useSearch} from '@/data/search/use-search';
 import {useSidebarFooter} from './use-sidebar-footer';
-import {HeaderSearch} from '@/components/header/search';
 import {useCurrentMember} from '../use-current-member';
-import {useTheme} from '@elwood/ui';
 
 export type UseMainLayoutInput = PropsWithChildren<
   MainLayoutProps & {
@@ -23,16 +30,46 @@ export type UseMainLayoutInput = PropsWithChildren<
 export function useMainLayout(
   input: PropsWithChildren<UseMainLayoutInput> = {},
 ): JSX.Element {
-  const [searchValue, setSearchValue] = useState('');
-
-  const {workspaceName, onLogout} = useProviderContext();
+  const {workspaceName, avatarUrl, onLogout} = useProviderContext();
   const currentMember = useCurrentMember();
   const sidebarFooter = useSidebarFooter();
   const theme = useTheme();
 
+  // Search
+  const [searchValue, setSearchValue] = useState('');
+  const [searchDebounceValue, setSearchDebounceValue] = useState('');
+  const [_, cancelSearchDebounce] = useDebounce(
+    () => {
+      setSearchDebounceValue(searchValue);
+    },
+    500,
+    [searchValue],
+  );
+  const searchQuery = useSearch({value: searchDebounceValue});
+  const searchLoading =
+    searchQuery.isFetching ||
+    searchQuery.isLoading ||
+    searchValue !== searchDebounceValue;
+  const searchResults = mapSearchResults(searchQuery.data ?? []);
+
+  const search = useMemo(() => {
+    return (
+      <HeaderSearch
+        loading={searchLoading}
+        value={searchValue}
+        onChange={value => {
+          setSearchValue(value);
+        }}
+        results={searchResults}
+      />
+    );
+  }, [searchValue, searchLoading, searchResults]);
+
+  // User Menu
   const userMenu = useMemo(
     () => (
       <HeaderUserMenu
+        avatarUrl={avatarUrl}
         name={currentMember.display_name ?? ''}
         userName={currentMember.username ?? ''}
         items={[]}
@@ -46,16 +83,12 @@ export function useMainLayout(
     ),
     [theme.value],
   );
-  const search = useMemo(() => {
-    return (
-      <HeaderSearch
-        value={searchValue}
-        onChange={e => setSearchValue(e.target.value)}
-        results={[]}
-      />
-    );
-  }, [searchValue]);
-  const actions = <>{userMenu}</>;
+
+  useEffect(() => {
+    return function unload() {
+      cancelSearchDebounce();
+    };
+  }, []);
 
   return (
     <MainLayout
@@ -64,7 +97,14 @@ export function useMainLayout(
           workspaceName={<Link href="/">{workspaceName}</Link>}
           title={input.title}
           search={search}
-          actions={actions}
+          actions={
+            <>
+              <Button href="/bookmarks" size="sm" variant="outline-muted">
+                <BookMarkedIcon className="size-4" />
+              </Button>
+              {userMenu}
+            </>
+          }
         />
       }
       sidebarFooter={sidebarFooter}
@@ -72,4 +112,50 @@ export function useMainLayout(
       {input.children}
     </MainLayout>
   );
+}
+
+function mapSearchResults(
+  results: Array<{name: string; bucket_id: string}>,
+): HeaderSearchProps['results'] {
+  const groups = [...new Set(results.map(r => r.bucket_id))];
+
+  return groups.map(group => {
+    const items = results
+      .filter(item => item.bucket_id === group)
+      .map(item => {
+        const name = item.name.trim().replace('.emptyFolderPlaceholder', '');
+        const nameParts = name.split('/').filter(item => item.length > 0);
+
+        return {
+          id: item.name,
+          icon: item.name.endsWith('.emptyFolderPlaceholder')
+            ? FolderIcon
+            : FileIcon,
+          title: (
+            <Link href={`/tree/${group}/${name}`}>
+              {nameParts.map((part, l) => {
+                if (l === nameParts.length - 1) {
+                  return <span key={`${item.name}-${l}`}>{part}</span>;
+                }
+
+                return (
+                  <span
+                    className="text-muted-foreground"
+                    key={`${item.name}-${l}`}>
+                    {part} /{' '}
+                  </span>
+                );
+              })}
+            </Link>
+          ),
+        };
+      });
+
+    items.sort(a => (a.id.endsWith('.emptyFolderPlaceholder') ? -1 : 1));
+
+    return {
+      title: group,
+      items,
+    };
+  });
 }

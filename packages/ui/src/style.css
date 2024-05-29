@@ -63,4 +63,46 @@
   body:not(.light):not(.dark) {
     visibility: hidden;
   }
+
+  @media (prefers-color-scheme: light) {
+    img[src$='#gh-dark-mode-only'] {
+      display: none !important;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    img[src$='#gh-light-mode-only'] {
+      display: none !important;
+    }
+  }
+
+  *::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+@layer components {
+  .markdown-body {
+    --color-canvas-default: hsl(var(--background));
+    --color-fg-default: hsl(var(--foreground));
+    --color-border-muted: hsl(var(--border));
+    --borderColor-muted: hsl(var(--border));
+    --borderColor-default: hsl(var(--border));
+    --fgColor-muted: hsl(var(--muted-foreground));
+    --bgColor-muted: hsl(var(--input));
+
+    a {
+      color: hsl(var(--foreground));
+      text-decoration: underline;
+    }
+
+    blockquote a {
+      color: hsl(var(--muted-foreground));
+      text-decoration: underline;
+    }
+
+    img.local-src-hidden {
+      display: none;
+    }
+  }
 }

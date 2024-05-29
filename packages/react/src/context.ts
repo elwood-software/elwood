@@ -9,6 +9,7 @@ export interface ProviderContextValue {
   initialData?: JsonObject;
   uploadManager: Uppy | null;
   member: MemberRecord;
+  avatarUrl?: string | null;
   renderers?: Renderer[];
   onLogout(): void;
 }

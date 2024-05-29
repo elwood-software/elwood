@@ -12,6 +12,7 @@ import {
 export type HeaderUserMenuProps = {
   name: string;
   userName: string;
+  avatarUrl: string | null | undefined;
   items: DropdownMenuProps['items'];
   theme: string;
   onThemeChange: (value: string) => void;
@@ -96,7 +97,15 @@ export function HeaderUserMenu(props: HeaderUserMenuProps) {
           items={items as DropdownMenuProps['items']}
           contentClassName="mr-3">
           <div className="flex text-muted-foreground cursor-pointer">
-            <Avatar fallback={props.name} round className="w-8 h-8" />
+            <Avatar
+              src={
+                props.avatarUrl ??
+                'https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=identicon'
+              }
+              fallback={props.name}
+              round
+              className="w-8 h-8"
+            />
           </div>
         </DropdownMenu>
       </div>{' '}
