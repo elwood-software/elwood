@@ -20,6 +20,7 @@ export type DatabaseTables = {
   setting: SettingsTable;
   objects: ObjectsTable;
   buckets: BucketsTable;
+  embedding: EmbeddingTable;
 };
 
 export type AccessTable = {
@@ -68,3 +69,55 @@ export type ObjectsTable = {
 export type Object = Selectable<ObjectsTable>;
 export type NewObject = Insertable<ObjectsTable>;
 export type UpdateObject = Updateable<ObjectsTable>;
+
+export type EmbeddingTable = {
+  instance_id: string | null;
+  id: Generated<string>;
+  bucket_id: string;
+  object_id: string;
+  embedding: string;
+  summary: string | null;
+  search_text: string | null | undefined;
+};
+
+export type Embedding = Selectable<EmbeddingTable>;
+export type NewEmbedding = Insertable<EmbeddingTable>;
+export type UpdateEmbedding = Updateable<EmbeddingTable>;
+
+// deno-lint-ignore no-namespace
+export namespace Webhook {
+  export type InsertPayload<R> = {
+    type: 'INSERT';
+    table: string;
+    schema: string;
+    record: R;
+    old_record: null;
+  };
+  export type UpdatePayload<R> = {
+    type: 'UPDATE';
+    table: string;
+    schema: string;
+    record: R;
+    old_record: R;
+  };
+  export type DeletePayload<R> = {
+    type: 'DELETE';
+    table: string;
+    schema: string;
+    record: null;
+    old_record: R;
+  };
+
+  export type DirectPayload<R> = {
+    type: 'DIRECT';
+    table: string;
+    schema: string;
+    record: R;
+  };
+
+  export type Payload<R> =
+    | InsertPayload<R>
+    | UpdatePayload<R>
+    | DeletePayload<R>
+    | DirectPayload<R>;
+}

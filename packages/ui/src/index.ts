@@ -22,6 +22,7 @@ export * from './components/table/table';
 export * from './components/card/card';
 export * from './components/popover/popover';
 export * from './components/command/command';
+export * from './components/drawer/drawer';
 
 export * from './svg/logo';
 export * from './svg/icons';

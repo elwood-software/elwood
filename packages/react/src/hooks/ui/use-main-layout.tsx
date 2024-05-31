@@ -6,6 +6,15 @@ import {
   useTheme,
   Button,
   BookMarkedIcon,
+  SparklesIcon,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
 } from '@elwood/ui';
 
 import {useProviderContext} from '@/hooks/use-provider-context';
@@ -99,6 +108,23 @@ export function useMainLayout(
           search={search}
           actions={
             <>
+              <Drawer>
+                <DrawerTrigger>
+                  <Button type="button" size="sm" variant="outline-muted">
+                    <SparklesIcon className="size-4" />
+                  </Button>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                    <DrawerDescription>
+                      This action cannot be undone.
+                    </DrawerDescription>
+                  </DrawerHeader>
+                  <DrawerFooter>ds</DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+
               <Button href="/bookmarks" size="sm" variant="outline-muted">
                 <BookMarkedIcon className="size-4" />
               </Button>
@@ -125,14 +151,13 @@ function mapSearchResults(
       .map(item => {
         const name = item.name.trim().replace('.emptyFolderPlaceholder', '');
         const nameParts = name.split('/').filter(item => item.length > 0);
+        const isFolder = item.name.endsWith('.emptyFolderPlaceholder');
 
         return {
           id: item.name,
-          icon: item.name.endsWith('.emptyFolderPlaceholder')
-            ? FolderIcon
-            : FileIcon,
+          icon: isFolder ? FolderIcon : FileIcon,
           title: (
-            <Link href={`/tree/${group}/${name}`}>
+            <Link href={`/${isFolder ? 'tree' : 'blob'}/${group}/${name}`}>
               {nameParts.map((part, l) => {
                 if (l === nameParts.length - 1) {
                   return <span key={`${item.name}-${l}`}>{part}</span>;

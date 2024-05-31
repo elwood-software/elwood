@@ -180,6 +180,7 @@ WITH CHECK (
   auth.role() = 'authenticated' AND elwood.is_a_member(true)
 );
 
+drop trigger if exists "elwood_generate_embeddings_insert"  on "storage"."objects";
 create trigger "elwood_generate_embeddings_insert" after insert
 on "storage"."objects" for each row
 execute function "supabase_functions"."http_request"(
