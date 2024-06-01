@@ -108,8 +108,8 @@ export function useMainLayout(
           search={search}
           actions={
             <>
-              <Drawer>
-                <DrawerTrigger>
+              <Drawer direction="right" shouldScaleBackground={false}>
+                <DrawerTrigger asChild={true}>
                   <Button type="button" size="sm" variant="outline-muted">
                     <SparklesIcon className="size-4" />
                   </Button>
