@@ -7,6 +7,7 @@ import * as discover from './handlers/discover.ts';
 import * as render from './handlers/render.ts';
 import * as search from './handlers/search.ts';
 import * as embeddings from './handlers/embeddings.ts';
+import * as assistant from './handlers/assistant.ts';
 
 const router = new Router();
 
@@ -14,6 +15,7 @@ router.get('/elwood/discover', discover.handler);
 router.post('/elwood/render', render.handler);
 router.post('/elwood/search', search.handler);
 router.post('/elwood/embeddings', embeddings.handler);
+router.post('/elwood/assistant', assistant.handler);
 
 const app = new Application();
 

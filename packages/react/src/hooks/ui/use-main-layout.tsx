@@ -28,6 +28,7 @@ import {HeaderUserMenu} from '@/components/header/user-menu';
 import {useSearch} from '@/data/search/use-search';
 import {useSidebarFooter} from './use-sidebar-footer';
 import {useCurrentMember} from '../use-current-member';
+import {useAssistant} from './use-assistant';
 
 export type UseMainLayoutInput = PropsWithChildren<
   MainLayoutProps & {
@@ -93,6 +94,10 @@ export function useMainLayout(
     [theme.value],
   );
 
+  const assistant = useAssistant({
+    footerClassName: '',
+  });
+
   useEffect(() => {
     return function unload() {
       cancelSearchDebounce();
@@ -114,14 +119,8 @@ export function useMainLayout(
                     <SparklesIcon className="size-4" />
                   </Button>
                 </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                    <DrawerDescription>
-                      This action cannot be undone.
-                    </DrawerDescription>
-                  </DrawerHeader>
-                  <DrawerFooter>ds</DrawerFooter>
+                <DrawerContent className="border-l p-4">
+                  {assistant}
                 </DrawerContent>
               </Drawer>
 

@@ -73,10 +73,11 @@ export type UpdateObject = Updateable<ObjectsTable>;
 export type EmbeddingTable = {
   instance_id: string | null;
   id: Generated<string>;
-  bucket_id: string;
+  chunk_id: string;
   object_id: string;
   embedding: string;
   summary: string | null;
+  content: string | null;
   search_text: string | null | undefined;
 };
 

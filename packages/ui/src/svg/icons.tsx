@@ -62,6 +62,7 @@ export {
   SearchIcon,
   ExternalLinkIcon,
   SparklesIcon,
+  BotIcon,
 } from 'lucide-react';
 
 export const Icons: Record<string, LucideIcon> = {
