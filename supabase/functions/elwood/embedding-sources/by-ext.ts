@@ -1,6 +1,6 @@
 import {extname} from 'node:path';
 import {type EmbeddingSource} from './base.ts';
-import {MarkdownEmbeddingSource} from './md.ts';
+import {MarkdownEmbeddingSource} from './markdown.ts';
 import {assert} from '../../_shared/deps.ts';
 
 export function embeddingSourceByExtension(

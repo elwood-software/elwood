@@ -1,27 +1,23 @@
-import {useState, type PropsWithChildren, useMemo, useEffect} from 'react';
-import {useDebounce} from 'react-use';
 import {
-  FolderIcon,
-  FileIcon,
-  useTheme,
-  Button,
-  BookMarkedIcon,
-  SparklesIcon,
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@elwood/ui';
+  type PropsWithChildren,
+  useState,
+  useMemo,
+  useEffect,
+  createContext,
+  useContext,
+  ReactNode,
+  useReducer,
+  Reducer,
+  useCallback,
+} from 'react';
+import {useDebounce} from 'react-use';
+import {FolderIcon, FileIcon, useTheme} from '@elwood/ui';
 
 import {useProviderContext} from '@/hooks/use-provider-context';
-import {MainLayout, type MainLayoutProps} from '@/components/layouts/main';
+import {type MainLayoutProps} from '@/components/layouts/main';
 
 import {Link} from '@/components/link';
-import {Header, HeaderProps} from '@/components/header/header';
+import {type HeaderProps} from '@/components/header/header';
 import {HeaderSearch, HeaderSearchProps} from '@/components/header/search';
 import {HeaderUserMenu} from '@/components/header/user-menu';
 
@@ -29,6 +25,26 @@ import {useSearch} from '@/data/search/use-search';
 import {useSidebarFooter} from './use-sidebar-footer';
 import {useCurrentMember} from '../use-current-member';
 import {useAssistant} from './use-assistant';
+import {Json} from '@elwood/common';
+
+type MainLayoutContextValue = {
+  setTitle(title: ReactNode): void;
+};
+
+export type MainLayoutState = {
+  contextValue: MainLayoutContextValue;
+  title: ReactNode;
+  workspaceName: ReactNode;
+  search: ReactNode;
+  assistant: ReactNode;
+  userMenu: ReactNode;
+};
+
+const MainLayoutContext = createContext<MainLayoutContextValue>({
+  setTitle: () => {},
+});
+
+export const MainLayoutProvider = MainLayoutContext.Provider;
 
 export type UseMainLayoutInput = PropsWithChildren<
   MainLayoutProps & {
@@ -39,11 +55,36 @@ export type UseMainLayoutInput = PropsWithChildren<
 
 export function useMainLayout(
   input: PropsWithChildren<UseMainLayoutInput> = {},
-): JSX.Element {
+): MainLayoutState {
   const {workspaceName, avatarUrl, onLogout} = useProviderContext();
   const currentMember = useCurrentMember();
-  const sidebarFooter = useSidebarFooter();
   const theme = useTheme();
+
+  const [contextValue, dispatch] = useReducer<
+    Reducer<
+      {
+        title: MainLayoutState['title'];
+      },
+      {type: 'SET_TITLE'; value: MainLayoutState['title']}
+    >
+  >(
+    (state, action) => {
+      switch (action.type) {
+        case 'SET_TITLE':
+          if (state.title === action.value) {
+            return state;
+          }
+
+          return {
+            ...state,
+            title: action.value,
+          };
+      }
+    },
+    {
+      title: null,
+    },
+  );
 
   // Search
   const [searchValue, setSearchValue] = useState('');
@@ -104,39 +145,32 @@ export function useMainLayout(
     };
   }, []);
 
-  return (
-    <MainLayout
-      header={
-        <Header
-          workspaceName={<Link href="/">{workspaceName}</Link>}
-          title={input.title}
-          search={search}
-          actions={
-            <>
-              <Drawer direction="right" shouldScaleBackground={false}>
-                <DrawerTrigger asChild={true}>
-                  <Button type="button" size="sm" variant="outline-muted">
-                    <SparklesIcon className="size-4" />
-                  </Button>
-                </DrawerTrigger>
-                <DrawerContent className="border-l p-4">
-                  {assistant}
-                </DrawerContent>
-              </Drawer>
+  return {
+    contextValue: {
+      setTitle(nextTitle) {
+        dispatch({
+          type: 'SET_TITLE',
+          value: nextTitle,
+        });
+      },
+    },
+    title: contextValue.title,
+    workspaceName,
+    search,
+    assistant,
+    userMenu,
+  };
+}
 
-              <Button href="/bookmarks" size="sm" variant="outline-muted">
-                <BookMarkedIcon className="size-4" />
-              </Button>
-              {userMenu}
-            </>
-          }
-        />
-      }
-      sidebarFooter={sidebarFooter}
-      sidebar={input.sidebar}>
-      {input.children}
-    </MainLayout>
-  );
+export function useSetMainLayoutTitle(
+  title: MainLayoutState['title'],
+  deps: Json[] = [],
+) {
+  const ctx = useContext(MainLayoutContext);
+
+  useEffect(() => {
+    ctx.setTitle(title);
+  }, deps);
 }
 
 function mapSearchResults(

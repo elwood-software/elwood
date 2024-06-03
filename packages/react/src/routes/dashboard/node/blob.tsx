@@ -2,7 +2,7 @@ import {useParams} from 'react-router-dom';
 import {Icons, Button, LinkIcon, Tooltip} from '@elwood/ui';
 import {invariant, toArray} from '@elwood/common';
 import {useTitle} from 'react-use';
-import {PageLayout} from '@/components/layouts/page';
+import {ContentLayout} from '@/components/layouts/content';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useRenderedBlob} from '@/hooks/ui/use-rendered-blob';
 import {useGetNode} from '@/data/node/use-get-node';
@@ -76,7 +76,7 @@ export default function FilesBlobRoute(): JSX.Element {
   });
 
   if (query.isLoading) {
-    return <PageLayout />;
+    return <ContentLayout />;
   }
 
   if (!node) {
@@ -100,7 +100,10 @@ export default function FilesBlobRoute(): JSX.Element {
   );
 
   return (
-    <PageLayout headerLeft={headerLeft} headerRight={headerRight} rail={rail}>
+    <ContentLayout
+      headerLeft={headerLeft}
+      headerRight={headerRight}
+      rail={rail}>
       <NodeBlob
         sticky
         headers={blobData?.params?.headings}
@@ -109,6 +112,6 @@ export default function FilesBlobRoute(): JSX.Element {
         actions={actions}>
         {blob}
       </NodeBlob>
-    </PageLayout>
+    </ContentLayout>
   );
 }

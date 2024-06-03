@@ -1,7 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {Button} from '@elwood/ui';
-
 import {MainLayout as Component} from './main';
 
 const meta: Meta<typeof Component> = {
@@ -18,7 +16,7 @@ type Story = StoryObj<typeof Component>;
  */
 export const Primary: Story = {
   render: () => (
-    <Component sidebar={<div>sidebar</div>}>
+    <Component>
       <div>child</div>
     </Component>
   ),

@@ -12,7 +12,6 @@ export async function handler<R extends string>(
 ): Promise<void> {
   const {db, connection} = connectDatabase();
   const body = (await ctx.request.body.json()) as Webhook.Payload<ObjectsTable>;
-  const model = new Supabase.ai.Session('gte-small');
   const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
   const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
   const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');

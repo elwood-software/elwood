@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone';
 import {UploadCloudIcon} from '@elwood/ui';
 import {toArray, noOp} from '@elwood/common';
 import {FilesTable} from '@/components/files/table';
-import {PageLayout} from '@/components/layouts/page';
+import {ContentLayout} from '@/components/layouts/content';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useUploadButton} from '@/hooks/ui/use-upload-button';
 import {useGetNode} from '@/data/node/use-get-node';
@@ -100,7 +100,7 @@ export default function FilesTreeRoute(): JSX.Element {
     <Dropzone onDrop={onDrop} noClick>
       {({getRootProps, getInputProps, isDragActive}) => (
         <>
-          <PageLayout
+          <ContentLayout
             headerLeft={headerLeft}
             headerRight={headerRight}
             mainProps={{...getRootProps(), style: {position: 'relative'}}}>
@@ -116,7 +116,7 @@ export default function FilesTreeRoute(): JSX.Element {
                 </div>
               </div>
             ) : null}
-          </PageLayout>
+          </ContentLayout>
           <input {...getInputProps()} />
         </>
       )}
