@@ -4,6 +4,8 @@ project_id = "elwood"
 
 [functions.elwood]
 verify_jwt = false
+[functions.elwood-ai]
+verify_jwt = false
 
 [api]
 enabled = true
