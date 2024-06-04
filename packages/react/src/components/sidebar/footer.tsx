@@ -14,15 +14,6 @@ export function SidebarFooter(props: SidebarFooterProps): JSX.Element {
     <footer>
       <div className="mb-3 mx-6">{props.uploadStatus}</div>
 
-      <div className="flex justify-between items-center p-1 mx-6 border rounded-lg">
-        <div className="pl-2 cursor-pointer">{props.userMenu}</div>
-        <div className="flex items-center space-x-1">
-          <Button href="/bookmarks" size="sm" variant="ghost">
-            <BookMarkedIcon className="size-4" />
-          </Button>
-        </div>
-      </div>
-
       <div className="border-t px-6 pb-1 mt-6 flex items-center justify-center space-x-1">
         <Button
           variant="link"

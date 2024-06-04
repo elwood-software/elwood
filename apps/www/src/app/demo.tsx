@@ -53,14 +53,17 @@ export function Demo() {
 
   if (!client || loading) {
     return (
-      <MainLayout title={workspaceName} sidebarFooter={<></>} sidebar={<></>}>
+      <MainLayout header={<></>}>
         <Spinner className="stroke-muted-foreground m-3" />
       </MainLayout>
     );
   }
 
   return (
-    <ElwoodProvider workspaceName={workspaceName} client={client}>
+    <ElwoodProvider
+      workspaceName={workspaceName}
+      client={client}
+      onLogout={() => {}}>
       <Router router={router} />
     </ElwoodProvider>
   );

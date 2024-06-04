@@ -4,12 +4,11 @@ import {useGetNode} from '@/data/node/use-get-node';
 import {NodeLink, createNodeLink} from '@/components/link';
 import {FilesTable} from '@/components/files/table';
 import {PageLayout} from '@/components/layouts/page';
-import {useMainLayout} from '@/hooks/ui/use-main-layout';
+import {ContentLayout} from '@/components/layouts/content';
 import {useProviderContext} from '@/hooks/use-provider-context';
 
 export default function FilesHome(): JSX.Element {
   const {member} = useProviderContext();
-  const MainLayout = useMainLayout();
 
   const query = useGetNode({path: []});
   const buckets = toArray(query.data?.children);
@@ -41,8 +40,8 @@ export default function FilesHome(): JSX.Element {
   );
 
   return (
-    <MainLayout sidebar={sidebar}>
-      <PageLayout largeTitle={`Hello, ${member.display_name ?? ''}`}>
+    <PageLayout sidebar={sidebar}>
+      <ContentLayout largeTitle={`Hello, ${member.display_name ?? ''}`}>
         <div className="py-6">
           <div>
             <div className="border rounded">
@@ -50,7 +49,7 @@ export default function FilesHome(): JSX.Element {
             </div>
           </div>
         </div>
-      </PageLayout>
-    </MainLayout>
+      </ContentLayout>
+    </PageLayout>
   );
 }

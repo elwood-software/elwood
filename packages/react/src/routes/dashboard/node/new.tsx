@@ -1,7 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {invariant, toArray} from '@elwood/common';
 import {useState, type FormEvent} from 'react';
-import {PageLayout} from '@/components/layouts/page';
+import {ContentLayout} from '@/components/layouts/content';
 import {Button} from '@/components/button';
 import {FileBreadcrumbs} from '@/components/files/breadcrumbs';
 import {useCreateNode} from '@/data/node/use-create-node';
@@ -41,7 +41,7 @@ export default function FilesNewRoute(): JSX.Element {
   }
 
   return (
-    <PageLayout headerLeft={<FileBreadcrumbs prefix={prefix} />}>
+    <ContentLayout headerLeft={<FileBreadcrumbs prefix={prefix} />}>
       <div className="p-12">
         <form onSubmit={onSubmit}>
           <div>create a folder</div>
@@ -56,6 +56,6 @@ export default function FilesNewRoute(): JSX.Element {
           <Button type="submit">Create</Button>
         </form>
       </div>
-    </PageLayout>
+    </ContentLayout>
   );
 }

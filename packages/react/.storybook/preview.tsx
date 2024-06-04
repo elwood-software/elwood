@@ -4,7 +4,8 @@ import {withThemeByClassName} from '@storybook/addon-themes';
 
 import {ElwoodThemeProvider} from '@elwood/ui';
 
-import './style.css';
+import 'tailwindcss/tailwind.css';
+import '@elwood/ui/dist/style.css';
 
 const preview: Preview = {
   parameters: {
@@ -17,10 +18,11 @@ const preview: Preview = {
   },
   decorators: [
     (Story: React.FC) => (
-      <ElwoodThemeProvider>
-        <div>a</div>
-        <Story />
-      </ElwoodThemeProvider>
+      <div className="w-screen h-screen fixed top-0 left-0 right-0 bottom-0">
+        <ElwoodThemeProvider>
+          <Story />
+        </ElwoodThemeProvider>
+      </div>
     ),
     withThemeByClassName({
       themes: {

@@ -116,7 +116,7 @@ export function Hero() {
                   <div className="mt-6 flex items-start px-1 text-sm">
                     <div
                       aria-hidden="true"
-                      className="select-none border-r border-slate-300/5 pr-4 font-mono text-slate-600">
+                      className="font-mono select-none border-r border-slate-300/5 pr-4 text-slate-600">
                       {Array.from({
                         length: code.split('\n').length,
                       }).map((_, index) => (

@@ -1,20 +1,24 @@
 import {useCallback, useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
+import sha256 from 'crypto-js/sha256';
+
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import Uppy from '@uppy/core';
 import Tus from '@uppy/tus';
 import {invariant, type MemberRecord} from '@elwood/common';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import {Spinner} from '@elwood/ui';
 import {ProviderContext, type ProviderContextValue} from '@/context';
 import {NoAccess} from '@/components/no-access';
 import {defaultRenders} from '@/renderer/default-renderers';
 import {MainLayout} from '@/components/layouts/main';
+import {Header} from './components/header/header';
+
+import {FeatureFlag} from './constants';
 
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
-  'uploadManager' | 'member'
+  'uploadManager' | 'member' | 'avatarUrl' | 'featureFlags'
 >;
 
 const queryClient = new QueryClient();
@@ -26,6 +30,7 @@ export function ElwoodProvider(
 ): JSX.Element {
   invariant(props.client, 'Client is required for ElwoodProvider');
 
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [member, setMember] = useState<MemberRecord | null | false>(null);
   const [uploadManager, setUploadManager] = useState<Uppy | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -36,6 +41,11 @@ export function ElwoodProvider(
     };
   }, [accessToken, props.client.key]);
   const renderers = props.renderers ?? defaultRenders;
+
+  const featureFlags: ProviderContextValue['featureFlags'] = {
+    [FeatureFlag.EnableAssistant]: false,
+    [FeatureFlag.EnabledBookmarks]: false,
+  };
 
   useEffect(() => {
     setUploadManager(
@@ -65,6 +75,11 @@ export function ElwoodProvider(
       .then(async ({data}) => {
         invariant(data.session?.access_token);
 
+        const user = await props.client.auth.getUser();
+        const token = sha256(user.data.user?.email ?? Math.random().toString());
+
+        setAvatarUrl(`https://gravatar.com/avatar/${token}?d=identicon`);
+
         const result = await props.client
           .members()
           .select('*')
@@ -86,13 +101,25 @@ export function ElwoodProvider(
   }
 
   if (member === null) {
-    return <MainLayout title={props.workspaceName} loading={true} />;
+    return (
+      <MainLayout
+        header={<Header workspaceName={props.workspaceName} />}
+        loading={true}
+      />
+    );
   }
 
   return (
     <QueryClientProvider client={queryClient}>
       <ProviderContext.Provider
-        value={{...props, uploadManager, member, renderers}}>
+        value={{
+          ...props,
+          featureFlags,
+          uploadManager,
+          member,
+          renderers,
+          avatarUrl,
+        }}>
         {props.children}
       </ProviderContext.Provider>
     </QueryClientProvider>

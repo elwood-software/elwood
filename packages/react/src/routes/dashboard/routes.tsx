@@ -1,46 +1,29 @@
 import {lazy, Suspense} from 'react';
-import {type RouteObject} from 'react-router-dom';
-import {MainLayout} from '@/components/layouts/main';
+import {Outlet, type RouteObject} from 'react-router-dom';
+
 import {PageLayout} from '@/components/layouts/page';
-import {useProviderContext} from '@/hooks/use-provider-context';
 
 import Home from './home';
+import NodeLayout from './node/layout';
+import Layout from './layout';
 
-const NodeLayout = lazy(() => import('./node/layout'));
 const Tree = lazy(() => import('./node/tree'));
 const Blob = lazy(() => import('./node/blob'));
 const Create = lazy(() => import('./node/new'));
-const Bookmarks = lazy(() => import('./bookmarks'));
-const Notifications = lazy(() => import('./notifications'));
 
-const mainFallback = <MainFallback />;
-const fallback = <PageLayout loading />;
+const fallback = <PageLayout />;
 
 export const dashboardRoutes: RouteObject[] = [
   {
     path: '/',
+    element: <Layout />,
     children: [
       {
         path: '/',
         index: true,
         element: <Home />,
       },
-      {
-        path: '/bookmarks',
-        element: (
-          <Suspense fallback={mainFallback}>
-            <Bookmarks />
-          </Suspense>
-        ),
-      },
-      {
-        path: '/notifications',
-        element: (
-          <Suspense fallback={mainFallback}>
-            <Notifications />
-          </Suspense>
-        ),
-      },
+
       {
         element: (
           <Suspense fallback={fallback}>
@@ -77,8 +60,3 @@ export const dashboardRoutes: RouteObject[] = [
     ],
   },
 ];
-
-function MainFallback(): JSX.Element {
-  const {workspaceName} = useProviderContext();
-  return <MainLayout title={workspaceName} loading />;
-}

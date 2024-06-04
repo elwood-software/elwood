@@ -47,14 +47,6 @@ export function FileBreadcrumbs(props: FilesBreadcrumbsProps): JSX.Element {
         props.className,
         'flex items-center leading-none text-sm',
       )}>
-      {variant !== 'compact' && (
-        <div className="flex mr-2 items-center justify-center">
-          <FileIcon
-            className="w-4 h-4 text-muted-foreground"
-            nodeType="BUCKET"
-          />
-        </div>
-      )}
       <BreadcrumbList>
         {breadcrumbs.map((item, idx) => {
           const isLast =

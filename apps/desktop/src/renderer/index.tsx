@@ -2,11 +2,12 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { ElwoodThemeProvider } from '@elwood/ui'
 
+import { ThemeBridge } from './components/theme-bridge'
 import App from './routes/app'
 import Workspace from './routes/workspace/view'
 
 import './global.css'
-import '@elwood/ui/style.css'
+import '@elwood/ui/dist/style.css'
 
 try {
   window.elwood.log('info', 'Starting app render')
@@ -17,15 +18,15 @@ try {
 
   if (searchParams.has('workspace')) {
     root.render(
-      <ElwoodThemeProvider>
+      <ThemeBridge>
         <Workspace id={searchParams.get('workspace') as string} />
-      </ElwoodThemeProvider>
+      </ThemeBridge>
     )
   } else {
     root.render(
-      <ElwoodThemeProvider>
+      <ThemeBridge>
         <App />
-      </ElwoodThemeProvider>
+      </ThemeBridge>
     )
   }
 } catch (err) {
