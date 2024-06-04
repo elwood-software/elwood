@@ -12,20 +12,18 @@ import {
 } from 'react';
 import {useDebounce} from 'react-use';
 import {FolderIcon, FileIcon, useTheme} from '@elwood/ui';
+import {Json} from '@elwood/common';
 
-import {useProviderContext} from '@/hooks/use-provider-context';
 import {type MainLayoutProps} from '@/components/layouts/main';
-
 import {Link} from '@/components/link';
 import {type HeaderProps} from '@/components/header/header';
 import {HeaderSearch, HeaderSearchProps} from '@/components/header/search';
-import {HeaderUserMenu} from '@/components/header/user-menu';
 
+import {HeaderUserMenu} from '@/components/header/user-menu';
+import {useProviderContext} from '@/hooks/use-provider-context';
 import {useSearch} from '@/data/search/use-search';
-import {useSidebarFooter} from './use-sidebar-footer';
 import {useCurrentMember} from '../use-current-member';
 import {useAssistant} from './use-assistant';
-import {Json} from '@elwood/common';
 
 type MainLayoutContextValue = {
   setTitle(title: ReactNode): void;

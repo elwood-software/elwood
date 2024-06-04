@@ -1,3 +1,4 @@
+import {useMemo} from 'react';
 import {Outlet} from 'react-router-dom';
 import {
   Button,
@@ -12,9 +13,10 @@ import {MainLayout} from '@/components/layouts/main';
 import {Link} from '@/components/link';
 import {Header} from '@/components/header/header';
 import {useMainLayout, MainLayoutProvider} from '@/hooks/ui/use-main-layout';
-import {useMemo} from 'react';
+import {useFeatureFlag} from '@/hooks/use-provider-context';
 
 export default function Layout() {
+  const flags = useFeatureFlag();
   const {contextValue, workspaceName, title, search, assistant, userMenu} =
     useMainLayout();
 
@@ -28,20 +30,25 @@ export default function Layout() {
             search={search}
             actions={
               <>
-                <Drawer direction="right" shouldScaleBackground={false}>
-                  <DrawerTrigger asChild={true}>
-                    <Button type="button" size="sm" variant="outline-muted">
-                      <SparklesIcon className="size-4" />
-                    </Button>
-                  </DrawerTrigger>
-                  <DrawerContent className="border-l p-4">
-                    {assistant}
-                  </DrawerContent>
-                </Drawer>
+                {flags.enable_assistant && (
+                  <Drawer direction="right" shouldScaleBackground={false}>
+                    <DrawerTrigger asChild={true}>
+                      <Button type="button" size="sm" variant="outline-muted">
+                        <SparklesIcon className="size-4" />
+                      </Button>
+                    </DrawerTrigger>
+                    <DrawerContent className="border-l p-4">
+                      {assistant}
+                    </DrawerContent>
+                  </Drawer>
+                )}
 
-                <Button href="/bookmarks" size="sm" variant="outline-muted">
-                  <BookMarkedIcon className="size-4" />
-                </Button>
+                {flags.enabled_bookmarks && (
+                  <Button href="/bookmarks" size="sm" variant="outline-muted">
+                    <BookMarkedIcon className="size-4" />
+                  </Button>
+                )}
+
                 {userMenu}
               </>
             }

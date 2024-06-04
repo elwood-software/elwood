@@ -61,7 +61,7 @@ export function HeaderSearch(props: HeaderSearchProps): JSX.Element {
     }
   }
 
-  const cl = clsx('flex items-center w-full h-full bg-transparent px-3 group', {
+  const cl = clsx('flex items-center w-full h-full bg-background px-3 group', {
     'border border-b-transparent rounded-t': open,
     'border rounded': !open,
   });

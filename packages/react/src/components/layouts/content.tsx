@@ -35,7 +35,7 @@ export function ContentLayout(
             <div>{props.headerRight}</div>
           </header>
         ) : null}
-        <div className="flex-grow flex flex-row flex-nowrap min-h-0 px-8 pt-4">
+        <div className="flex-grow flex flex-row flex-nowrap min-h-0 px-8 pt-3">
           <div {...props.mainProps} className={bodyClass}>
             {props.children}
             {props.loading ? (

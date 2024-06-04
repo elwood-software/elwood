@@ -5,14 +5,10 @@ import {NodeLink, createNodeLink} from '@/components/link';
 import {FilesTable} from '@/components/files/table';
 import {PageLayout} from '@/components/layouts/page';
 import {ContentLayout} from '@/components/layouts/content';
-import {useSetMainLayoutTitle} from '@/hooks/ui/use-main-layout';
 import {useProviderContext} from '@/hooks/use-provider-context';
-import {useEffect} from 'react';
 
 export default function FilesHome(): JSX.Element {
   const {member} = useProviderContext();
-
-  useSetMainLayoutTitle('files');
 
   const query = useGetNode({path: []});
   const buckets = toArray(query.data?.children);

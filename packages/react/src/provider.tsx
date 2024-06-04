@@ -8,16 +8,17 @@ import Tus from '@uppy/tus';
 import {invariant, type MemberRecord} from '@elwood/common';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import {Spinner} from '@elwood/ui';
 import {ProviderContext, type ProviderContextValue} from '@/context';
 import {NoAccess} from '@/components/no-access';
 import {defaultRenders} from '@/renderer/default-renderers';
 import {MainLayout} from '@/components/layouts/main';
 import {Header} from './components/header/header';
 
+import {FeatureFlag} from './constants';
+
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
-  'uploadManager' | 'member' | 'avatarUrl'
+  'uploadManager' | 'member' | 'avatarUrl' | 'featureFlags'
 >;
 
 const queryClient = new QueryClient();
@@ -40,6 +41,11 @@ export function ElwoodProvider(
     };
   }, [accessToken, props.client.key]);
   const renderers = props.renderers ?? defaultRenders;
+
+  const featureFlags: ProviderContextValue['featureFlags'] = {
+    [FeatureFlag.EnableAssistant]: false,
+    [FeatureFlag.EnabledBookmarks]: false,
+  };
 
   useEffect(() => {
     setUploadManager(
@@ -106,7 +112,14 @@ export function ElwoodProvider(
   return (
     <QueryClientProvider client={queryClient}>
       <ProviderContext.Provider
-        value={{...props, uploadManager, member, renderers, avatarUrl}}>
+        value={{
+          ...props,
+          featureFlags,
+          uploadManager,
+          member,
+          renderers,
+          avatarUrl,
+        }}>
         {props.children}
       </ProviderContext.Provider>
     </QueryClientProvider>

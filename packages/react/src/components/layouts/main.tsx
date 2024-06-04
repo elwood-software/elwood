@@ -13,7 +13,9 @@ export function MainLayout(
 
   return (
     <div className="w-full h-full grid grid-rows-[60px_auto] ">
-      <div className="border-b h-full bg-black">{props.header}</div>
+      <div className="border-b h-full bg-background-inverse">
+        {props.header}
+      </div>
       <div className="flex flex-row min-h-0">
         {children ? (
           children

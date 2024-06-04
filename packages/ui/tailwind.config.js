@@ -16,13 +16,19 @@ module.exports = {
     },
     extend: {
       colors: {
-        brand: 'hsl(var(--brand))',
+        brand: {
+          DEFAULT: 'hsl(var(--brand))',
+          foreground: 'hsl(var(--brand-foreground))',
+        },
         border: {
           DEFAULT: 'hsl(var(--border))',
         },
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
+        background: {
+          DEFAULT: 'hsl(var(--background))',
+          inverse: 'hsl(var(--background-inverse))',
+        },
         foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',

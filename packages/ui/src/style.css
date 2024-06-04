@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
+    --background-inverse: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
@@ -25,10 +26,12 @@
     --ring: 20 14.3% 4.1%;
     --radius: 0.75rem;
     --brand: 249 26% 38%; /* #4f487a */
+    --brand-foreground: var(--brand);
   }
 
   .dark {
     --background: 20 14.3% 4.1%;
+    --background-inverse: 0 0% 0%;
     --foreground: 60 9.1% 97.8%;
     --card: 20 14.3% 4.1%;
     --card-foreground: 60 9.1% 97.8%;
@@ -47,10 +50,15 @@
     --border: 12 6.5% 15.1%;
     --input: 12 6.5% 15.1%;
     --ring: 24 5.7% 82.9%;
+    --brand-foreground: 248 20% 48%; /* #696294 */
   }
 
   * {
     border-color: hsl(var(--border));
+  }
+
+  a:hover {
+    color: hsl(var(--brand-foreground));
   }
 
   body {
