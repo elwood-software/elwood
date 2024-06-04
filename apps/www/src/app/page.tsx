@@ -66,18 +66,12 @@ export default function Page() {
             </svg>
           </div>
 
-          <header className="border-b rounded-t-md px-3 py-3 flex justify-between">
+          <header className="border-b bg-border/30 rounded-t-md px-3 py-2 flex justify-between">
             <div className="space-x-1.5 flex">
               <div className="size-2.5 bg-foreground/20 rounded-full" />
               <div className="size-2.5 bg-foreground/20 rounded-full" />
               <div className="size-2.5 bg-foreground/20 rounded-full" />
             </div>
-            <Link
-              className="opacity-0 flex items-center group-hover:opacity-100 transition-opacity text-xs"
-              href="https://demo.elwood.software">
-              Open the full demo{' '}
-              <ExternalLinkIcon className="size-[1em] inline ml-1" />
-            </Link>
           </header>
           <div className="h-[80vh] w-full flex flex-row overflow-hidden relative">
             <NotMobile>

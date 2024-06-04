@@ -5,7 +5,6 @@ import {ElwoodThemeProvider} from '@elwood/ui';
 import {Analytics} from '@vercel/analytics/react';
 
 import './global.css';
-import '@elwood/ui/dist/style.css';
 
 export const metadata: Metadata = {
   title: 'Elwood',
