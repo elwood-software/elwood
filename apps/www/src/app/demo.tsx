@@ -53,7 +53,7 @@ export function Demo() {
 
   if (!client || loading) {
     return (
-      <MainLayout header={<></>} sidebarFooter={<></>} sidebar={<></>}>
+      <MainLayout header={<></>}>
         <Spinner className="stroke-muted-foreground m-3" />
       </MainLayout>
     );
