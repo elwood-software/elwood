@@ -2,14 +2,16 @@ import {toArray} from '@elwood/common';
 import {Icons} from '@elwood/ui';
 import {useGetNode} from '@/data/node/use-get-node';
 import {NodeLink, createNodeLink} from '@/components/link';
-import {FilesTable} from '@/components/files/table';
 import {PageLayout} from '@/components/layouts/page';
 import {ContentLayout} from '@/components/layouts/content';
 import {useProviderContext} from '@/hooks/use-provider-context';
 import {useSetMainLayoutTitle} from '@/hooks/ui/use-main-layout';
+import {useAssistant} from '@/hooks/ui/use-assistant';
 
-export default function FilesHome(): JSX.Element {
+export default function Assistant(): JSX.Element {
   const {member} = useProviderContext();
+
+  const assistant = useAssistant({});
 
   useSetMainLayoutTitle(null);
 
@@ -44,14 +46,8 @@ export default function FilesHome(): JSX.Element {
 
   return (
     <PageLayout sidebar={sidebar}>
-      <ContentLayout largeTitle={`Hello, ${member.display_name ?? ''}`}>
-        <div className="py-6">
-          <div>
-            <div className="border rounded">
-              <FilesTable nodes={nodes} prefix={[]} />
-            </div>
-          </div>
-        </div>
+      <ContentLayout>
+        <div className="border rounded size-full">{assistant}</div>
       </ContentLayout>
     </PageLayout>
   );

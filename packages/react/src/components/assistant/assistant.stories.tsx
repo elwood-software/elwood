@@ -31,8 +31,10 @@ export const Main: Story = {
     ],
   },
   render: args => (
-    <div className="h-screen w-[400px] p-6">
-      <Component {...args} />
+    <div className="bg-black p-6 h-screen">
+      <div className="bg-background w-[400px] h-full">
+        <Component {...args} />
+      </div>
     </div>
   ),
 };

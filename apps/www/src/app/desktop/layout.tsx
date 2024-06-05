@@ -1,4 +1,5 @@
 import type {PropsWithChildren} from 'react';
+import {type Metadata} from 'next';
 
 import Link from 'next/link';
 import {Logo, Button, StarIcon, FileIcon, ExternalLinkIcon} from '@elwood/ui';
@@ -8,6 +9,10 @@ import {Demo} from '../demo';
 
 import Grid from '@/components/grid';
 import {getReleases} from './get-releases';
+
+export const metadata: Metadata = {
+  title: 'Elwood for Mac',
+};
 
 export default async function Layout(props: PropsWithChildren) {
   const release = await getReleases(new URLSearchParams(''));

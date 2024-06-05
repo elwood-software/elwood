@@ -10,6 +10,7 @@ import Layout from './layout';
 const Tree = lazy(() => import('./node/tree'));
 const Blob = lazy(() => import('./node/blob'));
 const Create = lazy(() => import('./node/new'));
+const Assistant = lazy(() => import('./assistant'));
 
 const fallback = <PageLayout />;
 
@@ -23,7 +24,14 @@ export const dashboardRoutes: RouteObject[] = [
         index: true,
         element: <Home />,
       },
-
+      {
+        path: '/assistant',
+        element: (
+          <Suspense fallback={fallback}>
+            <Assistant />
+          </Suspense>
+        ),
+      },
       {
         element: (
           <Suspense fallback={fallback}>

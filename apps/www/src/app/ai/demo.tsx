@@ -5,8 +5,9 @@ import {createMemoryRouter} from 'react-router-dom';
 import {
   Router,
   ElwoodProvider,
-  MainLayout,
+  useAssistant,
   dashboardRoutes,
+  Assistant,
 } from '@elwood/react';
 import {Spinner} from '@elwood/ui';
 import {type ElwoodClient, createClient, type User} from '@elwood/js';
@@ -55,20 +56,29 @@ export function Demo() {
 
   const workspaceName = 'Dunder Mifflin';
 
+  const loadingComponent = (
+    <Assistant messages={[]}>
+      <Spinner />
+    </Assistant>
+  );
+
   if (!client || loading) {
-    return (
-      <MainLayout header={<></>}>
-        <Spinner className="stroke-muted-foreground m-3" />
-      </MainLayout>
-    );
+    return loadingComponent;
   }
 
   return (
     <ElwoodProvider
+      loadingComponent={loadingComponent}
       workspaceName={workspaceName}
       client={client}
       onLogout={() => {}}>
-      <Router router={router} />
+      <AssistantDemo />
     </ElwoodProvider>
   );
+}
+
+function AssistantDemo() {
+  const assistant = useAssistant({});
+
+  return <>{assistant}</>;
 }

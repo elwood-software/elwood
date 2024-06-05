@@ -63,6 +63,8 @@ export {
   ExternalLinkIcon,
   SparklesIcon,
   BotIcon,
+  UserIcon,
+  ChevronRightIcon,
 } from 'lucide-react';
 
 export const Icons: Record<string, LucideIcon> = {

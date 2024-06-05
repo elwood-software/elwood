@@ -11,6 +11,9 @@ export async function handler<R extends string>(
   ctx: RouterContext<R>,
 ): Promise<void> {
   const {db, connection} = connectDatabase();
+
+  assert(ctx.request.hasBody, 'Request has no body');
+
   const body = (await ctx.request.body.json()) as Webhook.Payload<ObjectsTable>;
   const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
   const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');

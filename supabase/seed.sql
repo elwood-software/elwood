@@ -1,5 +1,4 @@
-insert into elwood.setting (name, value) values ('workspace_name', json_build_object('default', 'Dunder Mifflin Paper Company'))
-ON CONFLICT (name) DO UPDATE SET value = json_build_object('default', 'Dunder Mifflin Paper Company');
+
 
 
 CREATE SCHEMA IF NOT EXISTS "local_only";
@@ -180,14 +179,5 @@ WITH CHECK (
   auth.role() = 'authenticated' AND elwood.is_a_member(true)
 );
 
-drop trigger if exists "elwood_generate_embeddings_insert"  on "storage"."objects";
-create trigger "elwood_generate_embeddings_insert" after insert
-on "storage"."objects" for each row
-execute function "supabase_functions"."http_request"(
-  'http://127.0.0.1:54321/functions/v1/elwood/embeddings',
-  'POST',
-  '{"Content-Type":"application/json"}',
-  '{}',
-  '1000'
-);
-
+SELECT elwood.set_setting('workspace_name', 'Dunder Mifflin');
+SELECT elwood.set_setting('ai', '', jsonb_build_object('generate_embeddings', true, 'embeddings_function_url', 'http://host.docker.internal:54321/functions/v1/elwood-ai/embeddings'));
