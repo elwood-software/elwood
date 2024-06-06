@@ -7,6 +7,8 @@ import {
   LogOutIcon,
   SunMoonIcon,
   AlertDialog,
+  UserIcon,
+  Button,
 } from '@elwood/ui';
 
 export type HeaderUserMenuProps = {
@@ -96,17 +98,9 @@ export function HeaderUserMenu(props: HeaderUserMenuProps) {
         <DropdownMenu
           items={items as DropdownMenuProps['items']}
           contentClassName="mr-3">
-          <div className="flex text-muted-foreground cursor-pointer">
-            <Avatar
-              src={
-                props.avatarUrl ??
-                'https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=identicon'
-              }
-              fallback={props.name}
-              round
-              className="w-8 h-8"
-            />
-          </div>
+          <Button type="button" size="sm" variant="outline-muted">
+            <UserIcon className="w-4 h-4" />
+          </Button>
         </DropdownMenu>
       </div>{' '}
       <AlertDialog

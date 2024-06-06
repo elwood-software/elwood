@@ -14,6 +14,7 @@ export function embeddingSourceByExtension(
 
   switch (ext) {
     case '.mdx':
+      return new MarkdownEmbeddingSource(content, true);
     case '.md':
       return new MarkdownEmbeddingSource(content);
     default:

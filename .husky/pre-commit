@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm type-check --filter=./packages/*
+TURBO_UI=0 pnpm type-check

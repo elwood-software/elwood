@@ -14,11 +14,20 @@ import {toString} from 'npm:mdast-util-to-string';
 import {EmbeddingSource} from './base.ts';
 
 export class MarkdownEmbeddingSource extends EmbeddingSource {
+  constructor(
+    public readonly content: string = '',
+    private readonly isMdx = false,
+  ) {
+    super(content);
+  }
+
   async generate() {
-    const tree = fromMarkdown(this.content, {
-      extensions: [mdxjs()],
-      mdastExtensions: [mdxFromMarkdown()],
-    });
+    const tree = this.isMdx
+      ? fromMarkdown(this.content, {
+          extensions: [mdxjs()],
+          mdastExtensions: [mdxFromMarkdown()],
+        })
+      : fromMarkdown(this.content);
 
     const meta = this.extractMetaExport(tree);
 

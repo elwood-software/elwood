@@ -15,6 +15,9 @@ module.exports = {
       },
     },
     extend: {
+      placeholderColor: {
+        DEFAULT: 'hsl(var(--border))',
+      },
       colors: {
         brand: {
           DEFAULT: 'hsl(var(--brand))',

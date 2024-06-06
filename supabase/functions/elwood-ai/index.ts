@@ -4,14 +4,14 @@ import {isHttpError} from 'jsr:@oak/commons/http_errors';
 import {oakCors} from 'https://deno.land/x/cors@v1.2.2/mod.ts';
 import {Status} from 'jsr:@oak/commons/status';
 
-import * as index from './handlers/index.ts';
+import * as embeddings from './handlers/embeddings.ts';
 import * as assistant from './handlers/assistant.ts';
 
 console.log('boot');
 
 const router = new Router();
 
-router.post('/elwood-ai/index', index.handler);
+router.post('/elwood-ai/embeddings', embeddings.handler);
 router.post('/elwood-ai/assistant', assistant.handler);
 
 router.get('/elwood-ai', ctx => {

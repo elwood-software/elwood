@@ -1,7 +1,7 @@
 {
   "extends": ["//"],
   "globalEnv": [],
-  "pipeline": {
+  "tasks": {
     "build": {
       "outputs": [".next/**", "!.next/cache/**"]
     }

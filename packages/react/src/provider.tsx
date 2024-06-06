@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from 'react';
-import type {PropsWithChildren} from 'react';
+import type {PropsWithChildren, ReactNode} from 'react';
 import sha256 from 'crypto-js/sha256';
 
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
@@ -14,12 +14,14 @@ import {defaultRenders} from '@/renderer/default-renderers';
 import {MainLayout} from '@/components/layouts/main';
 import {Header} from './components/header/header';
 
-import {FeatureFlag} from './constants';
+import {FeatureFlag, ConfigurationNames} from './constants';
 
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
-  'uploadManager' | 'member' | 'avatarUrl' | 'featureFlags'
->;
+  'uploadManager' | 'member' | 'avatarUrl' | 'featureFlags' | 'configuration'
+> & {
+  loadingComponent?: ReactNode;
+};
 
 const queryClient = new QueryClient();
 
@@ -43,8 +45,13 @@ export function ElwoodProvider(
   const renderers = props.renderers ?? defaultRenders;
 
   const featureFlags: ProviderContextValue['featureFlags'] = {
-    [FeatureFlag.EnableAssistant]: false,
+    [FeatureFlag.EnableAssistant]: true,
     [FeatureFlag.EnabledBookmarks]: false,
+  };
+
+  const configuration: ProviderContextValue['configuration'] = {
+    [ConfigurationNames.FunctionName]: 'elwood',
+    [ConfigurationNames.AiFunctionName]: 'elwood-ai',
   };
 
   useEffect(() => {
@@ -101,7 +108,9 @@ export function ElwoodProvider(
   }
 
   if (member === null) {
-    return (
+    return props.loadingComponent ? (
+      <>{props.loadingComponent}</>
+    ) : (
       <MainLayout
         header={<Header workspaceName={props.workspaceName} />}
         loading={true}
@@ -115,6 +124,7 @@ export function ElwoodProvider(
         value={{
           ...props,
           featureFlags,
+          configuration,
           uploadManager,
           member,
           renderers,

@@ -3,11 +3,14 @@ import {SSE} from 'sse.js';
 
 import {Assistant, type AssistantProps} from '@/components/assistant/assistant';
 import {useClient} from '../use-client';
+import {useConfiguration} from '../use-provider-context';
+import {ConfigurationNames} from '@/constants';
 
 enum MessageStatus {
   Pending = 'pending',
   Processing = 'processing',
   Sent = 'sent',
+  Error = 'error',
 }
 
 type Message = {
@@ -76,6 +79,7 @@ export function useAssistant(
 ): JSX.Element {
   const client = useClient();
   const eventSourceRef = useRef<SSE>();
+  const aiFunctionName = useConfiguration(ConfigurationNames.AiFunctionName);
 
   const [isSending, setIsSending] = useState(false);
   const [currentMessageId, setCurrentMessageId] = useState(1);
@@ -108,7 +112,7 @@ export function useAssistant(
       });
 
       const eventSource = new SSE(
-        `${client.url}/functions/v1/elwood/assistant`,
+        `${client.url}/functions/v1/${aiFunctionName}/assistant`,
         {
           headers: {
             apikey: client.key,
@@ -123,6 +127,19 @@ export function useAssistant(
           }),
         },
       );
+
+      eventSource.addEventListener('error', () => {
+        setIsSending(false);
+        dispatch({
+          type: 'update',
+          message: {
+            id: currentMessageId,
+            status: MessageStatus.Error,
+          },
+        });
+        setCurrentMessageId(x => x + 2);
+        return;
+      });
 
       eventSource.addEventListener('message', (event: MessageEvent) => {
         if (event.data === '[DONE]') {
