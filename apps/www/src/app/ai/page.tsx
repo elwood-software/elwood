@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: 'Elwood AI',
 };
 
-export default async function Page(props: PropsWithChildren) {
+export default async function Page() {
   return (
     <div className="w-full h-full flex flex-col">
       <Grid className="z-0" />
