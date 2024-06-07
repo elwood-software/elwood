@@ -33,12 +33,20 @@ export class Job extends State {
   async execute(): Promise<void> {
     console.log(`Running job: ${this.id}`);
 
-    for (const step of this.steps) {
-      if (this.status !== 'pending') {
-        return;
-      }
+    try {
+      this.start();
 
-      await step.execute();
+      for (const step of this.steps) {
+        if (this.status !== 'pending') {
+          return;
+        }
+
+        await step.execute();
+      }
+    } catch (error) {
+      await this.fail(error.message);
+    } finally {
+      this.stop();
     }
   }
 

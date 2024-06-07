@@ -12,6 +12,7 @@ export type ExecutionOptions = {};
 
 export class Execution extends State {
   readonly id: string;
+  readonly name = 'execution';
   readonly #jobs = new Map<string, Job>();
 
   #workingDir: string | null = null;
@@ -82,22 +83,30 @@ export class Execution extends State {
   async execute(): Promise<void> {
     console.log(`Executing: ${this.id}`);
 
-    for (const job of this.jobs) {
-      if (job.status !== 'pending') {
-        continue;
+    try {
+      this.start();
+
+      for (const job of this.jobs) {
+        if (job.status !== 'pending') {
+          continue;
+        }
+
+        await job.execute();
       }
 
-      await job.execute();
+      const hasFailure = this.jobs.some(job => job.result === 'failure');
+
+      if (hasFailure) {
+        await this.fail('Execution failed');
+        return;
+      }
+
+      await this.succeed();
+    } catch (error) {
+      await this.fail(error.message);
+    } finally {
+      this.stop();
     }
-
-    const hasFailure = this.jobs.some(job => job.result === 'failure');
-
-    if (hasFailure) {
-      await this.fail('Execution failed');
-      return;
-    }
-
-    await this.succeed();
   }
 
   getCombinedState() {

@@ -12,6 +12,8 @@ export abstract class State implements RunnerDefinition.State {
     reason: null,
   };
 
+  #startTime: number | null = null;
+
   get status() {
     return this._status;
   }
@@ -28,7 +30,7 @@ export abstract class State implements RunnerDefinition.State {
     };
   }
 
-  setState(name: string, value: unknown) {
+  setState<V = unknown>(name: string, value: V) {
     this._data[name] = value;
   }
 
@@ -50,5 +52,25 @@ export abstract class State implements RunnerDefinition.State {
     this._status = RunnerStatus.Complete;
     this._result = RunnerResult.Success;
     this._data.reason = reason;
+  }
+
+  start() {
+    this.#startTime = performance.now();
+  }
+
+  stop() {
+    if (this.#startTime === null) {
+      console.error('State.stop() called without State.start()');
+    }
+
+    if (this.#startTime !== null) {
+      const end = performance.now();
+
+      this.setState('timing', {
+        start: this.#startTime,
+        end,
+        duration: end - this.#startTime,
+      });
+    }
   }
 }

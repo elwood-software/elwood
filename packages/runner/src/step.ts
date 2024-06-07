@@ -35,19 +35,27 @@ export class Step extends State {
 
     console.log(`Running step: ${this.name}`);
 
-    const result = await executeDenoRun({
-      file: resolveActionUrlForDenoCommand(this.actionUrl),
-    });
+    try {
+      this.start();
 
-    switch (result.code) {
-      case 0: {
-        await this.succeed();
-        break;
+      const result = await executeDenoRun({
+        file: resolveActionUrlForDenoCommand(this.actionUrl),
+      });
+
+      switch (result.code) {
+        case 0: {
+          await this.succeed();
+          break;
+        }
+        default: {
+          await this.fail(`Action failed with code ${result.code}`);
+          await this.job.fail(`Step ${this.name} failed`);
+        }
       }
-      default: {
-        await this.fail(`Action failed with code ${result.code}`);
-        await this.job.fail(`Step ${this.name} failed`);
-      }
+    } catch (error) {
+      await this.fail(error.message);
+    } finally {
+      this.stop();
     }
   }
 
