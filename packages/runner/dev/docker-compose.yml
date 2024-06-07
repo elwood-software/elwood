@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: runner
+    container_name: runner
+    volumes:
+      - ../src:/elwood/runner/runtime
+      - ../actions:/elwood/runner/actions
+      - ../tmp:/tmp
+      - ../tmp-workspace/:/elwood/runner/workspace
+    working_dir: /elwood/runner/workspace
+    command:
+      [
+        '/elwood/runner/bin/deno',
+        'run',
+        '-A',
+        '/elwood/runner/runtime/launch.ts',
+      ]
