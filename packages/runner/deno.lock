@@ -1,0 +1,27 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@std/assert@1.0.0-rc.1": "jsr:@std/assert@1.0.0-rc.1",
+      "jsr:@std/internal@^1.0.0": "jsr:@std/internal@1.0.0"
+    },
+    "jsr": {
+      "@std/assert@1.0.0-rc.1": {
+        "integrity": "f2f1f1d5b5eab3a2165744996c42b3c501688d887a015067e12267fe5e6fb804",
+        "dependencies": [
+          "jsr:@std/internal@^1.0.0"
+        ]
+      },
+      "@std/internal@1.0.0": {
+        "integrity": "ac6a6dfebf838582c4b4f61a6907374e27e05bedb6ce276e0f1608fe84e7cd9a"
+      }
+    }
+  },
+  "remote": {},
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/assert@1.0.0-rc.1",
+      "jsr:@std/path@1.0.0-rc.1"
+    ]
+  }
+}

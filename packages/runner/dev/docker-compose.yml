@@ -9,6 +9,7 @@ services:
     container_name: runner
     volumes:
       - ../src:/elwood/runner/runtime
+      - ../deno.json:/elwood/runtime/deno.json
       - ../actions:/elwood/runner/actions
       - ../tmp:/tmp
       - ../tmp-workspace/:/elwood/runner/workspace
@@ -17,6 +18,8 @@ services:
       [
         '/elwood/runner/bin/deno',
         'run',
+        '--config',
+        '/elwood/runtime/deno.json',
         '-A',
         '/elwood/runner/runtime/launch.ts',
       ]

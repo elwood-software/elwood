@@ -38,8 +38,16 @@ export class Step extends State {
     try {
       this.start();
 
+      const commandInputEnv = this.#getCommandInputEnv();
+
       const result = await executeDenoRun({
         file: resolveActionUrlForDenoCommand(this.actionUrl),
+        permissions: {
+          env: Object.keys(commandInputEnv),
+        },
+        env: {
+          ...commandInputEnv,
+        },
       });
 
       switch (result.code) {
@@ -64,5 +72,13 @@ export class Step extends State {
       ...super.getCombinedState(),
       definition: this.def,
     };
+  }
+
+  #getCommandInputEnv(): Record<string, string> {
+    const withDefinition = this.def.with ?? {};
+
+    return Object.entries(withDefinition).reduce((acc, [key, value]) => {
+      return {...acc, [`INPUT_${key.toUpperCase()}`]: String(value)};
+    }, {});
   }
 }

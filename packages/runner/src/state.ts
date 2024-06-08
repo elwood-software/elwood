@@ -67,8 +67,8 @@ export abstract class State implements RunnerDefinition.State {
       const end = performance.now();
 
       this.setState('timing', {
-        start: this.#startTime,
-        end,
+        start: performance.timeOrigin + this.#startTime,
+        end: performance.timeOrigin + end,
         duration: end - this.#startTime,
       });
     }

@@ -1,14 +1,15 @@
 export type ExecuteDenoRunOptions = Omit<ExecuteDenoCommand, 'args'> & {
   file: string;
+  permissions?: Deno.PermissionOptionsObject;
 };
 
 export async function executeDenoRun(
   options: ExecuteDenoRunOptions,
 ): Promise<Deno.CommandOutput> {
-  const {file, ...cmdOptions} = options;
+  const {file, permissions, ...cmdOptions} = options;
 
   return await executeDenoCommand({
-    args: ['run', file],
+    args: ['run', ...permissionObjectToFlags(permissions ?? {}), file],
     ...cmdOptions,
   });
 }
@@ -25,4 +26,24 @@ export async function executeDenoCommand(
   });
 
   return await cmd.output();
+}
+
+export function permissionObjectToFlags(
+  options: Deno.PermissionOptionsObject,
+): string[] {
+  return Object.entries(options).reduce((acc, [name, value]) => {
+    if (value === false || value === 'inherit') {
+      return acc;
+    }
+
+    if (value === true) {
+      return [...acc, `--allow-${name}`];
+    }
+
+    if (Array.isArray(value)) {
+      return [...acc, `--allow-${name}=${value.join(',')}`];
+    }
+
+    return acc;
+  }, [] as string[]);
 }

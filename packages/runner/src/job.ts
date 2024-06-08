@@ -43,6 +43,15 @@ export class Job extends State {
 
         await step.execute();
       }
+
+      const hasFailure = this.steps.some(job => job.result === 'failure');
+
+      if (hasFailure) {
+        await this.fail('Execution failed');
+        return;
+      }
+
+      await this.succeed();
     } catch (error) {
       await this.fail(error.message);
     } finally {

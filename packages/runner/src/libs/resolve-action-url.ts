@@ -1,5 +1,5 @@
 import {basename, dirname} from 'node:path';
-import {fromFileUrl} from 'https://deno.land/std@0.224.0/path/from_file_url.ts';
+import {fromFileUrl} from '@std/path';
 
 import {RunnerDefinition} from '../types.ts';
 

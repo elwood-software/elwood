@@ -1,0 +1,16 @@
+{
+  "tasks": {
+    "dev": "docker compose -f ./dev/docker-compose.yml up",
+    "dev:down": "docker compose -f ./dev/docker-compose.yml down"
+  },
+  "compilerOptions": {
+    "strict": true,
+    "useUnknownInCatchVariables": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1.0.0-rc.1",
+    "@std/path": "jsr:@std/path@1.0.0-rc.1"
+  }
+}

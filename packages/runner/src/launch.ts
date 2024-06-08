@@ -15,16 +15,17 @@ const instructions: RunnerDefinition.Normalized = {
           name: 'copy',
           action: 'fs/copy',
           with: {
-            src: 'file://tmp/conan.mp3',
+            src: 'file:///tmp/conan.mp3',
             dest: 'conan.mp3',
+          },
+          permissions: {
+            env: [],
           },
         },
       ],
     },
   ],
 };
-
-console.log('instructions', instructions);
 
 if (import.meta.main) {
   main();

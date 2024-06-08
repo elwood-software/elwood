@@ -29,5 +29,10 @@ export namespace RunnerDefinition {
     name: string;
     action: string;
     with: Record<string, string>;
+    permissions: StepPermission;
+  }
+
+  export interface StepPermission {
+    env: string[];
   }
 }
