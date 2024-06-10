@@ -1,9 +1,4 @@
-import {type ClassValue, clsx} from 'clsx';
-import {twMerge} from 'tailwind-merge';
-
-export function cn(...inputs: ClassValue[]): string {
-  return twMerge(clsx(inputs));
-}
+import {cn} from '../lib/utils';
 
 export default function RetroGrid({className}: {className?: string}) {
   return (
