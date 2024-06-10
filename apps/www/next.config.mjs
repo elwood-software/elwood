@@ -6,8 +6,40 @@ export default {
     config.resolve.alias.canvas = false;
     return config;
   },
+
   async rewrites() {
     return [
+      {
+        has: [
+          {
+            type: 'host',
+            value: 'elwood.run',
+          },
+        ],
+        source: '/:path*',
+        destination: '/run/:path*',
+      },
+      {
+        has: [
+          {
+            type: 'host',
+            value: 'elwood.run',
+          },
+        ],
+        source: '/',
+        destination: '/run',
+      },
+      {
+        has: [
+          {
+            type: 'host',
+            value: 'elwood.run',
+          },
+        ],
+        source: '/schema.json',
+        destination:
+          'https://raw.githubusercontent.com/elwood-software/run/main/schema.json',
+      },
       {
         source: '/db/latest.json',
         destination:
