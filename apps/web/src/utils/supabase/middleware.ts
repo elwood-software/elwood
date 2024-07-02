@@ -4,6 +4,7 @@ import {getSupabaseEnv} from './get-supabase-env';
 
 export async function updateSession(
   request: NextRequest,
+  authNotRequiredPaths: string[],
 ): Promise<NextResponse> {
   const [url, key] = getSupabaseEnv();
 
@@ -63,7 +64,25 @@ export async function updateSession(
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
-    await supabase.auth.getUser();
+
+    const {
+      data: {user},
+    } = await supabase.auth.getUser();
+
+    if (
+      !user &&
+      !authNotRequiredPaths.some(path =>
+        request.nextUrl.pathname.startsWith(path),
+      )
+    ) {
+      // no user, potentially respond by redirecting the user to the login page
+      const url = new URL('/login', request.nextUrl.href);
+      url.search = new URLSearchParams({
+        next_uri: `${request.nextUrl.pathname}?${request.nextUrl.search}`,
+      }).toString();
+
+      return NextResponse.redirect(url, 307);
+    }
 
     return response;
   } catch (e) {

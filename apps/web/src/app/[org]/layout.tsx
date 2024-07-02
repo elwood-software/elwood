@@ -1,6 +1,7 @@
 import {type PropsWithChildren} from 'react';
-import AuthPage from '@/app/(unauthenticated)/auth/page';
+
 import {createClient} from '@/utils/supabase/server';
+import {redirect} from 'next/navigation';
 
 export default async function AuthenticatedLayout(
   props: PropsWithChildren,
@@ -11,7 +12,7 @@ export default async function AuthenticatedLayout(
   } = await client.auth.getUser();
 
   if (!user) {
-    return <AuthPage />;
+    return redirect('/login');
   }
 
   return <>{props.children}</>;
