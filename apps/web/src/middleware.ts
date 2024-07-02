@@ -2,7 +2,13 @@ import {type NextResponse, type NextRequest} from 'next/server';
 import {updateSession} from '@/utils/supabase/middleware';
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
-  return await updateSession(request, ['/login', '/logout', '/api']);
+  return await updateSession(request, [
+    '/login',
+    '/logout',
+    '/api',
+    '/org',
+    '/error',
+  ]);
 }
 
 export const config = {
