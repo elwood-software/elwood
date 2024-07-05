@@ -46,7 +46,8 @@
     "react-time-ago": "^7.3.3",
     "react-use": "^17.5.0",
     "remark-gfm": "^4.0.0",
-    "sse.js": "^2.5.0"
+    "sse.js": "^2.5.0",
+    "yaml": "^2.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",

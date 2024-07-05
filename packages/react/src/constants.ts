@@ -1,6 +1,7 @@
 export enum FeatureFlag {
   EnableAssistant = 'enable_assistant',
-  EnabledBookmarks = 'enabled_bookmarks',
+  EnableBookmarks = 'enable_bookmarks',
+  EnableSearch = 'enable_search',
 }
 
 export enum ConfigurationNames {

@@ -17,5 +17,11 @@ export function LoginForm(props: LoginFormProps) {
     message: null,
   });
 
-  return <AuthForm loading={pending} loginAction={formAction as any} />;
+  return (
+    <AuthForm
+      loading={pending}
+      errors={state.message}
+      loginAction={formAction as any}
+    />
+  );
 }

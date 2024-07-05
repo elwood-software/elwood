@@ -54,7 +54,8 @@ export type UseMainLayoutInput = PropsWithChildren<
 export function useMainLayout(
   input: PropsWithChildren<UseMainLayoutInput> = {},
 ): MainLayoutState {
-  const {workspaceName, avatarUrl, onLogout} = useProviderContext();
+  const {workspaceName, avatarUrl, onLogout, featureFlags} =
+    useProviderContext();
   const currentMember = useCurrentMember();
   const theme = useTheme();
 
@@ -102,6 +103,12 @@ export function useMainLayout(
   const searchResults = mapSearchResults(searchQuery.data ?? []);
 
   const search = useMemo(() => {
+    if (featureFlags.enable_search === false) {
+      // make sure to return a real node so the
+      // grid layout doesn't break
+      return <div></div>;
+    }
+
     return (
       <HeaderSearch
         loading={searchLoading}
@@ -112,7 +119,7 @@ export function useMainLayout(
         results={searchResults}
       />
     );
-  }, [searchValue, searchLoading, searchResults]);
+  }, [searchValue, searchLoading, searchResults, featureFlags.enable_search]);
 
   // User Menu
   const userMenu = useMemo(

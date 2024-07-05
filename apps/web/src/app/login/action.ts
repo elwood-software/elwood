@@ -45,7 +45,7 @@ export async function login(
     };
   }
 
-  const {error} = await client.auth.signInWithPassword({
+  const {data, error} = await client.auth.signInWithPassword({
     email: validatedFields.data.email,
     password: validatedFields.data.password,
   });
@@ -56,6 +56,7 @@ export async function login(
       message: [error.message],
     };
   }
+  console.log(data);
 
   revalidatePath('/', 'layout');
   redirect('/');

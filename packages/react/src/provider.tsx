@@ -18,8 +18,9 @@ import {FeatureFlag, ConfigurationNames} from './constants';
 
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
-  'uploadManager' | 'member' | 'avatarUrl' | 'featureFlags' | 'configuration'
+  'uploadManager' | 'member' | 'avatarUrl' | 'configuration'
 > & {
+  featureFlags?: Partial<Record<FeatureFlag, boolean>>;
   loadingComponent?: ReactNode;
 };
 
@@ -44,9 +45,14 @@ export function ElwoodProvider(
   }, [accessToken, props.client.key]);
   const renderers = props.renderers ?? defaultRenders;
 
+  // make sure feature flags are defined
   const featureFlags: ProviderContextValue['featureFlags'] = {
-    [FeatureFlag.EnableAssistant]: true,
-    [FeatureFlag.EnabledBookmarks]: false,
+    [FeatureFlag.EnableAssistant]:
+      props.featureFlags?.[FeatureFlag.EnableAssistant] ?? false,
+    [FeatureFlag.EnableBookmarks]:
+      props.featureFlags?.[FeatureFlag.EnableBookmarks] ?? false,
+    [FeatureFlag.EnableSearch]:
+      props.featureFlags?.[FeatureFlag.EnableSearch] ?? false,
   };
 
   const configuration: ProviderContextValue['configuration'] = {

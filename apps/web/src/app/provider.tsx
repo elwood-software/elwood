@@ -7,6 +7,7 @@ import {ElwoodProvider} from '@elwood/react';
 
 export type ProviderProps = {
   client: ElwoodClient;
+  workspaceName: string;
 };
 
 export function Provider(props: PropsWithChildren<ProviderProps>) {
@@ -18,7 +19,7 @@ export function Provider(props: PropsWithChildren<ProviderProps>) {
 
   return (
     <ElwoodProvider
-      workspaceName="Dunder Mifflin"
+      workspaceName={props.workspaceName}
       client={props.client}
       onLogout={onLogout}>
       {props.children}

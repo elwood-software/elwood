@@ -3,6 +3,8 @@ import {Outlet, type RouteObject} from 'react-router-dom';
 
 import {PageLayout} from '@/components/layouts/page';
 
+import {runRoutes} from './run/routes';
+
 import Home from './home';
 import NodeLayout from './node/layout';
 import Layout from './layout';
@@ -15,6 +17,7 @@ const Assistant = lazy(() => import('./assistant'));
 const fallback = <PageLayout />;
 
 export const dashboardRoutes: RouteObject[] = [
+  ...runRoutes,
   {
     path: '/',
     element: <Layout />,

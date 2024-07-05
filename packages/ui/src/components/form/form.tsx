@@ -1,4 +1,4 @@
-import {type FormEventHandler, type ReactNode} from 'react';
+import {PropsWithChildren, type FormEventHandler, type ReactNode} from 'react';
 import * as Primitive from '@radix-ui/react-form';
 import {clsx} from 'clsx';
 import {Button} from '../button/button';
@@ -19,7 +19,7 @@ export interface FormProps {
   onSubmit?: FormEventHandler;
 }
 
-export function Form(props: FormProps): JSX.Element {
+export function Form(props: PropsWithChildren<FormProps>): JSX.Element {
   return (
     <Primitive.Root onSubmit={props.onSubmit} className="space-y-6">
       {props.fields.map(field => {
@@ -69,14 +69,7 @@ export function Form(props: FormProps): JSX.Element {
           </Primitive.Field>
         );
       })}
-
-      {props.onSubmit ? (
-        <Primitive.Submit asChild>
-          <Button type="submit" variant="brand">
-            Post question
-          </Button>
-        </Primitive.Submit>
-      ) : null}
+      {props.children}
     </Primitive.Root>
   );
 }
