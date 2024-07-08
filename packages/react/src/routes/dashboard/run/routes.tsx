@@ -6,6 +6,8 @@ import {PageLayout} from '@/components/layouts/page';
 import Layout from './layout';
 
 const RunNewRoute = lazy(() => import('./new'));
+const RunHomeRoute = lazy(() => import('./home'));
+const RunViewRoute = lazy(() => import('./view'));
 
 const fallback = <PageLayout />;
 
@@ -17,7 +19,11 @@ export const runRoutes: RouteObject[] = [
       {
         path: '/run',
         index: true,
-        element: 'div',
+        element: (
+          <Suspense fallback={fallback}>
+            <RunHomeRoute />
+          </Suspense>
+        ),
       },
       {
         path: '/run/new',
@@ -29,7 +35,11 @@ export const runRoutes: RouteObject[] = [
       },
       {
         path: '/run/:id',
-        element: 'div',
+        element: (
+          <Suspense fallback={fallback}>
+            <RunViewRoute />
+          </Suspense>
+        ),
       },
     ],
   },

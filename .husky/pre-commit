@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# TURBO_UI=0 pnpm type-check
+ TURBO_UI=0 pnpm type-check

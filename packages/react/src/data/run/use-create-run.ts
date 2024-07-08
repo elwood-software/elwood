@@ -35,17 +35,16 @@ export function useCreateRun(
       const result = await supabase
         .from('elwood_run')
         .insert({
-          status: 'unassigned',
           configuration: getValue(data.configuration),
           variables: getValue(data.variables),
           metadata: {
-            started_by_user_id: session?.user?.id,
+            started_by_user_id: session?.session?.user?.id,
           },
         })
         .select('id')
         .single();
 
-      return result.data;
+      return result.data as UseCreateRunResult;
     },
     async onSuccess(data, variables, context) {
       // await queryClient.refetchQueries({

@@ -1,4 +1,4 @@
-import type {ElwoodClient} from '@/routes/dashboard/node/js/src';
+import type {ElwoodClient} from '@elwood/js';
 import {invariant} from '@elwood/common';
 import {useProviderContext} from './use-provider-context';
 

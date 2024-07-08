@@ -18,10 +18,10 @@ import {FeatureFlag, ConfigurationNames} from './constants';
 
 export type ElwoodProviderProps = Omit<
   ProviderContextValue,
-  'uploadManager' | 'member' | 'avatarUrl' | 'configuration'
+  'uploadManager' | 'member' | 'avatarUrl' | 'configuration' | 'featureFlags'
 > & {
-  featureFlags?: Partial<Record<FeatureFlag, boolean>>;
-  loadingComponent?: ReactNode;
+  featureFlags?: Partial<Record<FeatureFlag, boolean>> | undefined;
+  loadingComponent?: ReactNode | undefined;
 };
 
 const queryClient = new QueryClient();
