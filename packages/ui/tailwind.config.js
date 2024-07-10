@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: '-apple-system, "system-ui", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+      mono: 'ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace',
     },
     container: {
       center: true,

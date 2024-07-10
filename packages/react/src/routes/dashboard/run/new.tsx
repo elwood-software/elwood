@@ -4,6 +4,7 @@ import {Button, Form} from '@elwood/ui';
 import Editor from '@monaco-editor/react';
 import {stringify} from 'yaml';
 
+import {CreateRun} from '@/components/run/create';
 import {useCreateRun} from '@/data/run/use-create-run';
 
 const defaultValue = stringify({
@@ -20,7 +21,7 @@ const defaultValue = stringify({
           when: 'true',
           action: 'echo',
           input: {
-            content: '${{ `Hello, ${vars.name}` }',
+            content: '${{ `Hello, ${vars.name}` }}',
           },
         },
       ],
@@ -44,9 +45,7 @@ export default function RunNewRoute(): JSX.Element {
 
   const action = useCreateRun();
 
-  function onSubmit(e: FormEvent): void {
-    e.preventDefault();
-
+  function onSubmit(): void {
     action
       .mutateAsync({
         configuration: value.configuration,
@@ -63,48 +62,14 @@ export default function RunNewRoute(): JSX.Element {
   return (
     <>
       <div></div>
-      <div className="p-12 w-full">
-        <Form
-          name="run-new"
+      <div className="w-full">
+        <CreateRun
           onSubmit={onSubmit}
-          fields={[
-            {
-              name: 'configuration',
-              label: 'Workflow',
-              control: (
-                <Editor
-                  height="50vh"
-                  width="100%"
-                  defaultLanguage="yaml"
-                  defaultValue={defaultValue}
-                  theme="vs-dark"
-                  onChange={nextValue =>
-                    setValue(v => ({...value, configuration: nextValue ?? ''}))
-                  }
-                  options={{minimap: {enabled: false}}}
-                />
-              ),
-            },
-            {
-              name: 'variables',
-              label: 'Variables',
-              control: (
-                <Editor
-                  height="50vh"
-                  width="100%"
-                  defaultLanguage="json"
-                  defaultValue={value.variables}
-                  theme="vs-dark"
-                  onChange={nextValue =>
-                    setValue(v => ({...value, variables: nextValue ?? ''}))
-                  }
-                  options={{minimap: {enabled: false}, lineNumbers: 'off'}}
-                />
-              ),
-            },
-          ]}>
-          <Button type="submit">Start</Button>
-        </Form>
+          onChange={(field, fieldValue) => {
+            setValue(() => ({...value, [field]: fieldValue}));
+          }}
+          values={value}
+        />
       </div>
     </>
   );

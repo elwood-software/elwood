@@ -2,7 +2,9 @@ import {useGetRun} from '@/data/run/use-get-run';
 import {Spinner} from '@elwood/ui';
 import {useParams} from 'react-router-dom';
 
-export default function RunView() {
+import {RunView, RunViewProps} from '@/components/run/view';
+
+export default function RunViewRoute() {
   const params = useParams<{id: string}>();
   const query = useGetRun({id: params.id!});
 
@@ -11,13 +13,8 @@ export default function RunView() {
   }
 
   return (
-    <div className="p-12">
-      <div>Status: {query.data?.status}</div>
-      <div>Result: {query.data?.result}</div>
-      <div>Report</div>
-      <div>
-        <pre>{JSON.stringify(query.data?.report, null, 2)}</pre>
-      </div>
-    </div>
+    <>
+      <RunView className="m-6" run={query.data as RunViewProps['run']} />
+    </>
   );
 }

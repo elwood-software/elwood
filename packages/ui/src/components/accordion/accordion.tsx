@@ -6,9 +6,10 @@ import {AccordionTrigger} from './trigger';
 
 export interface AccordionPropsItem {
   id: string;
-  label: JSX.Element;
-  content: JSX.Element | (() => JSX.Element);
+  label: JSX.Element | ((open: boolean) => JSX.Element);
+  content: JSX.Element | ((open: boolean) => JSX.Element);
   open: boolean;
+  arrow?: boolean;
 }
 
 export interface AccordionProps {
@@ -37,11 +38,13 @@ export function Accordion(props: AccordionProps): JSX.Element {
             value={item.id}
             className={props.itemClassName}>
             <AccordionTrigger className={props.triggerClassName}>
-              {item.label}
+              {typeof item.label === 'function'
+                ? item.label(value.includes(item.id))
+                : item.label}
             </AccordionTrigger>
             <AccordionContent className={props.contentClassName}>
               {typeof item.content === 'function'
-                ? item.content()
+                ? item.content(value.includes(item.id))
                 : item.content}
             </AccordionContent>
           </AccordionItem>
