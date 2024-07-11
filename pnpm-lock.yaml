@@ -119,7 +119,7 @@ importers:
         version: 17.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwindcss:
         specifier: ^3.4.4
-        version: 3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+        version: 3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       typescript:
         specifier: ^5.5.3
         version: 5.5.3
@@ -206,7 +206,7 @@ importers:
         version: 1.2.1
       tailwindcss:
         specifier: ^3.4.4
-        version: 3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+        version: 3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       typescript:
         specifier: ^5.5.3
         version: 5.5.3
@@ -276,7 +276,7 @@ importers:
         version: 17.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwindcss:
         specifier: ^3.4.4
-        version: 3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+        version: 3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -358,7 +358,7 @@ importers:
         version: 2.4.0
       tailwindcss:
         specifier: ^3.4.4
-        version: 3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+        version: 3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -503,6 +503,9 @@ importers:
       '@elwood/ui':
         specifier: workspace:*
         version: link:../ui
+      '@jsr/elwood__run':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@monaco-editor/react':
         specifier: ^4.6.0
         version: 4.6.0(monaco-editor@0.50.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -539,6 +542,9 @@ importers:
       monaco-editor:
         specifier: ^0.50.0
         version: 0.50.0
+      monaco-yaml:
+        specifier: ^5.2.1
+        version: 5.2.1(monaco-editor@0.50.0)
       react-accessible-treeview:
         specifier: ^2.9.1
         version: 2.9.1(classnames@2.5.1)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -641,7 +647,7 @@ importers:
         version: 8.2.1(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       tailwindcss:
         specifier: ^3.4.4
-        version: 3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+        version: 3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       tsup:
         specifier: ^8.1.0
         version: 8.1.0(@swc/core@1.5.7)(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))(typescript@5.5.3)
@@ -734,7 +740,7 @@ importers:
         version: 2.4.0
       tailwindcss:
         specifier: ^3.4.4
-        version: 3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+        version: 3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3)))
@@ -2038,6 +2044,45 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
+  '@jsr/elwood__run@0.1.0':
+    resolution: {integrity: sha512-aHt/cvffK87XFkj49E0TaIyoYM/3xpWpWDZxozyQ+BHaglsyKZz9NqlkrSLh4TuTp8aHJ3QlRRPZnGW1WfEyxA==, tarball: https://npm.jsr.io/~/11/@jsr/elwood__run/0.1.0.tgz}
+
+  '@jsr/std__assert@0.226.0':
+    resolution: {integrity: sha512-xCuUFDfHkIZd96glKgjZbnYFqu6blu8Y53SyvDMlFDJm1Y/j+/FcW6xq7TzGFIaF5B9QecIlDfamfhzA8ZdVbg==, tarball: https://npm.jsr.io/~/11/@jsr/std__assert/0.226.0.tgz}
+
+  '@jsr/std__bytes@1.0.2':
+    resolution: {integrity: sha512-bkZ1rllRB1qsxFbPqtO1VAYTW2+3ZDmf6pcy8xihKS33r0Z1ly6/E/5DoapnJsNy05LdnANUySWt5kj/awgGdg==, tarball: https://npm.jsr.io/~/11/@jsr/std__bytes/1.0.2.tgz}
+
+  '@jsr/std__cli@0.224.7':
+    resolution: {integrity: sha512-SSE7AMT/nqTUKeQXB+PZcmD6L5IjsOFDQdm88Ik2o6P4gS+gXewLMPZJu/X/gaOH5ux2C4xZ26Dgp3vCAIuB4g==, tarball: https://npm.jsr.io/~/11/@jsr/std__cli/0.224.7.tgz}
+
+  '@jsr/std__dotenv@0.224.1':
+    resolution: {integrity: sha512-bG+4AfA84irgH7rrkfLZp522PCmF6FxW9tr6nXsrekI6KQU61y83rrpNuyZ/kARRM3ywi3krYnH0SGjk9rfHmw==, tarball: https://npm.jsr.io/~/11/@jsr/std__dotenv/0.224.1.tgz}
+
+  '@jsr/std__fmt@0.225.4':
+    resolution: {integrity: sha512-lb8QcV3YnAu3GsrG7wd51Fb56RxOBp4szMRS/TCLnQptmF0Rd0v8ksQeTHmGkuD6MY/V8gEy/Sj0qulRvR9lqQ==, tarball: https://npm.jsr.io/~/11/@jsr/std__fmt/0.225.4.tgz}
+
+  '@jsr/std__fs@1.0.0-rc.4':
+    resolution: {integrity: sha512-Hl8Hsi7NKBaikzrTXQAKO+feYODCQ23ziWihC/IhoU8j05xL466FCNf4hloGu4/Sl/+hl44dXIrM/ejezK/whA==, tarball: https://npm.jsr.io/~/11/@jsr/std__fs/1.0.0-rc.4.tgz}
+
+  '@jsr/std__internal@1.0.1':
+    resolution: {integrity: sha512-ssI1kvluIero6cCfiWNmYItqCR8QpQB+STBJoe/xQVZ79SDpoqjK5VF2Eq/2M+Dz8WbqHVmrXRCaGN162x+Ebw==, tarball: https://npm.jsr.io/~/11/@jsr/std__internal/1.0.1.tgz}
+
+  '@jsr/std__io@0.224.3':
+    resolution: {integrity: sha512-EeKfm0y4qe+iDWmjfVW+1GdGCM4qAYZ/SSH58GyeD1GnTC5I3xMjDcZm4+oDZzpyUi9/jEtnKnaYppSdTv9Nkw==, tarball: https://npm.jsr.io/~/11/@jsr/std__io/0.224.3.tgz}
+
+  '@jsr/std__log@0.224.3':
+    resolution: {integrity: sha512-CjwrlOqKFFaPf+PKeT7aLi2ECnW6GEQlQ4vAk+SifzHiZAGZ2cPkE7ipGpodgdPazuy1mX/58G3yOIkADD/T2Q==, tarball: https://npm.jsr.io/~/11/@jsr/std__log/0.224.3.tgz}
+
+  '@jsr/std__path@0.225.2':
+    resolution: {integrity: sha512-7JIWv7OKgLAYVEL0IYbYREcsCYZ8kONle1CzgHsJEY5zqYcZdAgEKdku/vBAVgBfKVnWWOEPr9kFNXTy2IhQ8w==, tarball: https://npm.jsr.io/~/11/@jsr/std__path/0.225.2.tgz}
+
+  '@jsr/std__path@1.0.0-rc.4':
+    resolution: {integrity: sha512-S3zdQlMGS6sNM0OvZsPoNKIF9dNiN1eh2fK6c5YNBl8PwTJGtjWS4OnwgZ9uaXTs1TZZDiCHSqK+l9l07Gr04Q==, tarball: https://npm.jsr.io/~/11/@jsr/std__path/1.0.0-rc.4.tgz}
+
+  '@jsr/std__yaml@0.224.3':
+    resolution: {integrity: sha512-G4ZoM7Y0Y/rv0Jm+RVlWKmZXxZdL+cOxNwxx0Fv3DqkSdCxNvyls6fw7ai9cYWnhRQcPrnd8cTc0WMTgBTXKIg==, tarball: https://npm.jsr.io/~/11/@jsr/std__yaml/0.224.3.tgz}
+
   '@malept/cross-spawn-promise@1.1.1':
     resolution: {integrity: sha512-RTBGWL5FWQcg9orDOCcp4LvItNzUPcyEU9bwaeJX0rJ1IQxzucC48Y0/sQLp/g6t99IQgAlGIaesJS+gTn7tVQ==}
     engines: {node: '>= 10'}
@@ -3188,11 +3233,17 @@ packages:
     resolution: {integrity: sha512-1ibVeYUacxWYi9i0cf5efil6adJ9WRyZBLivgjs+AUpewx1F3xPi7gLgaASI2SmIQxPoCEjAsLAzKPgMJVgOUQ==}
     engines: {node: 4.x || >=6.0.0}
 
+  '@supabase/postgrest-js@1.15.5':
+    resolution: {integrity: sha512-YR4TiitTE2hizT7mB99Cl3V9i00RAY5sUxS2/NuWWzkreM7OeYlP2OqnqVwwb4z6ILn+j8x9e/igJDepFhjswQ==}
+
   '@supabase/postgrest-js@1.15.7':
     resolution: {integrity: sha512-TJztay5lcnnKuXjIO/X/aaajOsP8qNeW0k3MqIFoOtRolj5MEAIy8rixNakRk3o23eVCdsuP3iMLYPvOOruH6Q==}
 
   '@supabase/realtime-js@2.10.2':
     resolution: {integrity: sha512-qyCQaNg90HmJstsvr2aJNxK2zgoKh9ZZA8oqb7UT2LCh3mj9zpa3Iwu167AuyNxsxrUE8eEJ2yH6wLCij4EApA==}
+
+  '@supabase/realtime-js@2.9.5':
+    resolution: {integrity: sha512-TEHlGwNGGmKPdeMtca1lFTYCedrhTAv3nZVoSjrKQ+wkMmaERuCe57zkC5KSWFzLYkb5FVHW8Hrr+PX1DDwplQ==}
 
   '@supabase/ssr@0.3.0':
     resolution: {integrity: sha512-lcVyQ7H6eumb2FB1Wa2N+jYWMfq6CFza3KapikT0fgttMQ+QvDgpNogx9jI8bZgKds+XFSMCojxFvFb+gwdbfA==}
@@ -3201,6 +3252,9 @@ packages:
 
   '@supabase/storage-js@2.6.0':
     resolution: {integrity: sha512-REAxr7myf+3utMkI2oOmZ6sdplMZZ71/2NEIEMBZHL9Fkmm3/JnaOZVSRqvG4LStYj2v5WhCruCzuMn6oD/Drw==}
+
+  '@supabase/supabase-js@2.43.5':
+    resolution: {integrity: sha512-Y4GukjZWW6ouohMaPlYz8tSz9ykf9jY7w9/RhqKuScmla3Xiklce8eLr8TYAtA+oQYCWxo3RgS3B6O4rd/72FA==}
 
   '@supabase/supabase-js@2.44.2':
     resolution: {integrity: sha512-fouCwL1OxqftOwLNgdDUPlNnFuCnt30nS4kLcnTpe6NYKn1PmjxRRBFmKscgHs6FjWyU+32ZG4uBJ29+/BWiDw==}
@@ -6273,6 +6327,9 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
+  jsonc-parser@3.3.1:
+    resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
+
   jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
 
@@ -6803,6 +6860,25 @@ packages:
   monaco-editor@0.50.0:
     resolution: {integrity: sha512-8CclLCmrRRh+sul7C08BmPBP3P8wVWfBHomsTcndxg5NRCEPfu/mc2AGU8k37ajjDVXcXFc12ORAMUkmk+lkFA==}
 
+  monaco-languageserver-types@0.3.4:
+    resolution: {integrity: sha512-d58sP5yNhjs8uG1ESXs0hFnuX2YfdMhiGeWhdgTUZyG9aaWgyI4dDwrK1khf1mPF2u9Sljv42sfYqPFZnqYMYg==}
+
+  monaco-marker-data-provider@1.2.3:
+    resolution: {integrity: sha512-BOiQs9UNEwVrF1rwYI32HUP8D7JTuHlJRlykx83e4+jfh1ceBWIBfB5ENDVSFUz651d95kxjKj36vV2JO3zr9w==}
+
+  monaco-types@0.1.0:
+    resolution: {integrity: sha512-aWK7SN9hAqNYi0WosPoMjenMeXJjwCxDibOqWffyQ/qXdzB/86xshGQobRferfmNz7BSNQ8GB0MD0oby9/5fTQ==}
+
+  monaco-worker-manager@2.0.1:
+    resolution: {integrity: sha512-kdPL0yvg5qjhKPNVjJoym331PY/5JC11aPJXtCZNwWRvBr6jhkIamvYAyiY5P1AWFmNOy0aRDRoMdZfa71h8kg==}
+    peerDependencies:
+      monaco-editor: '>=0.30.0'
+
+  monaco-yaml@5.2.1:
+    resolution: {integrity: sha512-hquqqJSOf1y+rDX5FbvynsMck5OG/x2wFGac8eRNcE9jfcczodHprYwqYylDfsH6+OtNl5FuENB24UmPzk7waQ==}
+    peerDependencies:
+      monaco-editor: '>=0.36'
+
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -7103,6 +7179,9 @@ packages:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
 
+  path-browserify@1.0.1:
+    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
+
   path-exists@3.0.0:
     resolution: {integrity: sha512-bpC7GYwiDYQ4wYLe+FA8lhRjhQCMcQGuSgGGqDkg/QerRWw9CmGRT0iSOVRSZJ29NMLZgIzqaljJ63oaL4NIJQ==}
     engines: {node: '>=4'}
@@ -7329,6 +7408,11 @@ packages:
         optional: true
       prettier-plugin-svelte:
         optional: true
+
+  prettier@2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
 
   prettier@3.3.2:
     resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
@@ -8795,6 +8879,22 @@ packages:
         optional: true
       terser:
         optional: true
+
+  vscode-jsonrpc@8.2.0:
+    resolution: {integrity: sha512-C+r0eKJUIfiDIfwJhria30+TYWPtuHJXHtI7J0YlOmKAo7ogxP20T0zxB7HZQIFhIyvoBPwWskjxrvAtfjyZfA==}
+    engines: {node: '>=14.0.0'}
+
+  vscode-languageserver-protocol@3.17.5:
+    resolution: {integrity: sha512-mb1bvRJN8SVznADSGWM9u/b07H7Ecg0I3OgXDuLdn307rl/J3A9YD6/eYOssqhecL27hK1IPZAsaqh00i/Jljg==}
+
+  vscode-languageserver-textdocument@1.0.11:
+    resolution: {integrity: sha512-X+8T3GoiwTVlJbicx/sIAF+yuJAqz8VvwJyoMVhwEMoEKE/fkDmrqUgDMyBECcM2A2frVZIUj5HI/ErRXCfOeA==}
+
+  vscode-languageserver-types@3.17.5:
+    resolution: {integrity: sha512-Ld1VelNuX9pdF39h2Hgaeb5hEZM2Z3jUrrMgWQAu82jMtZp7p3vJT3BzToKtZI7NgQssZje5o0zryOrhQvzQAg==}
+
+  vscode-uri@3.0.8:
+    resolution: {integrity: sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==}
 
   w3c-xmlserializer@4.0.0:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==}
@@ -10508,6 +10608,57 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.0
     optional: true
 
+  '@jsr/elwood__run@0.1.0':
+    dependencies:
+      '@jsr/std__assert': 0.226.0
+      '@jsr/std__cli': 0.224.7
+      '@jsr/std__dotenv': 0.224.1
+      '@jsr/std__fmt': 0.225.4
+      '@jsr/std__log': 0.224.3
+      '@jsr/std__path': 0.225.2
+      '@jsr/std__yaml': 0.224.3
+      '@supabase/supabase-js': 2.43.5
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@jsr/std__assert@0.226.0':
+    dependencies:
+      '@jsr/std__internal': 1.0.1
+
+  '@jsr/std__bytes@1.0.2': {}
+
+  '@jsr/std__cli@0.224.7': {}
+
+  '@jsr/std__dotenv@0.224.1': {}
+
+  '@jsr/std__fmt@0.225.4': {}
+
+  '@jsr/std__fs@1.0.0-rc.4':
+    dependencies:
+      '@jsr/std__path': 1.0.0-rc.4
+
+  '@jsr/std__internal@1.0.1': {}
+
+  '@jsr/std__io@0.224.3':
+    dependencies:
+      '@jsr/std__bytes': 1.0.2
+
+  '@jsr/std__log@0.224.3':
+    dependencies:
+      '@jsr/std__fmt': 0.225.4
+      '@jsr/std__fs': 1.0.0-rc.4
+      '@jsr/std__io': 0.224.3
+
+  '@jsr/std__path@0.225.2':
+    dependencies:
+      '@jsr/std__assert': 0.226.0
+
+  '@jsr/std__path@1.0.0-rc.4': {}
+
+  '@jsr/std__yaml@0.224.3': {}
+
   '@malept/cross-spawn-promise@1.1.1':
     dependencies:
       cross-spawn: 7.0.3
@@ -11778,11 +11929,25 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
+  '@supabase/postgrest-js@1.15.5':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
   '@supabase/postgrest-js@1.15.7':
     dependencies:
       '@supabase/node-fetch': 2.6.15
 
   '@supabase/realtime-js@2.10.2':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+      '@types/phoenix': 1.6.5
+      '@types/ws': 8.5.10
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@supabase/realtime-js@2.9.5':
     dependencies:
       '@supabase/node-fetch': 2.6.15
       '@types/phoenix': 1.6.5
@@ -11801,6 +11966,18 @@ snapshots:
   '@supabase/storage-js@2.6.0':
     dependencies:
       '@supabase/node-fetch': 2.6.15
+
+  '@supabase/supabase-js@2.43.5':
+    dependencies:
+      '@supabase/auth-js': 2.64.2
+      '@supabase/functions-js': 2.4.1
+      '@supabase/node-fetch': 2.6.15
+      '@supabase/postgrest-js': 1.15.5
+      '@supabase/realtime-js': 2.9.5
+      '@supabase/storage-js': 2.6.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   '@supabase/supabase-js@2.44.2':
     dependencies:
@@ -11887,7 +12064,7 @@ snapshots:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+      tailwindcss: 3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
 
   '@tanstack/query-core@5.50.1': {}
 
@@ -15653,10 +15830,10 @@ snapshots:
 
   jest@29.7.0:
     dependencies:
-      '@jest/core': 29.7.0(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+      '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       '@jest/types': 29.6.3
       import-local: 3.1.0
-      jest-cli: 29.7.0(@types/node@20.14.10)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+      jest-cli: 29.7.0(@types/node@20.14.10)(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -15795,6 +15972,8 @@ snapshots:
       minimist: 1.2.8
 
   json5@2.2.3: {}
+
+  jsonc-parser@3.3.1: {}
 
   jsonfile@4.0.0:
     optionalDependencies:
@@ -16555,6 +16734,37 @@ snapshots:
 
   monaco-editor@0.50.0: {}
 
+  monaco-languageserver-types@0.3.4:
+    dependencies:
+      monaco-types: 0.1.0
+      vscode-languageserver-protocol: 3.17.5
+      vscode-uri: 3.0.8
+
+  monaco-marker-data-provider@1.2.3:
+    dependencies:
+      monaco-types: 0.1.0
+
+  monaco-types@0.1.0: {}
+
+  monaco-worker-manager@2.0.1(monaco-editor@0.50.0):
+    dependencies:
+      monaco-editor: 0.50.0
+
+  monaco-yaml@5.2.1(monaco-editor@0.50.0):
+    dependencies:
+      jsonc-parser: 3.3.1
+      monaco-editor: 0.50.0
+      monaco-languageserver-types: 0.3.4
+      monaco-marker-data-provider: 1.2.3
+      monaco-types: 0.1.0
+      monaco-worker-manager: 2.0.1(monaco-editor@0.50.0)
+      path-browserify: 1.0.1
+      prettier: 2.8.8
+      vscode-languageserver-textdocument: 1.0.11
+      vscode-languageserver-types: 3.17.5
+      vscode-uri: 3.0.8
+      yaml: 2.4.5
+
   mri@1.2.0: {}
 
   ms@2.0.0: {}
@@ -16897,6 +17107,8 @@ snapshots:
 
   parseurl@1.3.3: {}
 
+  path-browserify@1.0.1: {}
+
   path-exists@3.0.0: {}
 
   path-exists@4.0.0: {}
@@ -16989,7 +17201,7 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.39
 
-  postcss-load-config@4.0.2(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3)):
+  postcss-load-config@4.0.2(postcss@8.4.39)(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3)):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.4.5
@@ -17049,6 +17261,8 @@ snapshots:
   prettier-plugin-tailwindcss@0.6.5(prettier@3.3.2):
     dependencies:
       prettier: 3.3.2
+
+  prettier@2.8.8: {}
 
   prettier@3.3.2: {}
 
@@ -18151,9 +18365,9 @@ snapshots:
 
   tailwindcss-animate@1.0.7(tailwindcss@3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))):
     dependencies:
-      tailwindcss: 3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+      tailwindcss: 3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
 
-  tailwindcss@3.4.4(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3)):
+  tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -18172,7 +18386,7 @@ snapshots:
       postcss: 8.4.39
       postcss-import: 15.1.0(postcss@8.4.39)
       postcss-js: 4.0.1(postcss@8.4.39)
-      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       postcss-nested: 6.0.1(postcss@8.4.39)
       postcss-selector-parser: 6.1.0
       resolve: 1.22.8
@@ -18385,7 +18599,7 @@ snapshots:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.10)(typescript@5.5.3))
+      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@types/node@20.14.10)(typescript@5.5.3))
       resolve-from: 5.0.0
       rollup: 4.18.1
       source-map: 0.8.0-beta.0
@@ -18784,6 +18998,19 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.77.1
       terser: 5.31.0
+
+  vscode-jsonrpc@8.2.0: {}
+
+  vscode-languageserver-protocol@3.17.5:
+    dependencies:
+      vscode-jsonrpc: 8.2.0
+      vscode-languageserver-types: 3.17.5
+
+  vscode-languageserver-textdocument@1.0.11: {}
+
+  vscode-languageserver-types@3.17.5: {}
+
+  vscode-uri@3.0.8: {}
 
   w3c-xmlserializer@4.0.0:
     dependencies:

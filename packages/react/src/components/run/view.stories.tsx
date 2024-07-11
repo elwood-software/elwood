@@ -13,114 +13,118 @@ export const Main: Story = {
   args: {
     run: {
       num: 1,
-      status: 'pending',
+      status: 'running',
       result: 'none',
       configuration: {
-        hello: 'world',
+        jobs: {
+          job_1: {
+            steps: [
+              {
+                name: 'say-hello',
+                when: 'true',
+                input: {content: '${{ `Hello, ${vars.name}` }}'},
+                action: 'echo',
+              },
+            ],
+          },
+          job_2: {
+            steps: [
+              {
+                name: 'say-hello',
+                when: 'true',
+                input: {content: '${{ `Hello, ${vars.name}` }}'},
+                action: 'echo',
+              },
+            ],
+          },
+        },
+        name: 'hello-world',
+        label: 'Hello World',
+        defaults: {permissions: 'all'},
+        description: 'A simple hello world workflow',
       },
       report: {
-        id: 'E1T315B',
+        id: 'E2T7EEC',
         jobs: {
-          // hi: {
-          //   id: 'J3JD409',
-          //   name: 'hi',
-          //   steps: [
-          //     {
-          //       id: 'S3TJ2FD3',
-          //       name: 'S3TJ2FD3',
-          //       reason: '',
-          //       result: 'success',
-          //       status: 'complete',
-          //       stderr: [],
-          //       stdout: [
-          //         {text: 'Hello World', timestamp: '2024-07-09T23:21:11.352Z'},
-          //       ],
-          //       timing: {
-          //         end: 1720567271478.735,
-          //         start: 1720567270659.1372,
-          //         elapsed: 819.5980419999996,
-          //       },
-          //       outputs: {},
-          //     },
-          //     {
-          //       id: 'S8JJ9240',
-          //       name: 'S8JJ9240',
-          //       reason: '',
-          //       result: 'success',
-          //       status: 'complete',
-          //       stderr: [],
-          //       stdout: [],
-          //       timing: {
-          //         end: 1720567276942.9082,
-          //         start: 1720567271478.867,
-          //         elapsed: 5464.041419,
-          //       },
-          //       outputs: {},
-          //     },
-          //     {
-          //       id: 'S9TTJ9BED',
-          //       name: 'S9TTJ9BED',
-          //       reason: '',
-          //       result: 'success',
-          //       status: 'complete',
-          //       stderr: [],
-          //       stdout: [
-          //         {
-          //           text: 'To you I say Goodbye World',
-          //           timestamp: '2024-07-09T23:21:17.241Z',
-          //         },
-          //       ],
-          //       timing: {
-          //         end: 1720567277266.8071,
-          //         start: 1720567276943.0154,
-          //         elapsed: 323.79170799999883,
-          //       },
-          //       outputs: {},
-          //     },
-          //     {
-          //       id: 'S4JTJ4E89',
-          //       name: 'S4JTJ4E89',
-          //       reason: '',
-          //       result: 'success',
-          //       status: 'complete',
-          //       stderr: [],
-          //       stdout: [
-          //         {
-          //           text: 'Toties tutamen candidus arguo. Volubilis reprehenderit comptus beneficium excepturi veritas despecto debilito agnitio tabula.Adipisci carpo adulatio coma strenuus uberrime suffoco ustilo suppellex. Virga animi triduana.',
-          //           timestamp: '2024-07-09T23:21:19.771Z',
-          //         },
-          //         {
-          //           text: 'Validus urbanus creo despecto vulticulus aequitas conor spiritus uter cursim. Quod tracto demulceo clementia venia vulgo tametsi depromo adicio.Desino viduo creptio bestia depono abeo absorbeo cursus utpote. Paulatim supra dedecor possimus.Cunctatio vehemens creator molestias defungo voluntarius. Canto tolero eius alioqui sponte versus amiculum vinum crustulum.Ago umbra thermae. Comparo compono vergo sperno subito suggero.Repudiandae confero curriculum theca demonstro alioqui cariosus consuasor assumenda tot. Quibusdam suggero eveniet vilitas commodo cometes vos thema victus agnitio.Sulum absens tricesimus. Tardus vinitor cupiditate unus.Laboriosam arceo eveniet tantum catena bellum saepe versus. Cito corona aptus amplitudo theatrum inflammatio appello trado.Appono creptio vado quibusdam. Viriliter accusator voluptatibus cum adhaero.Patruus provident tenus aggredior pax. Adopto atavus decumbo avarus curriculum coadunatio enim.Coruscus summopere conculco. Tantillus bene curto delectus sortitus verecundia.Assentator aggredior sustineo summopere acceptus esse collum cenaculum. Suggero neque colo depono cursim velit.Admitto vaco cernuus decor temporibus utor. Curis natus aliquid.Collum sperno taceo administratio cito complectus voluptate. Cattus vero testimonium aliquid.Coniuratio volutabrum acies verbera vorax claudeo. Quam atqui adopto supplanto veritatis desidero titulus ipsa.Abundans cupiditas suffragium audentia. Tum teres vis acidus.Spero cras solio crastinus thesis ullus brevis territo. Beatae sumptus dolore error coerceo cum ventito.Attonbitus caveo canis tui. Carbo thalassinus patrocinor verumtamen conatus.Umbra caput voluptatem barba. Currus solio amo.',
-          //           timestamp: '2024-07-09T23:21:19.774Z',
-          //         },
-          //       ],
-          //       timing: {
-          //         end: 1720567280265.6624,
-          //         start: 1720567277267.0034,
-          //         elapsed: 2998.658877,
-          //       },
-          //       outputs: {},
-          //     },
-          //   ],
-          //   result: 'success',
-          //   status: 'complete',
-          //   timing: {
-          //     end: 1720567280266.2622,
-          //     start: 1720567270658.7996,
-          //     elapsed: 9607.46263,
-          //   },
-          // },
+          job_1: {
+            id: 'J5J500C',
+            name: 'job_1',
+            steps: [
+              {
+                id: 'S2TJ193B',
+                name: 'say-hello',
+                reason: '',
+                result: 'success',
+                status: 'complete',
+                stderr: [],
+                stdout: [
+                  {
+                    text: 'Hello, Hello World',
+                    timestamp: '2024-07-11T15:58:59.836Z',
+                  },
+                ],
+                timing: {
+                  end: 1720713539949.7112,
+                  start: 1720713539208.6953,
+                  elapsed: 741.0158330000004,
+                },
+                outputs: {},
+              },
+            ],
+            result: 'success',
+            status: 'complete',
+            reason: '',
+            timing: {
+              end: 1720713539949.883,
+              start: 1720713539207.798,
+              elapsed: 742.0851669999997,
+            },
+          },
+          job_2: {
+            id: 'J1JJF807',
+            name: 'job_2',
+            steps: [
+              {
+                id: 'S9TTJBAE6',
+                name: 'say-hello',
+                reason: '',
+                result: 'success',
+                status: 'complete',
+                stderr: [],
+                stdout: [
+                  {
+                    text: 'Hello, Hello World',
+                    timestamp: '2024-07-11T15:59:00.138Z',
+                  },
+                ],
+                timing: {
+                  end: 1720713540156.5327,
+                  start: 1720713539950.0916,
+                  elapsed: 206.44137499999988,
+                },
+                outputs: {},
+              },
+            ],
+            reason: '',
+            result: 'success',
+            status: 'complete',
+            timing: {
+              end: 1720713540156.7205,
+              start: 1720713539950.051,
+              elapsed: 206.66941700000007,
+            },
+          },
         },
-        name: 'bootstrap',
+        name: 'hello-world',
         reason: '',
         result: 'success',
         status: 'complete',
         timing: {
-          end: 1720567280266.5603,
-          start: 1720567270658.1045,
-          elapsed: 9608.455838000002,
+          end: 1720713540156.9504,
+          start: 1720713539206.6755,
+          elapsed: 950.2748339999998,
         },
-        tracking_id: '8167fad7-2868-4ee3-9850-1a98b38b0897',
+        tracking_id: '8c4b6cee-668d-4fc4-93ce-5e61a46e9fb8',
       },
     },
   },

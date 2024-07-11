@@ -7,15 +7,13 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "files": ["dist/**"],
   "scripts": {
     "build": "pnpm build:js",
     "build:js": "tsup src/index.ts --format esm,cjs --dts --external react",
     "clean": "rm -rf dist",
     "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit -p ./tsconfig.json",
     "lint": "eslint src/",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
@@ -28,6 +26,7 @@
     "@elwood/common": "workspace:*",
     "@elwood/js": "workspace:*",
     "@elwood/ui": "workspace:*",
+    "@jsr/elwood__run": "^0.1.0",
     "@monaco-editor/react": "^4.6.0",
     "@remix-run/router": "^1.17.1",
     "@tanstack/react-query": "^5.50.1",
@@ -40,6 +39,7 @@
     "html-react-parser": "^5.1.10",
     "javascript-time-ago": "^2.5.10",
     "monaco-editor": "^0.50.0",
+    "monaco-yaml": "^5.2.1",
     "react-accessible-treeview": "^2.9.1",
     "react-dropzone": "^14.2.3",
     "react-markdown": "^9.0.1",

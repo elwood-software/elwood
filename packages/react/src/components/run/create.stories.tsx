@@ -14,8 +14,14 @@ export const Main: Story = {
     onSubmit: () => {},
     onChange: () => {},
     values: {
-      configuration: 'config',
-      variables: 'vars',
+      configuration: 'poop',
+      variables: JSON.stringify(
+        {
+          hello: 'world',
+        },
+        null,
+        2,
+      ),
     },
   },
   render: args => <Component {...args} />,

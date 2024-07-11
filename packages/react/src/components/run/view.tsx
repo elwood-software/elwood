@@ -11,9 +11,10 @@ import {
 import clsx from 'clsx';
 import Editor from '@monaco-editor/react';
 import {stringify} from 'yaml';
+import {type Workflow, type Status, type Result} from '@jsr/elwood__run';
 
-type Status = 'pending' | 'running' | 'complete' | 'queued' | 'assigned';
-type Result = 'none' | 'success' | 'failure' | 'cancelled' | 'skipped';
+import {RunStatusIcon} from './status-icon';
+import {RunDisplayName} from './display-name';
 
 export type RunViewProps = {
   className?: string;
@@ -21,74 +22,70 @@ export type RunViewProps = {
     num: number;
     status: Status;
     result: Result;
-    configuration: JsonObject;
-    report: {
-      timing: {
-        end: number;
-        start: number;
-        elapsed: number;
-      };
-      tracking_id: string;
-      id: string;
-      status: Status;
-      result: Result;
-      name: string;
-      reason: string;
-      jobs: Record<
-        string,
-        {
-          id: string;
-          name: string;
-          status: Status;
-          result: Result;
-          timing: {
-            end: number;
-            start: number;
-            elapsed: number;
-          };
-          steps: Array<{
-            id: string;
-            reason: string;
-            name: string;
-            status: Status;
-            result: Result;
-            stdout: Array<{timestamp: string; text: string}>;
-            stderr: Array<{timestamp: string; text: string}>;
-            outputs: JsonObject;
-            timing: {
-              end: number;
-              start: number;
-              elapsed: number;
-            };
-          }>;
-        }
-      >;
-    };
+    configuration: Workflow.Configuration | null;
+    report: Workflow.Report | null;
   };
 };
 
 export function RunView(props: RunViewProps) {
   const {status, result} = props.run;
   const hasRunOrIsRunning = ['complete', 'running'].includes(status);
+  const report = props.run.report;
+  const configuration = props.run.configuration;
 
-  const report = props.run.report ?? {};
-  const jobs = Object.entries(report.jobs ?? {});
-  const items = jobs.map(([name, job]) => {
+  const jobNames = [
+    ...new Set([
+      ...Object.keys(report?.jobs ?? {}),
+      ...Object.keys(configuration?.jobs ?? {}),
+    ]),
+  ];
+
+  const jobs = Object.entries(report?.jobs ?? {});
+
+  const items = jobNames.map(name => {
+    const jobReport = Object.entries(report?.jobs ?? {}).find(
+      e => e[0] === name,
+    )?.[1];
+    const jobDef = Object.entries(configuration?.jobs ?? {}).find(
+      e => e[0] === name,
+    )?.[1];
+
+    if (!jobReport && !jobDef) {
+      return <></>;
+    }
+
+    const stepNames = (jobReport?.steps ?? jobDef?.steps ?? []).map(
+      item => item.name,
+    );
+
     return (
       <div key={name}>
         <div className="border-b w-full text-left px-3.5 py-3">
-          <h2 className="font-bold flex items-center justify-start">{name}</h2>
+          <h2 className="font-bold flex items-center justify-start">
+            <RunDisplayName primary={jobDef} fallback={jobReport} />
+          </h2>
         </div>
         <div className="p-3 space-y-3 bg-black">
-          {toArray(job.steps).map(step => {
+          {stepNames.map(stepName => {
+            const stepReport = jobReport?.steps?.find(
+              item => item.name === stepName,
+            );
+            const stepDef = jobDef?.steps?.find(item => item.name === stepName);
+
+            if (!stepReport && !stepDef) {
+              return <></>;
+            }
+
             const cn = clsx(
               'flex items-center justify-start w-full rounded space-x-2 font-medium text-sm text-muted-foreground',
             );
 
-            const log = [
-              ...step.stdout.map(item => ({...item, type: 'out'})),
-              ...step.stderr.map(item => ({...item, type: 'err'})),
-            ];
+            const log = stepReport
+              ? [
+                  ...stepReport?.stdout.map(item => ({...item, type: 'out'})),
+                  ...stepReport?.stderr.map(item => ({...item, type: 'err'})),
+                ]
+              : [];
 
             log.sort((a, b) => {
               return (
@@ -98,20 +95,22 @@ export function RunView(props: RunViewProps) {
             });
 
             return (
-              <div key={`${name}${step.name}`} className="pb-3">
+              <div key={`${name}${stepName}`} className="pb-3">
                 <span className={cn}>
-                  <StatusIcon
+                  <RunStatusIcon
                     className="size-5 ml-0.5"
-                    status={step.status}
-                    result={step.result}
+                    status={stepReport?.status ?? 'queued'}
+                    result={stepReport?.result ?? 'none'}
                   />
-                  <span>{step.name}</span>
+                  <RunDisplayName primary={stepDef} fallback={stepReport} />
                 </span>
 
                 {log.length > 0 && (
                   <div className="ml-2 pt-3 space-y-1 text-xs">
-                    {toArray(log).map(({type, text}, num) => (
-                      <span className="flex items-start font-mono">
+                    {toArray(log).map(({type, timestamp, text}, num) => (
+                      <span
+                        className="flex items-start font-mono"
+                        key={`log-${stepName}-${timestamp}`}>
                         <pre className="text-muted-foreground mr-2">
                           {num + 1}.
                         </pre>
@@ -158,13 +157,13 @@ export function RunView(props: RunViewProps) {
       <header className="p-6 col-span-2 flex justify-between items-center">
         <div>
           <h1 className="flex items-center text-2xl font-extrabold">
-            <StatusIcon color={true} status={status} result={result} />
-            <span className="ml-2">
-              {props.run.report.name}
-              <span className="ml-2 text-lg text-muted-foreground font-normal">
-                #{props.run.num}
-              </span>
-            </span>
+            <RunStatusIcon color={true} status={status} result={result} />
+            <RunDisplayName
+              primary={props.run.configuration}
+              fallback={props.run.report}
+              className="ml-2"
+              postfix={`#${props.run.num}`}
+            />
           </h1>
         </div>
         <div>
@@ -182,27 +181,26 @@ export function RunView(props: RunViewProps) {
         {hasRunOrIsRunning && (
           <>
             <div>
-              <h3 className="uppercase text-xs font-medium tracking-wide text-muted-foreground mb-1.5">
+              <h3 className="uppercase text-xs font-medium tracking-wide text-muted-foreground mb-2">
                 Jobs
               </h3>
-              <div className="space-y-4">
-                {jobs.map(([name, job]) => (
-                  <a href={''} className="flex items-center text-ms">
-                    <StatusIcon
-                      color={true}
-                      status={job.status}
-                      result={job.result}
-                      className="mr-1.5 size-5"
-                    />
-                    <span>{job.name}</span>
-                  </a>
-                ))}
+              <div className="space-y-3">
+                {jobs.map(([_, job]) => {
+                  return (
+                    <div
+                      key={`job-id-${job.id}`}
+                      className="flex items-center text-ms">
+                      <RunStatusIcon
+                        color={true}
+                        status={job.status}
+                        result={job.result}
+                        className="mr-1.5 size-4"
+                      />
+                      <RunDisplayName primary={job} fallback={null} />
+                    </div>
+                  );
+                })}
               </div>
-            </div>
-            <div className="pt-6">
-              <h3 className="uppercase text-xs font-medium tracking-wide text-muted-foreground">
-                Artifacts
-              </h3>
             </div>
           </>
         )}
@@ -245,43 +243,5 @@ export function RunView(props: RunViewProps) {
         {hasRunOrIsRunning && jobs.length > 0 && items}
       </div>
     </div>
-  );
-}
-
-type StatusIconProps = {
-  status: Status;
-  result: Result;
-  className?: string;
-  color?: boolean;
-};
-
-export function StatusIcon(props: StatusIconProps) {
-  let Icon =
-    props.status === 'running'
-      ? CircleEllipsis
-      : props.result === 'success'
-        ? CircleCheck
-        : CircleAlert;
-
-  if (['pending', 'queued', 'assigned'].includes(props.status)) {
-    Icon = CircleEllipsis;
-  }
-
-  const color = {
-    none: '',
-    success: 'text-green-500',
-    failure: 'text-red-500',
-    cancelled: '',
-    skipped: 'text-blue-500',
-  }[props.result];
-
-  return (
-    <Icon
-      className={clsx(
-        props.className,
-        'fill-current stroke-black',
-        props.color && color,
-      )}
-    />
   );
 }

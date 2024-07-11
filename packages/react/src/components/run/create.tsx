@@ -2,6 +2,22 @@ import type {MouseEventHandler} from 'react';
 import {useMeasure} from 'react-use';
 import Editor from '@monaco-editor/react';
 import {Button} from '@/components/button';
+import {configureMonacoYaml} from 'monaco-yaml';
+
+// @ts-ignore
+import YamlWorker from './yaml.worker?worker';
+
+window.MonacoEnvironment = {
+  getWorker(moduleId, label) {
+    switch (label) {
+      // Handle other cases
+      case 'yaml':
+        return new YamlWorker();
+      default:
+        throw new Error(`Unknown label ${label}`);
+    }
+  },
+};
 
 export type CreateRunProps = {
   onSubmit: MouseEventHandler;
@@ -44,6 +60,19 @@ export function CreateRun(props: CreateRunProps) {
         ref={ref}>
         <div>
           <Editor
+            onMount={(_, monaco) => {
+              configureMonacoYaml(monaco, {
+                enableSchemaRequest: true,
+                schemas: [
+                  {
+                    // If YAML file is opened matching this glob
+                    fileMatch: ['*'],
+                    // Then this schema will be downloaded from the internet and used.
+                    uri: 'https://x.elwood.run/workflow.json',
+                  },
+                ],
+              });
+            }}
             height={height}
             width="100%"
             defaultLanguage="yaml"
@@ -53,6 +82,9 @@ export function CreateRun(props: CreateRunProps) {
               props.onChange('configuration', nextValue);
             }}
             options={{
+              tabSize: 2,
+              formatOnType: true,
+              automaticLayout: true,
               padding: {top: 12, bottom: 6},
               minimap: {enabled: false},
               overviewRulerLanes: 0,
