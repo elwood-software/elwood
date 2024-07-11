@@ -2,8 +2,6 @@ import {Button, Input} from '@elwood/ui';
 import {FormEventHandler} from 'react';
 
 export interface AuthFormProps {
-  loginAction?: (data: FormData) => Promise<void>;
-  onSubmit?: FormEventHandler;
   onChange?: (name: string, value: string) => void;
   loading: boolean;
   errors?: string[];
@@ -12,72 +10,67 @@ export interface AuthFormProps {
 }
 
 export function AuthForm(props: AuthFormProps): JSX.Element {
-  const {loginAction, errors, loading, onSubmit} = props;
+  const {errors, loading} = props;
 
   return (
-    <div className="bg-sidebar p-12 rounded-lg w-full max-w-sm bg-sidebar border">
-      <Form
-        action={loginAction as FormProps['action']}
-        className="space-y-6"
-        onSubmit={onSubmit}>
-        {props.hideEmail ? (
-          <input type="hidden" name="email" value={props.email} />
-        ) : (
-          <div>
-            <label
-              className="text-muted-foreground text-xs font-medium"
-              htmlFor="email">
-              Email Address
-            </label>
-            <div className="mt-2">
-              <Input
-                autoComplete="email"
-                id="email"
-                name="email"
-                placeholder="awesome@elwood.software"
-                required
-                type="email"
-                onChange={e => props.onChange?.('email', e.target.value)}
-              />
-            </div>
-          </div>
-        )}
-
+    <div className="bg-sidebar p-12 rounded-lg w-full max-w-sm bg-sidebar border space-y-6">
+      {props.hideEmail ? (
+        <input type="hidden" name="email" value={props.email} />
+      ) : (
         <div>
-          <div className="flex items-center justify-between">
-            <label
-              className="text-muted-foreground text-xs font-medium"
-              htmlFor="password">
-              Password
-            </label>
-          </div>
+          <label
+            className="text-muted-foreground text-xs font-medium"
+            htmlFor="email">
+            Email Address
+          </label>
           <div className="mt-2">
             <Input
-              autoComplete="current-password"
-              id="password"
-              name="password"
-              placeholder="very_secret"
+              autoComplete="email"
+              id="email"
+              name="email"
+              placeholder="awesome@elwood.software"
               required
-              type="password"
-              onChange={e => props.onChange?.('password', e.target.value)}
+              type="email"
+              onChange={e => props.onChange?.('email', e.target.value)}
             />
           </div>
         </div>
+      )}
 
-        <div>
-          <Button className="w-full" loading={loading} type="submit">
-            Sign in
-          </Button>
+      <div>
+        <div className="flex items-center justify-between">
+          <label
+            className="text-muted-foreground text-xs font-medium"
+            htmlFor="password">
+            Password
+          </label>
         </div>
+        <div className="mt-2">
+          <Input
+            autoComplete="current-password"
+            id="password"
+            name="password"
+            placeholder="very_secret"
+            required
+            type="password"
+            onChange={e => props.onChange?.('password', e.target.value)}
+          />
+        </div>
+      </div>
 
-        {errors && errors.length > 0 ? (
-          <div>
-            {errors.map(ln => (
-              <div key={`error-${ln}`}>{ln}</div>
-            ))}
-          </div>
-        ) : null}
-      </Form>
+      <div>
+        <Button className="w-full" loading={loading} type="submit">
+          Sign in
+        </Button>
+      </div>
+
+      {errors && errors.length > 0 ? (
+        <div>
+          {errors.map(ln => (
+            <div key={`error-${ln}`}>{ln}</div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

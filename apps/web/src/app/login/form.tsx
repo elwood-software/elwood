@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {useFormStatus, useFormState} from 'react-dom';
 
-import {AuthForm} from '@elwood/react';
+import {AuthForm, AuthFormProps} from '@elwood/react';
 import type {LoginActionState} from './action';
 
 export type LoginFormProps = {
@@ -11,17 +11,20 @@ export type LoginFormProps = {
 };
 
 export function LoginForm(props: LoginFormProps) {
-  const {pending} = useFormStatus();
   // @ts-ignore
   const [state, formAction] = useFormState<LoginState>(props.action, {
     message: null,
   });
 
   return (
-    <AuthForm
-      loading={pending}
-      errors={state.message}
-      loginAction={formAction as any}
-    />
+    <form action={formAction}>
+      <FormWithLoading errors={state.message} />
+    </form>
   );
+}
+
+function FormWithLoading(props: Omit<AuthFormProps, 'loading'>) {
+  const status = useFormStatus();
+
+  return <AuthForm loading={status.pending} {...props} />;
 }

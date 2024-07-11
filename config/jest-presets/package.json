@@ -4,10 +4,10 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "ts-jest": "^29.1.5"
+    "ts-jest": "^29.2.2"
   },
   "devDependencies": {
-    "@types/node": "^20.14.9",
+    "@types/node": "^20.14.10",
     "jest-environment-jsdom": "^29.7.0"
   }
 }

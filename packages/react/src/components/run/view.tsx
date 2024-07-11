@@ -1,15 +1,16 @@
 import {JsonObject} from '@elwood/common';
 import {toArray} from '@elwood/common';
 import {
-  Accordion,
-  ChevronRightIcon,
-  ChevronDownIcon,
+  Dialog,
   CircleAlert,
   CircleEllipsis,
   CircleCheck,
+  Spinner,
+  Button,
 } from '@elwood/ui';
 import clsx from 'clsx';
-import {Link} from '../link';
+import Editor from '@monaco-editor/react';
+import {stringify} from 'yaml';
 
 type Status = 'pending' | 'running' | 'complete' | 'queued' | 'assigned';
 type Result = 'none' | 'success' | 'failure' | 'cancelled' | 'skipped';
@@ -20,7 +21,7 @@ export type RunViewProps = {
     num: number;
     status: Status;
     result: Result;
-
+    configuration: JsonObject;
     report: {
       timing: {
         end: number;
@@ -67,8 +68,11 @@ export type RunViewProps = {
 };
 
 export function RunView(props: RunViewProps) {
-  const jobs = Object.entries(props.run.report.jobs ?? {});
+  const {status, result} = props.run;
+  const hasRunOrIsRunning = ['complete', 'running'].includes(status);
 
+  const report = props.run.report ?? {};
+  const jobs = Object.entries(report.jobs ?? {});
   const items = jobs.map(([name, job]) => {
     return (
       <div key={name}>
@@ -130,54 +134,116 @@ export function RunView(props: RunViewProps) {
     );
   });
 
+  const config = (
+    <Editor
+      height="60vh"
+      width="100%"
+      defaultLanguage="yaml"
+      defaultValue={stringify(props.run.configuration)}
+      theme="vs-dark"
+      options={{
+        padding: {top: 12},
+        readOnly: true,
+        minimap: {enabled: false},
+        overviewRulerLanes: 0,
+        renderLineHighlight: 'none',
+        matchBrackets: 'never',
+        scrollBeyondLastLine: false,
+      }}
+    />
+  );
+
   return (
     <div className="size-full  grid grid-cols-[1fr_3fr] grid-rows-[auto_minmax(0,_1fr)]">
-      <header className="p-6 col-span-2">
-        <h1 className="flex items-center text-2xl font-extrabold">
-          <StatusIcon
-            color={true}
-            status={props.run.status}
-            result={props.run.result}
-          />
-          <span className="ml-2">
-            {props.run.report.name}
-            <span className="ml-2 text-lg text-muted-foreground font-normal">
-              #{props.run.num}
-            </span>
-          </span>
-        </h1>
+      <header className="p-6 col-span-2 flex justify-between items-center">
         <div>
-          Completed in{' '}
-          {Math.round(props.run.report.timing.elapsed / Math.pow(10, 6))}{' '}
-          seconds
+          <h1 className="flex items-center text-2xl font-extrabold">
+            <StatusIcon color={true} status={status} result={result} />
+            <span className="ml-2">
+              {props.run.report.name}
+              <span className="ml-2 text-lg text-muted-foreground font-normal">
+                #{props.run.num}
+              </span>
+            </span>
+          </h1>
+        </div>
+        <div>
+          <Dialog
+            content={config}
+            title="Workflow File"
+            className="max-w-[1200px]">
+            <Button size="sm" variant="outline" type="button">
+              Workflow File
+            </Button>
+          </Dialog>
         </div>
       </header>
       <div className="px-6 space-y-6 divide divide-y">
-        <div>
-          <h3 className="uppercase text-xs font-medium tracking-wide text-muted-foreground mb-1.5">
-            Jobs
-          </h3>
-          <div className="space-y-4">
-            {jobs.map(([name, job]) => (
-              <a href={''} className="flex items-center text-ms">
-                <StatusIcon
-                  color={true}
-                  status={job.status}
-                  result={job.result}
-                  className="mr-1.5 size-5"
-                />
-                <span>{job.name}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-        <div className="pt-6">
-          <h3 className="uppercase text-xs font-medium tracking-wide text-muted-foreground">
-            Artifacts
-          </h3>
-        </div>
+        {hasRunOrIsRunning && (
+          <>
+            <div>
+              <h3 className="uppercase text-xs font-medium tracking-wide text-muted-foreground mb-1.5">
+                Jobs
+              </h3>
+              <div className="space-y-4">
+                {jobs.map(([name, job]) => (
+                  <a href={''} className="flex items-center text-ms">
+                    <StatusIcon
+                      color={true}
+                      status={job.status}
+                      result={job.result}
+                      className="mr-1.5 size-5"
+                    />
+                    <span>{job.name}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className="pt-6">
+              <h3 className="uppercase text-xs font-medium tracking-wide text-muted-foreground">
+                Artifacts
+              </h3>
+            </div>
+          </>
+        )}
       </div>
-      <div className="border-l border-t divide-y divide">{items}</div>
+      <div className="border-l border-t divide-y divide bg-black">
+        {!hasRunOrIsRunning && (
+          <div className="flex size-full items-center justify-center flex-col">
+            <Spinner className="mb-3 text-muted-foreground" />
+
+            {status == 'queued' && (
+              <>
+                <h1 className="text-xl font-bold">Queued</h1>
+                <p className="text-muted-foreground text-sm">
+                  Run is waiting to be assigned to a worker.
+                </p>
+              </>
+            )}
+
+            {status == 'assigned' && (
+              <>
+                <h1 className="text-xl font-bold">Assigned</h1>
+                <p className="text-muted-foreground text-sm">
+                  Run has been assigned to worker and is waiting for worker to
+                  initialize.
+                </p>
+              </>
+            )}
+
+            {status == 'pending' && (
+              <>
+                <h1 className="text-xl font-bold">Pending</h1>
+                <p className="text-muted-foreground text-sm">
+                  Run is waiting for worker to start execution.
+                </p>
+              </>
+            )}
+          </div>
+        )}
+
+        {hasRunOrIsRunning && jobs.length > 0 && items}
+      </div>
     </div>
   );
 }
@@ -190,12 +256,16 @@ type StatusIconProps = {
 };
 
 export function StatusIcon(props: StatusIconProps) {
-  const Icon =
+  let Icon =
     props.status === 'running'
       ? CircleEllipsis
       : props.result === 'success'
         ? CircleCheck
         : CircleAlert;
+
+  if (['pending', 'queued', 'assigned'].includes(props.status)) {
+    Icon = CircleEllipsis;
+  }
 
   const color = {
     none: '',
