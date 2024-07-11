@@ -11,7 +11,7 @@ import {
 import clsx from 'clsx';
 import Editor from '@monaco-editor/react';
 import {stringify} from 'yaml';
-import {type Workflow, type Status, type Result} from '@jsr/elwood__run';
+import {type Workflow, type Status, type Result} from '@jsr/elwood__run/types';
 
 import {RunStatusIcon} from './status-icon';
 import {RunDisplayName} from './display-name';

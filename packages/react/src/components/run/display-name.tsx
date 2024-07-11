@@ -1,5 +1,5 @@
 import {JsonObject} from '@elwood/common';
-import {type Workflow} from '@jsr/elwood__run';
+
 import {ReactNode} from 'react';
 
 export type RunDisplayNameProps = {

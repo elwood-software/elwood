@@ -1,6 +1,6 @@
 import {CircleAlert, CircleEllipsis, CircleCheck} from '@elwood/ui';
 import clsx from 'clsx';
-import {type Status, type Result} from '@jsr/elwood__run';
+import {type Status, type Result} from '@jsr/elwood__run/types';
 
 export type RunStatusIconProps = {
   status: Status;
