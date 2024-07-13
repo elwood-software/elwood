@@ -35,7 +35,9 @@ export function ElwoodProvider(
 
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [member, setMember] = useState<MemberRecord | null | false>(null);
-  const [uploadManager, setUploadManager] = useState<Uppy | null>(null);
+  const [uploadManager, setUploadManager] = useState<Uppy<any, any> | null>(
+    null,
+  );
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const getHeaders = useCallback(() => {
     return {

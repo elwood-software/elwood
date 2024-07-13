@@ -9,7 +9,7 @@ export interface ProviderContextValue {
   workspaceName: string;
   client: ElwoodClient;
   initialData?: JsonObject;
-  uploadManager: Uppy | null;
+  uploadManager: Uppy<any, any> | null;
   member: MemberRecord;
   avatarUrl?: string | null;
   renderers?: Renderer[];
