@@ -10,6 +10,14 @@ export default meta;
 type Story = StoryObj<typeof Component>;
 
 export const Main: Story = {
-  args: {},
+  args: {
+    runs: [
+      {
+        num: 1,
+        status: 'running',
+        result: 'none',
+      },
+    ],
+  },
   render: args => <Component {...args} />,
 };

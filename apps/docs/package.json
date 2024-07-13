@@ -13,7 +13,7 @@
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
-    "@algolia/autocomplete-core": "^1.17.3",
+    "@algolia/autocomplete-core": "^1.17.4",
     "@elwood/ui": "workspace:*",
     "@headlessui/react": "^2.1.2",
     "@markdoc/markdoc": "^0.4.0",
@@ -47,7 +47,7 @@
     "eslint-config-next": "latest",
     "eslint-plugin-next": "^0.0.0",
     "postcss": "^8.4.39",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
     "sharp": "0.33.4"
   }
 }

@@ -7,6 +7,7 @@ import {
   CircleCheck,
   Spinner,
   Button,
+  ArrowLeft,
 } from '@elwood/ui';
 import clsx from 'clsx';
 import Editor from '@monaco-editor/react';
@@ -15,6 +16,7 @@ import {type Workflow, type Status, type Result} from '@jsr/elwood__run/types';
 
 import {RunStatusIcon} from './status-icon';
 import {RunDisplayName} from './display-name';
+import {Link} from '../link';
 
 export type RunViewProps = {
   className?: string;
@@ -156,6 +158,13 @@ export function RunView(props: RunViewProps) {
     <div className="size-full  grid grid-cols-[1fr_3fr] grid-rows-[auto_minmax(0,_1fr)]">
       <header className="p-6 col-span-2 flex justify-between items-center">
         <div>
+          <Link
+            href="/run"
+            className="text-sm text-muted-foreground flex items-center mb-2">
+            <ArrowLeft className="size-4" />
+            Runs
+          </Link>
+
           <h1 className="flex items-center text-2xl font-extrabold">
             <RunStatusIcon color={true} status={status} result={result} />
             <RunDisplayName

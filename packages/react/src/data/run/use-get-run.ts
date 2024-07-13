@@ -26,7 +26,12 @@ export function useGetRun(
       .channel(`elwood_run:id=eq.${input.id}`)
       .on(
         'postgres_changes',
-        {event: 'UPDATE', schema: 'elwood', table: 'run'},
+        {
+          event: 'UPDATE',
+          schema: 'elwood',
+          table: 'run',
+          filter: `id=eq.${input.id}`,
+        },
         payload => {
           queryClient.setQueryData(['run', input.id], payload.new);
         },

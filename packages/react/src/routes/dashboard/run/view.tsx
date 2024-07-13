@@ -9,7 +9,15 @@ export default function RunViewRoute() {
   const query = useGetRun({id: params.id!});
 
   if (query.isLoading) {
-    return <Spinner />;
+    return (
+      <div className="p-6">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (query.isError || !query.data) {
+    return <div className="p-6">Run Not Found</div>;
   }
 
   return (

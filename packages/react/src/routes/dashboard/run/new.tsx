@@ -8,7 +8,6 @@ import {CreateRun} from '@/components/run/create';
 import {useCreateRun} from '@/data/run/use-create-run';
 
 const defaultValue = stringify({
-  $schema: 'https://x.elwood.run/workflow.json',
   name: 'hello-world',
   defaults: {
     permissions: 'all',
