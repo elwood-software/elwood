@@ -33,8 +33,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(electron@31.2.0)
       electron-updater:
-        specifier: ^6.2.1
-        version: 6.2.1
+        specifier: ^6.3.0-alpha.6
+        version: 6.3.0-alpha.8
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^2.0.0
@@ -4272,6 +4272,10 @@ packages:
     resolution: {integrity: sha512-upp+biKpN/XZMLim7aguUyW8s0FUpDvOtK6sbanMFDAMBzpHDqdhgVYm6zc9HJ6nWo7u2Lxk60i2M6Jd3aiNrA==}
     engines: {node: '>=12.0.0'}
 
+  builder-util-runtime@9.2.5-alpha.4:
+    resolution: {integrity: sha512-XGquk0b7ieYcIyMZESksJm+9gT9mDRJ5ckkhym2cyB87CPMHGLt8uhN1liZlgkBfLU/aMicR7x6XanO0z64Qzg==}
+    engines: {node: '>=12.0.0'}
+
   builder-util@24.13.1:
     resolution: {integrity: sha512-NhbCSIntruNDTOVI9fdXz0dihaqX2YuE1D6zZMrwiErzH4ELZHE6mdiB40wEgZNprDia+FghRFgKoAqMZRRjSA==}
 
@@ -4902,8 +4906,8 @@ packages:
   electron-to-chromium@1.4.827:
     resolution: {integrity: sha512-VY+J0e4SFcNfQy19MEoMdaIcZLmDCprqvBtkii1WTCTQHpRvf5N8+3kTYCgL/PcntvwQvmMJWTuDPsq+IlhWKQ==}
 
-  electron-updater@6.2.1:
-    resolution: {integrity: sha512-83eKIPW14qwZqUUM6wdsIRwVKZyjmHxQ4/8G+1C6iS5PdDt7b1umYQyj1/qPpH510GmHEQe4q0kCPe3qmb3a0Q==}
+  electron-updater@6.3.0-alpha.8:
+    resolution: {integrity: sha512-u5lhB9sXXZB4SwXd3D0PA7Fb+fxV4NrifrewqMtceklkufkyAJ0eMIIEuXd0eNnVKvaC9yWobHIV0ppITKM2Ig==}
 
   electron-vite@2.3.0:
     resolution: {integrity: sha512-lsN2FymgJlp4k6MrcsphGqZQ9fKRdJKasoaiwIrAewN1tapYI/KINLdfEL7n10LuF0pPSNf/IqjzZbB5VINctg==}
@@ -13306,6 +13310,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  builder-util-runtime@9.2.5-alpha.4:
+    dependencies:
+      debug: 4.3.5
+      sax: 1.4.1
+    transitivePeerDependencies:
+      - supports-color
+
   builder-util@24.13.1:
     dependencies:
       7zip-bin: 5.2.0
@@ -13973,9 +13984,9 @@ snapshots:
 
   electron-to-chromium@1.4.827: {}
 
-  electron-updater@6.2.1:
+  electron-updater@6.3.0-alpha.8:
     dependencies:
-      builder-util-runtime: 9.2.4
+      builder-util-runtime: 9.2.5-alpha.4
       fs-extra: 10.1.0
       js-yaml: 4.1.0
       lazy-val: 1.0.5
