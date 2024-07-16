@@ -8,6 +8,8 @@ import Layout from './layout';
 const RunNewRoute = lazy(() => import('./new'));
 const RunHomeRoute = lazy(() => import('./home'));
 const RunViewRoute = lazy(() => import('./view'));
+const RunWorkflowNewRoute = lazy(() => import('./workflow/new'));
+const RunWorkflowViewRoute = lazy(() => import('./workflow/view'));
 
 const fallback = <PageLayout />;
 
@@ -30,6 +32,23 @@ export const runRoutes: RouteObject[] = [
         element: (
           <Suspense fallback={fallback}>
             <RunNewRoute />
+          </Suspense>
+        ),
+      },
+
+      {
+        path: '/run/workflow/new',
+        element: (
+          <Suspense fallback={fallback}>
+            <RunWorkflowNewRoute />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/run/workflow/:id',
+        element: (
+          <Suspense fallback={fallback}>
+            <RunWorkflowViewRoute />
           </Suspense>
         ),
       },

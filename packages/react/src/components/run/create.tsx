@@ -2,32 +2,27 @@ import type {MouseEventHandler} from 'react';
 import {useMeasure} from 'react-use';
 import Editor from '@monaco-editor/react';
 import {Button} from '@/components/button';
-import {configureMonacoYaml} from 'monaco-yaml';
+import {Link} from '@/components/link';
 
-// @ts-ignore
-import YamlWorker from './yaml.worker?worker';
-
-window.MonacoEnvironment = {
-  getWorker(moduleId, label) {
-    switch (label) {
-      // Handle other cases
-      case 'yaml':
-        return new YamlWorker();
-      default:
-        throw new Error(`Unknown label ${label}`);
-    }
-  },
-};
+import {YamlEditor} from '@/components/yaml-editor/yaml-editor';
+import {Input, Spinner, ArrowLeft} from '@elwood/ui';
 
 export type CreateRunProps = {
+  isReady: boolean;
   onSubmit: MouseEventHandler;
   onChange(
-    field: 'configuration' | 'variables',
+    field: 'configuration' | 'variables' | 'short_summary',
     value: string | undefined,
   ): void;
   values: {
     configuration: string;
     variables: string;
+    short_summary: string;
+  };
+  workflow?: {
+    id: string;
+    label: string;
+    name: string;
   };
 };
 
@@ -38,16 +33,55 @@ export function CreateRun(props: CreateRunProps) {
     <div className="size-full flex flex-col">
       <div className="grid grid-cols-[3fr_1fr]" ref={ref}>
         <div className="col-span-2 px-6 py-3 border-b flex justify-between  items-center">
-          <h1 className="font-extrabold text-xl">Start a Run</h1>
+          <div>
+            <Link
+              href="/run"
+              className="text-xs text-muted-foreground flex items-center mb-2">
+              <ArrowLeft className="size-3 mr-1" />
+              <span>Runs</span>
+            </Link>
+            <h1 className="font-extrabold text-xl">Start a Run</h1>
+            {props.workflow && (
+              <small className="text-muted-foreground text-sm">
+                from{' '}
+                <Link
+                  href={`/run/workflow/${props.workflow.id}`}
+                  className="font-medium">
+                  {props.workflow.label ?? props.workflow.name}
+                </Link>
+              </small>
+            )}
+          </div>
 
-          <Button onClick={props.onSubmit} type="submit">
-            Start
-          </Button>
+          <div className="flex items-center justify-end space-x-3">
+            <label className="flex items-center space-x-1 text-sm">
+              <span className="font-medium text-muted-foreground">Summary</span>
+              <input
+                value={props.values.short_summary}
+                onChange={e => props.onChange('short_summary', e.target.value)}
+                className="px-3 py-2.5 w-[250px] bg-transparent border rounded-lg ring-0 outline-none"
+                placeholder="Run this awesome workflow!"
+              />
+            </label>
+
+            <Button
+              disabled={!props.isReady}
+              onClick={props.onSubmit}
+              type="submit">
+              <span>Start</span>
+            </Button>
+          </div>
         </div>
-        <div className="px-6 py-3 bg-[#1e1e1e] border-b">
+        <div className="px-6 py-3 bg-[#1e1e1e] border-b flex items-center">
           <strong className="text-xs uppercase text-muted-foreground">
             Configuration
           </strong>
+
+          {props.workflow?.id && (
+            <div className="bg-blue-800 text-blue-300 px-3 py-0.5 text-xs rounded-full ml-3">
+              Can not edit configuration when workflow is selected
+            </div>
+          )}
         </div>
         <div className="px-6 py-3 bg-[#1e1e1e] border-b border-l">
           <strong className="text-xs uppercase text-muted-foreground">
@@ -56,40 +90,23 @@ export function CreateRun(props: CreateRunProps) {
         </div>
       </div>
       <div
-        className="grid grid-cols-[3fr_1fr] flex-grow bg-[#1e1e1e]"
+        className="grid grid-cols-[3fr_1fr] flex-grow bg-[#1e1e1e] relative"
         ref={ref}>
-        <div>
-          <Editor
-            onMount={(_, monaco) => {
-              configureMonacoYaml(monaco, {
-                enableSchemaRequest: true,
-                schemas: [
-                  {
-                    // If YAML file is opened matching this glob
-                    fileMatch: ['*'],
-                    // Then this schema will be downloaded from the internet and used.
-                    uri: 'https://x.elwood.run/workflow.json',
-                  },
-                ],
-              });
-            }}
+        {!props.isReady && (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#1e1e1e] bg-opacity-90 z-50">
+            <Spinner />
+          </div>
+        )}
+
+        <div className="">
+          <YamlEditor
             height={height}
-            width="100%"
-            defaultLanguage="yaml"
-            defaultValue={props.values.configuration}
-            theme="vs-dark"
+            value={props.values.configuration}
             onChange={nextValue => {
               props.onChange('configuration', nextValue);
             }}
             options={{
-              tabSize: 2,
-              formatOnType: true,
-              automaticLayout: true,
-              padding: {top: 12, bottom: 6},
-              minimap: {enabled: false},
-              overviewRulerLanes: 0,
-              renderLineHighlight: 'none',
-              scrollbar: {vertical: 'hidden', horizontal: 'hidden'},
+              readOnly: !!props.workflow?.id,
             }}
           />
         </div>
@@ -98,7 +115,7 @@ export function CreateRun(props: CreateRunProps) {
             height={height}
             width="100%"
             defaultLanguage="json"
-            defaultValue={props.values.variables}
+            value={props.values.variables}
             theme="vs-dark"
             onChange={nextValue => {
               props.onChange('variables', nextValue);

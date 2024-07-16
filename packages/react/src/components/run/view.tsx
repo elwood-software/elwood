@@ -22,6 +22,11 @@ export type RunViewProps = {
   className?: string;
   run: {
     num: number;
+    short_summary: string;
+    workflow: {
+      id: string;
+      name: string;
+    };
     status: Status;
     result: Result;
     configuration: Workflow.Configuration | null;
@@ -156,7 +161,7 @@ export function RunView(props: RunViewProps) {
 
   return (
     <div className="size-full  grid grid-cols-[1fr_3fr] grid-rows-[auto_minmax(0,_1fr)]">
-      <header className="p-6 col-span-2 flex justify-between items-center">
+      <header className="p-6 pb-8 col-span-2 flex justify-between items-center">
         <div>
           <Link
             href="/run"
@@ -165,14 +170,18 @@ export function RunView(props: RunViewProps) {
             Runs
           </Link>
 
-          <h1 className="flex items-center text-2xl font-extrabold">
-            <RunStatusIcon color={true} status={status} result={result} />
-            <RunDisplayName
-              primary={props.run.configuration}
-              fallback={props.run.report}
-              className="ml-2"
-              postfix={`#${props.run.num}`}
-            />
+          <h1 className="flex items-center">
+            <span className="flex flex-col ml-1">
+              <span className="text-2xl font-extrabold flex items-center justify-center ">
+                <RunStatusIcon color={true} status={status} result={result} />
+                <span className="ml-1">
+                  {props.run.short_summary ?? props.run.workflow.name}
+                </span>
+              </span>
+              <span className="text-sm text-muted-foreground ml-5">
+                #{props.run.num} - started 10 minutes ago
+              </span>
+            </span>
           </h1>
         </div>
         <div>

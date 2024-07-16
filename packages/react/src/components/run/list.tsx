@@ -7,7 +7,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  ChevronRightIcon,
+  PlusIcon,
 } from '@elwood/ui';
 import {toArray} from '@elwood/common';
 
@@ -16,7 +16,7 @@ import {Button} from '@/components/button';
 
 import {RunStatusIcon} from './status-icon';
 import {RunDisplayName} from './display-name';
-import clsx from 'clsx';
+import {RunTable} from './table';
 
 export type RunListProps = {
   className?: string;
@@ -53,8 +53,12 @@ export function RunList(props: RunListProps) {
         <div className="mx-6">
           <header className="flex justify-between items-center text-xs font-medium mb-1.5">
             <h2 className="text-muted-foreground uppercase ">Workflows</h2>
+
+            <Link href="/run/workflow/new">
+              <PlusIcon className="size-4" />
+            </Link>
           </header>
-          <div className="border-t">
+          <div className="border-t py-1.5">
             {workflows.length === 0 && (
               <div className="p-6 text-center text-muted-foreground text-xs">
                 No workflows found. Create a new workflow to get started.
@@ -63,11 +67,13 @@ export function RunList(props: RunListProps) {
 
             {workflows.map(workflow => {
               return (
-                <Link
-                  key={`workflow-${workflow.id}`}
-                  href={`/run?workflow=${workflow.id}`}>
-                  {workflow.label}
-                </Link>
+                <div key={`workflow-${workflow.id}`}>
+                  <Link
+                    className="py-1.5 text-sm"
+                    href={`/run/workflow/${workflow.id}`}>
+                    {workflow.label}
+                  </Link>
+                </div>
               );
             })}
           </div>
@@ -97,49 +103,7 @@ export function RunList(props: RunListProps) {
         </div>
       </div>
       <div className="size-full flex flex-col">
-        <div className="border m-12">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Status</TableHead>
-                <TableHead>Workflow</TableHead>
-                <TableHead></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {runs.map(run => {
-                return (
-                  <TableRow key={`runs-view-${run.id}`}>
-                    <TableCell className="w-2">
-                      <RunStatusIcon status={run.status} result={run.result} />
-                    </TableCell>
-                    <TableCell>
-                      <Link href={`/run/${run.id}`}>
-                        <RunDisplayName
-                          primary={{
-                            name: run.name,
-                            label: run.label,
-                          }}
-                          fallback={{}}
-                          postfix={`#${run.num}`}
-                        />
-                      </Link>
-                    </TableCell>
-                    <TableCell className="flex justify-end">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        href={`/run/${run.id}`}
-                        className="flex justify-center items-center">
-                        view
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
+        <RunTable runs={runs} />
       </div>
     </>
   );

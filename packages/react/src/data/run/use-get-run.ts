@@ -8,6 +8,8 @@ export type UseGetRunResult = {
   status: string;
   result: string;
   report: JsonObject;
+  workflow_id: string;
+  summary: string;
 };
 
 export interface UseGetRunInput {

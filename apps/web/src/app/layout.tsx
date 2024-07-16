@@ -6,6 +6,8 @@ import {ElwoodThemeProvider} from '@elwood/ui';
 import './global.css';
 import '@elwood/ui/dist/style.css';
 
+import {YamlEditorProvider} from '../utils/yaml-editor/provider';
+
 export const metadata: Metadata = {
   title: 'Elwood',
 };
@@ -22,6 +24,7 @@ export default function RootLayout(props: PropsWithChildren): JSX.Element {
         data-color-mode={themeClassName}
         data-color-server-theme={theme}>
         <ElwoodThemeProvider>{props.children}</ElwoodThemeProvider>
+        <YamlEditorProvider />
       </body>
     </html>
   );

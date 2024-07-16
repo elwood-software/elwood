@@ -19,6 +19,7 @@ export function Provider(props: PropsWithChildren<ProviderProps>) {
 
   return (
     <ElwoodProvider
+      isPlatform={false}
       workspaceName={props.workspaceName}
       client={props.client}
       onLogout={onLogout}>

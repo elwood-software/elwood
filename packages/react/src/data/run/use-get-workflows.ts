@@ -6,7 +6,6 @@ export type UseGetRunWorkflowsResult = {
   id: string;
   name: string;
   label: string;
-  description: string;
 }[];
 
 export interface UseGetRunWorkflowsInput {}
@@ -26,7 +25,7 @@ export function useGetRunWorkflows(
     async queryFn() {
       const {data, error} = await supabase
         .from('elwood_run_workflow')
-        .select('*')
+        .select('id,name,label:configuration->>label')
         .order('created_at', {ascending: false});
 
       if (error) {

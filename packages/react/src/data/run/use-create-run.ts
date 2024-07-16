@@ -9,9 +9,13 @@ import {useClient} from '@/hooks/use-client';
 import type {JsonObject, Json} from '@elwood/common';
 import {parse as parseYaml} from 'yaml';
 
+import {createWorkflow} from './use-create-workflow';
+
 export type UseCreateRunInput = {
+  workflow_id: string | null | undefined;
   configuration: Json;
   variables: Json;
+  short_summary: string | null | undefined;
 };
 
 export type UseCreateRunResult = {
@@ -31,13 +35,24 @@ export function useCreateRun(
     ...opts,
     mutationFn: async data => {
       const {data: session} = await supabase.auth.getSession();
+      let workflowId = data.workflow_id;
+
+      if (!workflowId) {
+        const result = await createWorkflow(supabase, {
+          configuration: data.configuration,
+        });
+
+        workflowId = result.id;
+      }
 
       const result = await supabase
         .from('elwood_run')
         .insert({
-          configuration: getValue(data.configuration),
+          short_summary: data.short_summary,
+          workflow_id: workflowId,
           variables: getValue(data.variables),
           metadata: {
+            trigger: 'web',
             started_by_user_id: session?.session?.user?.id,
           },
         })

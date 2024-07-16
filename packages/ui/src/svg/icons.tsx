@@ -68,6 +68,7 @@ export {
   BotIcon,
   UserIcon,
   ChevronRightIcon,
+  PlusIcon,
 } from 'lucide-react';
 
 export const Icons: Record<string, LucideIcon> = {

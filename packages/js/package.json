@@ -22,7 +22,7 @@
   "dependencies": {
     "@elwood/common": "workspace:*",
     "@supabase/postgrest-js": "1.15.8",
-    "@supabase/supabase-js": "2.44.3"
+    "@supabase/supabase-js": "2.44.4"
   },
   "devDependencies": {
     "@elwood/eslint-config": "workspace:*",

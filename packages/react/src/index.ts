@@ -5,6 +5,7 @@ export * from './components/layouts/main';
 export * from './components/layouts/page';
 export * from './components/render';
 export * from './components/assistant/assistant';
+export * from './components/workspace-select/page';
 
 export * from './provider';
 export * from './components/router';

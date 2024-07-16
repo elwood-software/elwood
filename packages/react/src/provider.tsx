@@ -24,9 +24,9 @@ export type ElwoodProviderProps = Omit<
   loadingComponent?: ReactNode | undefined;
 };
 
-const queryClient = new QueryClient();
-
 TimeAgo.addDefaultLocale(en);
+
+const queryClient = new QueryClient();
 
 export function ElwoodProvider(
   props: PropsWithChildren<ElwoodProviderProps>,

@@ -6,6 +6,7 @@ import {type ElwoodClient} from '@elwood/js';
 import {FeatureFlag, ConfigurationNames} from './constants';
 
 export interface ProviderContextValue {
+  isPlatform: boolean;
   workspaceName: string;
   client: ElwoodClient;
   initialData?: JsonObject;
