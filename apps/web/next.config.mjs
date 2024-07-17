@@ -1,7 +1,12 @@
 const vercelUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : undefined;
-const assetPrefix = process.env.ASSET_PREFIX ?? vercelUrl ?? undefined;
+const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : undefined;
+
+const assetPrefix =
+  process.env.ASSET_PREFIX ?? productionUrl ?? vercelUrl ?? undefined;
 
 /** @type {import('next').NextConfig} */
 export default {
