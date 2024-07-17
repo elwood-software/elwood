@@ -1,5 +1,7 @@
-const assetPrefix =
-  process.env.ASSET_PREFIX ?? process.env.VERCEL_URL ?? undefined;
+const vercelUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : undefined;
+const assetPrefix = process.env.ASSET_PREFIX ?? vercelUrl ?? undefined;
 
 /** @type {import('next').NextConfig} */
 export default {
