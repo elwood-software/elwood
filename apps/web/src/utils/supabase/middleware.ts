@@ -19,6 +19,9 @@ export async function updateSession(
     });
 
     const supabase = createServerClient(url, key, {
+      auth: {
+        storageKey: 'elwood-auth',
+      },
       cookies: {
         get(name: string) {
           return request.cookies.get(name)?.value;

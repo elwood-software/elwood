@@ -7,5 +7,14 @@ import {getSupabaseEnv} from './get-supabase-env';
 
 export function createClient(): ElwoodClient {
   const [url, key] = getSupabaseEnv();
-  return createElwoodClient(url, key, {}, createBrowserClient(url, key));
+  return createElwoodClient(
+    url,
+    key,
+    {
+      auth: {
+        storageKey: 'elwood-auth',
+      },
+    },
+    createBrowserClient(url, key),
+  );
 }

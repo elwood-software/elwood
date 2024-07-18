@@ -8,6 +8,9 @@ export function createClient(): SupabaseClient {
   const cookieStore = cookies();
 
   return createServerClient(url, key, {
+    auth: {
+      storageKey: 'elwood-auth',
+    },
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value;
