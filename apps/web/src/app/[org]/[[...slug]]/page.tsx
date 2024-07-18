@@ -50,12 +50,12 @@ export default function Page(props: Props): JSX.Element {
     );
   }, [props.params.org, orgs]);
 
-  if (!router || !client) {
-    return <Spinner full />;
-  }
-
   if (error) {
     return <div>{error}</div>;
+  }
+
+  if (!router || !client) {
+    return <Spinner full />;
   }
 
   return (

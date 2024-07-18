@@ -88,7 +88,7 @@ export function ElwoodProvider(
     props.client.auth
       .getSession()
       .then(async ({data}) => {
-        invariant(data.session?.access_token);
+        invariant(data.session?.access_token, 'Missing access token');
 
         const user = await props.client.auth.getUser();
         const token = sha256(user.data.user?.email ?? Math.random().toString());
@@ -106,7 +106,7 @@ export function ElwoodProvider(
         setMember(result.data);
         setAccessToken(data.session.access_token);
       })
-      .catch(() => {
+      .catch(err => {
         setMember(false);
       });
   }, [props.client, getHeaders]);

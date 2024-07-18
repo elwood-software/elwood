@@ -14,7 +14,7 @@ export function Provider(props: PropsWithChildren<ProviderProps>) {
   const router = useRouter();
 
   function onLogout() {
-    router.push('/auth/logout');
+    router.push('/logout');
   }
 
   return (
