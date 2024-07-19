@@ -18,7 +18,7 @@
     "seed-storage": "./scripts/seed-storage.ts"
   },
   "devDependencies": {
-    "husky": "^9.0.11",
+    "husky": "^9.1.1",
     "prettier": "^3.3.3",
     "prettier-plugin-sql-cst": "^0.11.5",
     "prettier-plugin-tailwindcss": "^0.6.5",

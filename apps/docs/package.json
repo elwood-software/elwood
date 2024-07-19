@@ -20,7 +20,7 @@
     "@markdoc/next.js": "^0.3.7",
     "@sindresorhus/slugify": "^2.2.1",
     "@tailwindcss/typography": "^0.5.13",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.14.11",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-highlight-words": "^0.20.0",
@@ -37,7 +37,7 @@
     "react-dom": "^18.3.1",
     "react-highlight-words": "^0.20.0",
     "simple-functional-loader": "^1.2.1",
-    "tailwindcss": "^3.4.5",
+    "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3"
   },
   "devDependencies": {

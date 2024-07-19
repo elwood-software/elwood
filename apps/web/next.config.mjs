@@ -5,10 +5,8 @@ const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : undefined;
 
-// const assetPrefix =
-//   process.env.ASSET_PREFIX ?? productionUrl ?? vercelUrl ?? undefined;
-
-const assetPrefix = 'http://localhost:3002';
+const assetPrefix =
+  process.env.ASSET_PREFIX ?? productionUrl ?? vercelUrl ?? undefined;
 
 /** @type {import('next').NextConfig} */
 export default {
