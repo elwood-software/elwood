@@ -10,8 +10,9 @@ import {
 import {Spinner} from '@elwood/ui';
 import {type ElwoodClient} from '@elwood/js';
 import {createClient} from '@/utils/supabase/client';
-import {Provider} from '@/app/provider';
-import {useOrgs} from '@/data/use-orgs';
+import {Provider} from '../provider';
+import {useWorkspaces} from '@/data/use-workspaces';
+import {toArray, type Platform} from '@elwood/common';
 
 type Props = {
   params: {
@@ -22,48 +23,52 @@ type Props = {
 export default function Page(props: Props): JSX.Element {
   const [client, setClient] = useState<ElwoodClient | null>(null);
   const [router, setRouter] = useState<RouterProps['router'] | null>(null);
-  const {data: orgs, loading} = useOrgs();
+  const {data, loading} = useWorkspaces();
   const [error, setError] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Platform.Workspace>([]);
+  const workspaces = toArray(data);
 
   useEffect(() => {
     if (loading) {
       return;
     }
 
-    if (!loading && orgs.length === 0) {
-      setError('No organizations found');
+    if (!loading && workspaces.length === 0) {
+      setError('No Workspaces found');
       return;
     }
 
-    const org = orgs.find(o => o.name === props.params.org);
+    const activeWorkspace = workspaces.find(o => o.name === props.params.org);
 
-    if (!org) {
+    if (!activeWorkspace) {
       setError('Organization not found');
       return;
     }
 
+    setSelected(activeWorkspace);
     setClient(createClient());
     setRouter(
       createBrowserRouter(dashboardRoutes, {
-        basename: `/${org.name}`,
+        basename: `/${activeWorkspace.name}`,
       }),
     );
-  }, [props.params.org, orgs]);
+  }, [props.params.org, workspaces]);
 
   if (error) {
     return <div>{error}</div>;
   }
 
-  if (!router || !client) {
+  if (!router || !client || !selected) {
     return <Spinner full />;
   }
 
   return (
     <Provider
       client={client}
-      workspaceName={
-        orgs.find(o => o.name === props.params.org)?.display_name ?? '...'
-      }>
+      workspaces={workspaces.map(item => ({
+        ...item,
+        selected: item.id === selected.id,
+      }))}>
       <Router router={router} />
     </Provider>
   );

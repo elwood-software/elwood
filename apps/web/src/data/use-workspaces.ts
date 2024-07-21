@@ -1,15 +1,14 @@
 'use client';
 
 import {useState, useEffect} from 'react';
+import type {Platform} from '@elwood/common';
 
-export type Org = {id: string; name: string; display_name: string};
-
-export type UseOrgsResult = {
+export type UseWorkspacesResult = {
   loading: boolean;
-  data: Org[];
+  data: Platform.Workspace[];
 };
 
-export function useOrgs(): UseOrgsResult {
+export function useWorkspaces(): UseWorkspacesResult {
   const [loading, setLoading] = useState(true);
   const [orgs, setOrgs] = useState<Org[]>([]);
 

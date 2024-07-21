@@ -2,12 +2,13 @@ export type * from '@supabase/supabase-js';
 
 export * from './client';
 
-import type {SupabaseClient} from '@supabase/supabase-js';
-import type {ElwoodClientOptions, GenericSchema} from './types';
-import {ElwoodClient} from './client';
+import type {Database as ElwoodDatabase} from '@elwood/common';
 
-export const createClient = <
-  Database = any,
+import type {ElwoodClientOptions, GenericSchema} from './types';
+import {ElwoodClient, SupabaseClientCreator} from './client';
+
+export function createClient<
+  Database = ElwoodDatabase,
   SchemaName extends string & keyof Database = 'public' extends keyof Database
     ? 'public'
     : string & keyof Database,
@@ -18,12 +19,12 @@ export const createClient = <
   supabaseUrl: string,
   supabaseKey: string,
   options?: ElwoodClientOptions<SchemaName>,
-  supabaseClient?: SupabaseClient<Database, SchemaName, Schema> | null,
-): ElwoodClient<Database, SchemaName, Schema> => {
+  creator?: SupabaseClientCreator<any, any, any>,
+): ElwoodClient<Database, SchemaName, Schema> {
   return new ElwoodClient<Database, SchemaName, Schema>(
     supabaseUrl,
     supabaseKey,
     options,
-    supabaseClient,
+    creator,
   );
-};
+}

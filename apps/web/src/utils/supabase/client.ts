@@ -30,11 +30,6 @@ export function createClient(): ElwoodClient {
         storage,
       },
     },
-    createBrowserClient(url, key, {
-      auth: {
-        storageKey: 'elwood-auth',
-        storage,
-      },
-    }),
+    createBrowserClient,
   );
 }

@@ -5,7 +5,7 @@ import sha256 from 'crypto-js/sha256';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import Uppy from '@uppy/core';
 import Tus from '@uppy/tus';
-import {invariant, type MemberRecord} from '@elwood/common';
+import {invariant, Records} from '@elwood/common';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import {ProviderContext, type ProviderContextValue} from '@/context';
@@ -32,9 +32,13 @@ export function ElwoodProvider(
   props: PropsWithChildren<ElwoodProviderProps>,
 ): JSX.Element {
   invariant(props.client, 'Client is required for ElwoodProvider');
+  invariant(props.workspaces.length > 0, 'Workspaces are required');
+
+  const selectedWorkspace =
+    props.workspaces.find(item => item.selected) ?? props.workspaces[0];
 
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [member, setMember] = useState<MemberRecord | null | false>(null);
+  const [member, setMember] = useState<Records.Member.Row | null | false>(null);
   const [uploadManager, setUploadManager] = useState<Uppy<any, any> | null>(
     null,
   );
@@ -96,7 +100,7 @@ export function ElwoodProvider(
         setAvatarUrl(`https://gravatar.com/avatar/${token}?d=identicon`);
 
         const result = await props.client
-          .members()
+          .fromMembers()
           .select('*')
           .eq('user_id', data.session.user.id)
           .single();
@@ -111,6 +115,10 @@ export function ElwoodProvider(
       });
   }, [props.client, getHeaders]);
 
+  if (!selectedWorkspace) {
+    return <div>No Selected Workspace</div>;
+  }
+
   if (member === false) {
     return <NoAccess />;
   }
@@ -120,7 +128,7 @@ export function ElwoodProvider(
       <>{props.loadingComponent}</>
     ) : (
       <MainLayout
-        header={<Header workspaceName={props.workspaceName} />}
+        header={<Header workspaceName={selectedWorkspace.name} />}
         loading={true}
       />
     );

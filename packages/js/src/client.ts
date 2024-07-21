@@ -4,13 +4,30 @@ import {
   type SupabaseClientOptions,
 } from '@supabase/supabase-js';
 import type {
+  PostgrestQueryBuilder,
   PostgrestClient,
   PostgrestFilterBuilder,
-  PostgrestQueryBuilder,
 } from '@supabase/postgrest-js';
-import {invariant, type Database as ElwoodDatabase} from '@elwood/common';
+import {invariant, Records, Database} from '@elwood/common';
 
 import {GenericSchema} from './types';
+
+type ElwoodSchema = Database['public'];
+type ElwoodClientType = ElwoodClient<Database, 'public', ElwoodSchema>;
+
+export type SupabaseClientCreator<
+  Database = any,
+  SchemaName extends string & keyof Database = 'public' extends keyof Database
+    ? 'public'
+    : string & keyof Database,
+  Schema extends GenericSchema = Database[SchemaName] extends GenericSchema
+    ? Database[SchemaName]
+    : any,
+> = (
+  supabaseUrl: string,
+  supabaseKey: string,
+  options: any,
+) => SupabaseClient<Database, SchemaName, Schema>;
 
 export class ElwoodClient<
   Database = any,
@@ -23,33 +40,29 @@ export class ElwoodClient<
 > {
   readonly #supabaseUrl: string;
   readonly #supabaseKey: string;
-  readonly #supabaseClient: SupabaseClient<Database, SchemaName>;
-
-  readonly #options: SupabaseClientOptions<SchemaName>;
-  readonly #elwoodClient: PostgrestClient<ElwoodDatabase, 'public'>;
+  readonly #supabaseClient: SupabaseClient<Database, SchemaName, Schema>;
+  readonly #elwoodClient: ElwoodClientType;
 
   constructor(
     protected supabaseUrl: string,
     protected supabaseKey: string,
     options: SupabaseClientOptions<SchemaName> = {},
-    initialClient: SupabaseClient<Database, SchemaName> | null = null,
+    creator: SupabaseClientCreator<Database, SchemaName, Schema> | undefined,
   ) {
     console.log('init ElwoodClient');
 
     invariant(supabaseKey, 'supabaseKey is required');
     invariant(supabaseUrl, 'supabaseUrl is required');
 
+    this.#supabaseClient = (creator ?? createClient)(
+      supabaseUrl,
+      supabaseKey,
+      options,
+    );
+    this.#elwoodClient = this.#supabaseClient as unknown as ElwoodClientType;
+
     this.#supabaseKey = supabaseKey;
     this.#supabaseUrl = supabaseUrl;
-    this.#options = options;
-
-    this.#supabaseClient =
-      initialClient ??
-      createClient<Database, SchemaName>(supabaseUrl, supabaseKey, options);
-
-    this.#elwoodClient = (
-      this.#supabaseClient as SupabaseClient<ElwoodDatabase, 'public'>
-    ).schema('public');
   }
 
   get url() {
@@ -136,56 +149,29 @@ export class ElwoodClient<
    * Elwood API
    */
 
-  members(): PostgrestQueryBuilder<
-    ElwoodDatabase['public'],
-    ElwoodDatabase['public']['Views']['elwood_member']
-  > {
+  fromMembers(): PostgrestQueryBuilder<ElwoodSchema, Records.Member.View> {
     return this.#elwoodClient.from('elwood_member');
   }
 
-  activity(): PostgrestQueryBuilder<
-    ElwoodDatabase['public'],
-    ElwoodDatabase['public']['Views']['elwood_activity']
-  > {
-    return this.#elwoodClient.from('elwood_activity');
+  fromRuns(): PostgrestQueryBuilder<ElwoodSchema, Records.Run.View> {
+    return this.#elwoodClient.from('elwood_run');
   }
 
-  follow(): PostgrestQueryBuilder<
-    ElwoodDatabase['public'],
-    ElwoodDatabase['public']['Views']['elwood_follow']
-  > {
-    return this.#elwoodClient.from('elwood_follow');
+  fromRunEvents(): PostgrestQueryBuilder<ElwoodSchema, Records.Run.EventView> {
+    return this.#elwoodClient.from('elwood_run_event');
   }
 
-  async getNode(
-    path: string[],
-  ): Promise<
-    ElwoodDatabase['public']['CompositeTypes']['elwood_get_node_result']
+  fromRunTriggers(): PostgrestQueryBuilder<
+    ElwoodSchema,
+    Records.Run.TriggerView
   > {
-    const {data, error} = await this.#elwoodClient.rpc('elwood_get_node', {
-      p_path: path,
-    });
-
-    if (error) {
-      throw error;
-    }
-
-    return data as ElwoodDatabase['public']['CompositeTypes']['elwood_get_node_result'];
+    return this.#elwoodClient.from('elwood_run_triggers');
   }
 
-  async getNodeTree(
-    path: string[],
-  ): Promise<
-    ElwoodDatabase['public']['CompositeTypes']['elwood_get_node_tree_result']
+  fromRunWorkflows(): PostgrestQueryBuilder<
+    ElwoodSchema,
+    Records.Run.WorkflowView
   > {
-    const {data, error} = await this.#elwoodClient.rpc('elwood_get_node_tree', {
-      p_path: path,
-    });
-
-    if (error) {
-      throw error;
-    }
-
-    return data as ElwoodDatabase['public']['CompositeTypes']['elwood_get_node_tree_result'];
+    return this.#elwoodClient.from('elwood_run_workflow');
   }
 }
