@@ -54,10 +54,10 @@ export type UseMainLayoutInput = PropsWithChildren<
 export function useMainLayout(
   input: PropsWithChildren<UseMainLayoutInput> = {},
 ): MainLayoutState {
-  const {workspaceName, avatarUrl, onLogout, featureFlags} =
-    useProviderContext();
+  const {workspaces, avatarUrl, onLogout, featureFlags} = useProviderContext();
   const currentMember = useCurrentMember();
   const theme = useTheme();
+  const workspaceName = workspaces.find(item => item.selected)?.displayName;
 
   const [contextValue, dispatch] = useReducer<
     Reducer<

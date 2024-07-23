@@ -1,5 +1,3 @@
-import {type Status, type Result} from '@jsr/elwood__run/types';
-
 import {
   Table,
   TableBody,
@@ -14,22 +12,11 @@ import {toArray} from '@elwood/common';
 import {Link} from '@/components/link';
 import {Button} from '@/components/button';
 
-import {RunStatusIcon} from './status-icon';
-import {RunDisplayName} from './display-name';
+import type {UseGetRunsItem} from '@/types';
 
 export type RunTableProps = {
   className?: string;
-  runs?: Array<{
-    id: string;
-    num: number;
-    short_summary: string;
-    status: Status;
-    result: Result;
-    workflow: {
-      id: string;
-      name: string;
-    };
-  }>;
+  runs?: UseGetRunsItem[];
 };
 
 export function RunTable(props: RunTableProps) {
@@ -46,16 +33,27 @@ export function RunTable(props: RunTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
+          {runs.length === 0 && (
+            <TableRow key={`runs-view-empty`}>
+              <TableCell
+                className="flex items-center justify-center text-muted-foreground"
+                colSpan={3}>
+                No runs found.
+                <Link
+                  href="/run/new"
+                  className="underline text-muted-foreground ml-1">
+                  Create a new run to get started.
+                </Link>
+              </TableCell>
+            </TableRow>
+          )}
+
           {runs.map(run => {
             return (
               <TableRow key={`runs-view-${run.id}`}>
-                <TableCell className="w-2">
-                  <RunStatusIcon status={run.status} result={run.result} />
-                </TableCell>
+                <TableCell className="w-2">.</TableCell>
                 <TableCell>
-                  <Link href={`/run/${run.id}`}>
-                    {run.short_summary ?? run.workflow.name}
-                  </Link>
+                  <Link href={`/run/${run.id}`}>{run.short_summary}</Link>
                 </TableCell>
                 <TableCell className="flex justify-end">
                   <Button

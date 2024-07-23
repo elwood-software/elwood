@@ -3,7 +3,7 @@ import type {
   UseMutationResult,
 } from '@tanstack/react-query';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import type {GetNodeResult, NodeRecord} from '@elwood/common';
+import type {Records} from '@elwood/common';
 import {invariant} from '@elwood/common';
 import {useClient} from '@/hooks/use-client';
 import type {JsonObject, Json} from '@elwood/common';
@@ -11,12 +11,7 @@ import {parse as parseYaml} from 'yaml';
 
 import {createWorkflow} from './use-create-workflow';
 
-export type UseCreateRunInput = {
-  workflow_id: string | null | undefined;
-  configuration: Json;
-  variables: Json;
-  short_summary: string | null | undefined;
-};
+export type UseCreateRunInput = Records.Run.New;
 
 export type UseCreateRunResult = {
   id: string;

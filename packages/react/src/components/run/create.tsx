@@ -1,33 +1,75 @@
-import type {MouseEventHandler} from 'react';
+import {useState, type MouseEventHandler} from 'react';
 import {useMeasure} from 'react-use';
 import Editor from '@monaco-editor/react';
+import {
+  Input,
+  Spinner,
+  ArrowLeft,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  FormLabel,
+  Textarea,
+} from '@elwood/ui';
+
 import {Button} from '@/components/button';
 import {Link} from '@/components/link';
-
 import {YamlEditor} from '@/components/yaml-editor/yaml-editor';
-import {Input, Spinner, ArrowLeft} from '@elwood/ui';
+
+import type {UseGetRunWorkflowsItem, UseGetRunWorkflowItem} from '@/types';
+import {toArray} from '@elwood/common';
 
 export type CreateRunProps = {
   isReady: boolean;
   onSubmit: MouseEventHandler;
   onChange(
-    field: 'configuration' | 'variables' | 'short_summary',
+    field: 'configuration' | 'variables' | 'short_summary' | 'long_summary',
     value: string | undefined,
   ): void;
   values: {
     configuration: string;
     variables: string;
     short_summary: string;
+    summary: string;
   };
-  workflow?: {
-    id: string;
-    label: string;
-    name: string;
-  };
+  selectedWorkflow?: UseGetRunWorkflowItem;
+  workflows: UseGetRunWorkflowsItem[];
 };
 
 export function CreateRun(props: CreateRunProps) {
   const [ref, {height}] = useMeasure<HTMLDivElement>();
+  const [open, setOpen] = useState(false);
+
+  if (!props.selectedWorkflow && props.workflows.length > 0) {
+    return (
+      <div className="size-full flex flex-col">
+        <header className="px-6 py-3 border-b flex justify-between  items-center">
+          <div>
+            <Link
+              href="/run"
+              className="text-xs text-muted-foreground flex items-center mb-2">
+              <ArrowLeft className="size-3 mr-1" />
+              <span>Runs</span>
+            </Link>
+            <h1 className="font-extrabold text-xl">Start a Run</h1>
+          </div>
+        </header>
+        <div className="w-full flex justify-center">
+          <ul className="max-w-2xl w-full my-6">
+            {toArray(props.workflows).map(workflow => {
+              return (
+                <div>
+                  <Link href={`/run/new?workflow_id=${workflow.id}`}>
+                    {workflow.label ?? workflow.name}
+                  </Link>
+                </div>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="size-full flex flex-col">
@@ -41,35 +83,62 @@ export function CreateRun(props: CreateRunProps) {
               <span>Runs</span>
             </Link>
             <h1 className="font-extrabold text-xl">Start a Run</h1>
-            {props.workflow && (
+            {props.selectedWorkflow && (
               <small className="text-muted-foreground text-sm">
                 from{' '}
                 <Link
-                  href={`/run/workflow/${props.workflow.id}`}
+                  href={`/run/workflow/${props.selectedWorkflow.id}`}
                   className="font-medium">
-                  {props.workflow.label ?? props.workflow.name}
+                  {props.selectedWorkflow.label ?? props.selectedWorkflow.name}
                 </Link>
               </small>
             )}
           </div>
 
           <div className="flex items-center justify-end space-x-3">
-            <label className="flex items-center space-x-1 text-sm">
-              <span className="font-medium text-muted-foreground">Summary</span>
-              <input
-                value={props.values.short_summary}
-                onChange={e => props.onChange('short_summary', e.target.value)}
-                className="px-3 py-2.5 w-[250px] bg-transparent border rounded-lg ring-0 outline-none"
-                placeholder="Run this awesome workflow!"
-              />
-            </label>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild onMouseEnter={() => setOpen(true)}>
+                <Button type="button" variant="outline">
+                  <span>Continue</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="space-y-6 mr-6">
+                <div>
+                  <FormLabel className="mb-1" htmlFor="summary">
+                    Short Summary
+                  </FormLabel>
+                  <Input
+                    name="summary"
+                    value={props.values.short_summary}
+                    onChange={e =>
+                      props.onChange('short_summary', e.target.value)
+                    }
+                    placeholder="Transcribe the Gettysburg address"
+                  />
+                </div>
 
-            <Button
-              disabled={!props.isReady}
-              onClick={props.onSubmit}
-              type="submit">
-              <span>Start</span>
-            </Button>
+                <div>
+                  <FormLabel className="mb-1" htmlFor="summary">
+                    Summary
+                  </FormLabel>
+                  <Textarea
+                    name="summary"
+                    value={props.values.summary}
+                    onChange={e =>
+                      props.onChange('long_summary', e.target.value)
+                    }
+                    placeholder="This is a test video we need to transcript"
+                  />
+                </div>
+
+                <Button
+                  type="button"
+                  onClick={props.onSubmit}
+                  className="w-full">
+                  Start Run
+                </Button>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
         <div className="px-6 py-3 bg-[#1e1e1e] border-b flex items-center">
@@ -77,7 +146,7 @@ export function CreateRun(props: CreateRunProps) {
             Configuration
           </strong>
 
-          {props.workflow?.id && (
+          {props.selectedWorkflow?.id && (
             <div className="bg-blue-800 text-blue-300 px-3 py-0.5 text-xs rounded-full ml-3">
               Can not edit configuration when workflow is selected
             </div>
@@ -106,7 +175,7 @@ export function CreateRun(props: CreateRunProps) {
               props.onChange('configuration', nextValue);
             }}
             options={{
-              readOnly: !!props.workflow?.id,
+              readOnly: !!props.selectedWorkflow?.id,
             }}
           />
         </div>

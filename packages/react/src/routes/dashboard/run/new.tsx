@@ -1,12 +1,13 @@
 import {useEffect, useState, type FormEvent} from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
-import {Button, Form} from '@elwood/ui';
-import Editor from '@monaco-editor/react';
+
 import {stringify} from 'yaml';
 
 import {CreateRun} from '@/components/run/create';
 import {useCreateRun} from '@/data/run/use-create-run';
 import {useGetRunWorkflow} from '@/data/run/use-get-workflow';
+import {useGetRunWorkflows} from '@/data/run/use-get-workflows';
+import {toArray} from '@elwood/common';
 
 const defaultValue = stringify({
   name: 'hello-world',
@@ -34,6 +35,7 @@ export default function RunNewRoute(): JSX.Element {
   const [q] = useSearchParams();
   const workflowId = q.get('workflow');
 
+  const workflowsQuery = useGetRunWorkflows();
   const workflowQuery = useGetRunWorkflow(
     {id: q.get('workflow')!},
     {
@@ -67,7 +69,7 @@ export default function RunNewRoute(): JSX.Element {
     }
 
     setValue({
-      configuration: stringify(workflowQuery.data.configuration),
+      configuration: stringify(workflowQuery.data?.configuration),
       variables: JSON.stringify({}),
       short_summary: '',
     });
@@ -104,7 +106,8 @@ export default function RunNewRoute(): JSX.Element {
             setValue(() => ({...value, [field]: fieldValue}));
           }}
           values={value}
-          workflow={workflowQuery.data}
+          selectedWorkflow={workflowQuery.data}
+          workflows={toArray(workflowsQuery.data)}
         />
       </div>
     </>

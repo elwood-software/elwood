@@ -1,16 +1,12 @@
+import {useEffect} from 'react';
 import type {UseQueryOptions, UseQueryResult} from '@tanstack/react-query';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
-import {useClient} from '@/hooks/use-client';
-import {useEffect} from 'react';
-import {JsonObject} from '@elwood/common';
 
-export type UseGetRunResult = {
-  status: string;
-  result: string;
-  report: JsonObject;
-  workflow_id: string;
-  summary: string;
-};
+import {useClient} from '@/hooks/use-client';
+
+import type {UseGetRunItem} from '@/types';
+
+export type UseGetRunResult = UseGetRunItem;
 
 export interface UseGetRunInput {
   id: string;

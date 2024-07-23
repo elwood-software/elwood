@@ -1,35 +1,22 @@
-import {type Workflow, type Status, type Result} from '@jsr/elwood__run/types';
-
-import {
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableHead,
-  TableHeader,
-  PlusIcon,
-} from '@elwood/ui';
+import {PlusIcon} from '@elwood/ui';
 import {toArray} from '@elwood/common';
 
 import {Link} from '@/components/link';
 import {Button} from '@/components/button';
 
-import {RunStatusIcon} from './status-icon';
-import {RunDisplayName} from './display-name';
+import type {
+  UseGetRunsItem,
+  UseGetRunWorkflowsItem,
+  UseGetRunTriggerItem,
+} from '@/types';
+
 import {RunTable} from './table';
 
 export type RunListProps = {
   className?: string;
-  runs?: Array<{
-    id: string;
-    num: number;
-    name: string;
-    label: string;
-    status: Status;
-    result: Result;
-  }>;
-  workflows?: Array<{id: string; name: string; label: string}>;
-  triggers?: Array<{id: string; name: string; label: string}>;
+  runs?: UseGetRunsItem[];
+  workflows?: UseGetRunWorkflowsItem[];
+  triggers?: UseGetRunTriggerItem[];
 };
 
 export function RunList(props: RunListProps) {
@@ -90,19 +77,19 @@ export function RunList(props: RunListProps) {
               </div>
             )}
 
-            {triggers.map(workflow => {
+            {triggers.map(item => {
               return (
                 <Link
-                  key={`workflow-${workflow.id}`}
-                  href={`/run?workflow=${workflow.id}`}>
-                  {workflow.label}
+                  key={`workflow-${item.trigger}`}
+                  href={`/run?trigger=${item.trigger}`}>
+                  {item.trigger}
                 </Link>
               );
             })}
           </div>
         </div>
       </div>
-      <div className="size-full flex flex-col">
+      <div className="size-full flex flex-col p-12">
         <RunTable runs={runs} />
       </div>
     </>

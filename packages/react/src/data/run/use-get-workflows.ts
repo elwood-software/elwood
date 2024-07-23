@@ -2,11 +2,9 @@ import type {UseQueryOptions, UseQueryResult} from '@tanstack/react-query';
 import {useQuery} from '@tanstack/react-query';
 import {useClient} from '@/hooks/use-client';
 
-export type UseGetRunWorkflowsResult = {
-  id: string;
-  name: string;
-  label: string;
-}[];
+import {UseGetRunWorkflowsItem} from '@/types';
+
+export type UseGetRunWorkflowsResult = UseGetRunWorkflowsItem[];
 
 export interface UseGetRunWorkflowsInput {}
 

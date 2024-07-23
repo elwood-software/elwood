@@ -6,16 +6,20 @@ type BaseInputElement = ElementRef<'input'>;
 
 export type InputRef = ForwardedRef<BaseInputElement>;
 export type InputProps = JSX.IntrinsicElements['input'] & {
+  ring?: boolean;
   as?: JSXElementConstructor<JSX.IntrinsicElements['input']>;
 };
 
 export const Input = forwardRef<BaseInputElement, InputProps>(
   function Input(props, forwardedRef): JSX.Element {
     const Element = props.as ?? 'input';
+    const ring = props.ring ?? true;
 
     const cn = clsx(
       props.className,
-      'bg-background border text-foreground px-6 py-3 rounded-lg w-full ring-0 outline-none focus:border-foreground',
+      'flex w-full rounded-md bg-background px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
+      ring && 'border border-input',
+      props.className,
     );
 
     return <Element {...props} className={cn} ref={forwardedRef} />;

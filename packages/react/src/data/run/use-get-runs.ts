@@ -1,15 +1,11 @@
 import type {UseQueryOptions, UseQueryResult} from '@tanstack/react-query';
 import {useQuery} from '@tanstack/react-query';
+import {type Records} from '@elwood/common';
+
+import type {UseGetRunsItem} from '@/types';
 import {useClient} from '@/hooks/use-client';
 
-export type UseGetRunsResult = {
-  id: string;
-  num: number;
-  summary: string;
-  status: string;
-  result: string;
-  reason: string;
-}[];
+export type UseGetRunsResult = UseGetRunsItem[];
 
 export interface UseGetRunsInput {
   workflow_id?: string;
@@ -19,16 +15,16 @@ export function useGetRuns(
   input: UseGetRunsInput = {},
   opts: Omit<UseQueryOptions<UseGetRunsResult>, 'queryFn' | 'queryKey'> = {},
 ): UseQueryResult<UseGetRunsResult> {
-  const supabase = useClient();
+  const client = useClient();
 
   return useQuery({
     ...opts,
     queryKey: ['runs', input.workflow_id],
     async queryFn() {
-      const q = supabase
-        .from('elwood_run')
+      const q = client
+        .fromRuns()
         .select(
-          'id,num,summary,status,result,reason:report->>reason,workflow:elwood_run_workflow(id,name)',
+          'id,num,summary,status,result,reason:report->>reason,workflow:elwood_run_workflow(id,name,configuration->>label)',
         )
         .order('created_at', {ascending: false});
 
@@ -42,7 +38,7 @@ export function useGetRuns(
         throw error;
       }
 
-      return data;
+      return data as UseGetRunsResult;
     },
   });
 }

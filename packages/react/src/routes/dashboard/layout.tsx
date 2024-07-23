@@ -20,6 +20,8 @@ export default function Layout() {
   const {contextValue, workspaceName, title, search, assistant, userMenu} =
     useMainLayout();
 
+  console.log('xx workspaceName', workspaceName);
+
   const layout = useMemo(() => {
     return (
       <MainLayout

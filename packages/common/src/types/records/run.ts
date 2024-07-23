@@ -1,8 +1,15 @@
 import {type Database} from '../database';
+import {JsonObject} from '../scalar';
 
 export type Row = Database['public']['Views']['elwood_run']['Row'];
-export type New = Database['public']['Views']['elwood_run']['Insert'];
-export type Update = Database['public']['Views']['elwood_run']['Update'];
+export type New = Database['public']['Views']['elwood_run']['Insert'] & {
+  configuration?: JsonObject;
+  variables?: JsonObject;
+};
+export type Update = Database['public']['Views']['elwood_run']['Update'] & {
+  configuration?: JsonObject;
+  variables?: JsonObject;
+};
 export type View = Database['public']['Views']['elwood_run'];
 
 export type Event = Database['public']['Views']['elwood_run_event']['Row'];

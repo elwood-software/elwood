@@ -16,7 +16,7 @@ import {toArray, type Platform} from '@elwood/common';
 
 type Props = {
   params: {
-    org: string;
+    'workspace-name': string;
   };
 };
 
@@ -25,7 +25,7 @@ export default function Page(props: Props): JSX.Element {
   const [router, setRouter] = useState<RouterProps['router'] | null>(null);
   const {data, loading} = useWorkspaces();
   const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState<Platform.Workspace>([]);
+  const [selected, setSelected] = useState<Platform.Workspace | null>(null);
   const workspaces = toArray(data);
 
   useEffect(() => {
@@ -38,7 +38,9 @@ export default function Page(props: Props): JSX.Element {
       return;
     }
 
-    const activeWorkspace = workspaces.find(o => o.name === props.params.org);
+    const activeWorkspace = workspaces.find(
+      o => o.name === props.params['workspace-name'],
+    );
 
     if (!activeWorkspace) {
       setError('Organization not found');
@@ -52,7 +54,7 @@ export default function Page(props: Props): JSX.Element {
         basename: `/${activeWorkspace.name}`,
       }),
     );
-  }, [props.params.org, workspaces]);
+  }, [props.params['workspace-name'], workspaces]);
 
   if (error) {
     return <div>{error}</div>;
