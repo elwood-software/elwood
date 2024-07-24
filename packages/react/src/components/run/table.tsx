@@ -11,8 +11,9 @@ import {toArray} from '@elwood/common';
 
 import {Link} from '@/components/link';
 import {Button} from '@/components/button';
-
 import type {UseGetRunsItem} from '@/types';
+import {RunDisplayName} from './display-name';
+import {RunStatusIcon} from './status-icon';
 
 export type RunTableProps = {
   className?: string;
@@ -51,9 +52,13 @@ export function RunTable(props: RunTableProps) {
           {runs.map(run => {
             return (
               <TableRow key={`runs-view-${run.id}`}>
-                <TableCell className="w-2">.</TableCell>
+                <TableCell className="w-2">
+                  <RunStatusIcon run={run} />
+                </TableCell>
                 <TableCell>
-                  <Link href={`/run/${run.id}`}>{run.short_summary}</Link>
+                  <Link href={`/run/${run.id}`}>
+                    <RunDisplayName run={run} />
+                  </Link>
                 </TableCell>
                 <TableCell className="flex justify-end">
                   <Button

@@ -1,24 +1,52 @@
-import {CircleAlert, CircleEllipsis, CircleCheck} from '@elwood/ui';
+import {CircleAlert, CircleEllipsis, CircleCheck, Spinner} from '@elwood/ui';
 import clsx from 'clsx';
-import {type Status, type Result} from '@jsr/elwood__run/types';
 
-export type RunStatusIconProps = {
-  status: Status;
-  result: Result;
+import type {
+  RunWorkflowStatus,
+  RunWorkflowResult,
+  UseGetRunItem,
+  UseGetRunsItem,
+} from '@/types';
+
+export type RunStatusIconPropsWithRun = {
+  run: UseGetRunItem | UseGetRunsItem;
+};
+export type RunStatusIconPropsWithValues = {
+  status: RunWorkflowStatus;
+  result: RunWorkflowResult;
+};
+
+export type RunStatusIconProps = (
+  | RunStatusIconPropsWithRun
+  | RunStatusIconPropsWithValues
+) & {
   className?: string;
   color?: boolean;
 };
 
 export function RunStatusIcon(props: RunStatusIconProps) {
+  const status: RunWorkflowStatus =
+    ((props as RunStatusIconPropsWithRun).run
+      ? (props as RunStatusIconPropsWithRun).run.status
+      : (props as RunStatusIconPropsWithValues).status) ?? 'queued';
+  const result: RunWorkflowResult =
+    ((props as RunStatusIconPropsWithRun).run
+      ? (props as RunStatusIconPropsWithRun).run.result
+      : (props as RunStatusIconPropsWithValues).result) ?? 'none';
+
   let Icon =
-    props.status === 'running'
+    status === 'running'
       ? CircleEllipsis
-      : props.result === 'success'
+      : result === 'success'
         ? CircleCheck
         : CircleAlert;
 
-  if (['pending', 'queued', 'assigned'].includes(props.status)) {
+  if (['pending', 'queued', 'assigned'].includes(status)) {
     Icon = CircleEllipsis;
+  }
+
+  if (status === 'running') {
+    return <Spinner className={clsx(props.className)} />;
   }
 
   const color = {
@@ -27,7 +55,7 @@ export function RunStatusIcon(props: RunStatusIconProps) {
     failure: 'text-red-500',
     cancelled: '',
     skipped: 'text-blue-500',
-  }[props.result];
+  }[result];
 
   return (
     <Icon

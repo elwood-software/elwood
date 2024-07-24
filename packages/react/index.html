@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elwood Local</title>
+  </head>
+  <body class="w-full">
+    <div
+      class="overflow-hidden w-screen h-screen text-foreground bg-background"
+      id="root"></div>
+    <script type="module">
+      import React from 'react';
+      import {createRoot} from 'react-dom/client';
+      import {ElwoodThemeProvider} from '@elwood/ui';
+      import '@monaco-editor/react';
+      import YamlWorker from './src/__local__/yaml-worker.ts?worker';
+
+      import './src/__local__/local.css';
+      import '@elwood/ui/dist/style.css';
+
+      import {Main} from './src/__local__/main.tsx';
+
+      window.MonacoEnvironment = {
+        getWorker(_moduleId, label) {
+          switch (label) {
+            case 'yaml':
+              return new YamlWorker();
+            default:
+              throw new Error(`Unknown label ${label}`);
+          }
+        },
+      };
+
+      createRoot(document.getElementById('root')).render(
+        React.createElement(
+          ElwoodThemeProvider,
+          null,
+          React.createElement(Main),
+        ),
+      );
+    </script>
+  </body>
+</html>

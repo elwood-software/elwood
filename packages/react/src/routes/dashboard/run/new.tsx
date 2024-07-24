@@ -35,17 +35,19 @@ export default function RunNewRoute(): JSX.Element {
   const [q] = useSearchParams();
   const workflowId = q.get('workflow');
 
+  const action = useCreateRun();
   const workflowsQuery = useGetRunWorkflows();
   const workflowQuery = useGetRunWorkflow(
-    {id: q.get('workflow')!},
+    {id: workflowId!},
     {
-      enabled: q.has('workflow'),
+      enabled: !!workflowId,
     },
   );
 
   const [isReady, setIsReady] = useState(false);
   const [value, setValue] = useState({
-    short_summary: '',
+    summary: null,
+    short_summary: null,
     configuration: defaultValue,
     variables: JSON.stringify(
       {
@@ -71,18 +73,17 @@ export default function RunNewRoute(): JSX.Element {
     setValue({
       configuration: stringify(workflowQuery.data?.configuration),
       variables: JSON.stringify({}),
-      short_summary: '',
+      short_summary: null,
+      summary: null,
     });
 
     setIsReady(true);
   }, [workflowId, workflowQuery.data]);
 
-  const action = useCreateRun();
-
   function onSubmit(): void {
     action
       .mutateAsync({
-        workflow_id: workflowQuery.data?.id,
+        workflow_id: workflowId,
         configuration: value.configuration,
         variables: value.variables,
         short_summary: value.short_summary,

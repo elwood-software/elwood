@@ -1,41 +1,61 @@
-import {JsonObject} from '@elwood/common';
-
 import {ReactNode} from 'react';
 
+import type {
+  UseGetRunsItem,
+  UseGetRunItem,
+  UseGetRunWorkflowItem,
+  RunWorkflow,
+} from '@/types';
+import {useGetRunWorkflow} from '@/data/run/use-get-workflow';
+
 export type RunDisplayNameProps = {
-  primary: JsonObject | null | undefined;
-  fallback: JsonObject | null | undefined;
+  run: UseGetRunItem | UseGetRunsItem;
   className?: string;
-  postfix?: ReactNode;
+  postfix?: boolean;
+  fallback?: ReactNode;
 };
 
 export function RunDisplayName(props: RunDisplayNameProps) {
-  const {primary, fallback} = props;
-
-  if (!primary && !fallback) {
-    return <>(unknown)</>;
-  }
-
-  let name = '(unknown)';
-
-  if (props.primary?.label) {
-    name = props.primary.label;
-  } else if (props.primary?.name) {
-    name = props.primary?.name;
-  } else if (props.fallback?.name) {
-    name = props.fallback.name;
-  } else if (props.fallback?.name) {
-    name = props.fallback.name;
-  }
+  const {run} = props;
 
   return (
     <span className={props.className}>
-      {name}
-      {props.postfix && (
-        <span className="ml-2 text-lg text-muted-foreground font-normal">
-          {props.postfix}
+      {run.short_summary ?? (
+        <RunWorkflowDisplayName workflow={{id: run.workflow_id}} />
+      )}
+      {props.postfix !== false && (
+        <span className="ml-2 text-muted-foreground font-normal text-xs">
+          #{run.num}
         </span>
       )}
     </span>
   );
+}
+
+export type RunWorkflowDisplayNameProps = {
+  workflow: UseGetRunWorkflowItem | {id: string | null};
+  fallback?: ReactNode;
+};
+
+export function RunWorkflowDisplayName(props: RunWorkflowDisplayNameProps) {
+  const query = useGetRunWorkflow(
+    {
+      id: props.workflow.id!,
+    },
+    {
+      enabled: !!props.workflow.id,
+    },
+  );
+
+  return query.data?.label ?? query.data?.name ?? props.fallback ?? null;
+}
+
+export type RunWorkflowJobOrStepDisplayNameProps = {
+  item: RunWorkflow.Job | RunWorkflow.Step;
+};
+
+export function RunWorkflowJobOrStepDisplayName(
+  props: RunWorkflowJobOrStepDisplayNameProps,
+) {
+  return <>{props.item.label ?? props.item.name}</>;
 }

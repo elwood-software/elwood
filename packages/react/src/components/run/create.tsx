@@ -10,6 +10,7 @@ import {
   PopoverContent,
   FormLabel,
   Textarea,
+  ChevronRightIcon,
 } from '@elwood/ui';
 
 import {Button} from '@/components/button';
@@ -29,8 +30,8 @@ export type CreateRunProps = {
   values: {
     configuration: string;
     variables: string;
-    short_summary: string;
-    summary: string;
+    short_summary: string | null;
+    summary: string | null;
   };
   selectedWorkflow?: UseGetRunWorkflowItem;
   workflows: UseGetRunWorkflowsItem[];
@@ -54,18 +55,30 @@ export function CreateRun(props: CreateRunProps) {
             <h1 className="font-extrabold text-xl">Start a Run</h1>
           </div>
         </header>
-        <div className="w-full flex justify-center">
-          <ul className="max-w-2xl w-full my-6">
-            {toArray(props.workflows).map(workflow => {
-              return (
-                <div>
-                  <Link href={`/run/new?workflow_id=${workflow.id}`}>
-                    {workflow.label ?? workflow.name}
-                  </Link>
-                </div>
-              );
-            })}
-          </ul>
+        <div className="w-full flex justify-center items-center flex-col">
+          <div className="max-w-2xl w-full mt-12">
+            <header className="mb-6">
+              <h2 className="text-lg font-semibold">Select a Workflow</h2>
+              <p className="text-muted-foreground">
+                Choose a workflow to start a run
+              </p>
+            </header>
+            <ul className="w-full my-6 border divide-y">
+              {toArray(props.workflows).map(workflow => {
+                return (
+                  <div key={`CreateRun-Workflow-${workflow.id}`}>
+                    <Link
+                      href={`/run/new?workflow=${workflow.id}`}
+                      className="p-3 flex justify-between items-center">
+                      {workflow.label ?? workflow.name}
+
+                      <ChevronRightIcon className="size-[1em]" />
+                    </Link>
+                  </div>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     );
@@ -109,7 +122,7 @@ export function CreateRun(props: CreateRunProps) {
                   </FormLabel>
                   <Input
                     name="summary"
-                    value={props.values.short_summary}
+                    value={props.values.short_summary ?? ''}
                     onChange={e =>
                       props.onChange('short_summary', e.target.value)
                     }
@@ -123,7 +136,7 @@ export function CreateRun(props: CreateRunProps) {
                   </FormLabel>
                   <Textarea
                     name="summary"
-                    value={props.values.summary}
+                    value={props.values.summary ?? ''}
                     onChange={e =>
                       props.onChange('long_summary', e.target.value)
                     }

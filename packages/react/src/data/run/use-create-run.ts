@@ -11,7 +11,13 @@ import {parse as parseYaml} from 'yaml';
 
 import {createWorkflow} from './use-create-workflow';
 
-export type UseCreateRunInput = Records.Run.New;
+export type UseCreateRunInput = {
+  workflow_id?: string | null;
+  configuration: string;
+  variables: string;
+  short_summary?: string | null;
+  summary?: string | null;
+};
 
 export type UseCreateRunResult = {
   id: string;
@@ -26,7 +32,7 @@ export function useCreateRun(
   const supabase = useClient();
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<UseCreateRunResult, Error, UseCreateRunInput>({
     ...opts,
     mutationFn: async data => {
       const {data: session} = await supabase.auth.getSession();
@@ -43,6 +49,7 @@ export function useCreateRun(
       const result = await supabase
         .from('elwood_run')
         .insert({
+          summary: data.summary,
           short_summary: data.short_summary,
           workflow_id: workflowId,
           variables: getValue(data.variables),

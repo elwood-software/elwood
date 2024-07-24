@@ -1,4 +1,4 @@
-import {PlusIcon} from '@elwood/ui';
+import {PlusIcon, cn} from '@elwood/ui';
 import {toArray} from '@elwood/common';
 
 import {Link} from '@/components/link';
@@ -17,6 +17,10 @@ export type RunListProps = {
   runs?: UseGetRunsItem[];
   workflows?: UseGetRunWorkflowsItem[];
   triggers?: UseGetRunTriggerItem[];
+  filters: {
+    workflow_id?: string | null;
+    trigger?: string | null;
+  };
 };
 
 export function RunList(props: RunListProps) {
@@ -52,12 +56,20 @@ export function RunList(props: RunListProps) {
               </div>
             )}
 
+            {workflows.length !== 0 && (
+              <Link href={`/run/`} className="block px-2 py-1.5">
+                All
+              </Link>
+            )}
+
             {workflows.map(workflow => {
+              const cl = cn('py-1.5 px-2 text-sm rounded', {
+                ['bg-muted']: workflow.id === props.filters.workflow_id,
+              });
+
               return (
-                <div key={`workflow-${workflow.id}`}>
-                  <Link
-                    className="py-1.5 text-sm"
-                    href={`/run/workflow/${workflow.id}`}>
+                <div key={`workflow-${workflow.id}`} className={cl}>
+                  <Link href={`/run/?workflow=${workflow.id}`}>
                     {workflow.label}
                   </Link>
                 </div>
@@ -73,7 +85,7 @@ export function RunList(props: RunListProps) {
           <div className="border-t">
             {triggers.length === 0 && (
               <div className="p-6 text-center text-muted-foreground text-xs">
-                No workflows found. Create a new workflow to get started.
+                No triggers found.
               </div>
             )}
 

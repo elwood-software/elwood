@@ -3,12 +3,12 @@
 import {PropsWithChildren} from 'react';
 import {useRouter} from 'next/navigation';
 import {type ElwoodClient} from '@elwood/js';
-import {ElwoodProvider} from '@elwood/react';
+import {ElwoodProvider, type ElwoodProviderProps} from '@elwood/react';
 import type {Platform} from '@elwood/common';
 
 export type ProviderProps = {
   client: ElwoodClient;
-  workspaces: Platform.Workspace[];
+  workspaces: ElwoodProviderProps['workspaces'];
 };
 
 export function Provider(props: PropsWithChildren<ProviderProps>) {

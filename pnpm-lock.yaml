@@ -119,7 +119,7 @@ importers:
         version: 17.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwindcss:
         specifier: ^3.4.6
-        version: 3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+        version: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
       typescript:
         specifier: ^5.5.3
         version: 5.5.3
@@ -206,7 +206,7 @@ importers:
         version: 1.2.1
       tailwindcss:
         specifier: ^3.4.6
-        version: 3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+        version: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
       typescript:
         specifier: ^5.5.3
         version: 5.5.3
@@ -276,7 +276,7 @@ importers:
         version: 17.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwindcss:
         specifier: ^3.4.6
-        version: 3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+        version: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
       universal-cookie:
         specifier: ^7.2.0
         version: 7.2.0
@@ -364,7 +364,7 @@ importers:
         version: 2.4.0
       tailwindcss:
         specifier: ^3.4.6
-        version: 3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+        version: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -639,6 +639,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
+      '@vitejs/plugin-react':
+        specifier: ^4.3.1
+        version: 4.3.1(vite@5.3.4(@types/node@20.14.11)(sass@1.77.1)(terser@5.31.3))
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
@@ -653,7 +656,7 @@ importers:
         version: 8.2.5(@babel/preset-env@7.24.8(@babel/core@7.24.9))
       tailwindcss:
         specifier: ^3.4.6
-        version: 3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+        version: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
       tsup:
         specifier: ^8.2.2
         version: 8.2.2(@swc/core@1.5.7)(jiti@1.21.6)(postcss@8.4.39)(typescript@5.5.3)(yaml@2.4.5)
@@ -746,7 +749,7 @@ importers:
         version: 2.4.0
       tailwindcss:
         specifier: ^3.4.6
-        version: 3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+        version: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3)))
@@ -12447,7 +12450,7 @@ snapshots:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+      tailwindcss: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
 
   '@tanstack/query-core@5.51.9': {}
 
@@ -16227,10 +16230,10 @@ snapshots:
 
   jest@29.7.0:
     dependencies:
-      '@jest/core': 29.7.0(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+      '@jest/core': 29.7.0(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
       '@jest/types': 29.6.3
       import-local: 3.2.0
-      jest-cli: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+      jest-cli: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -17590,7 +17593,7 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.39
 
-  postcss-load-config@4.0.2(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3)):
+  postcss-load-config@4.0.2(postcss@8.4.39)(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3)):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.4.5
@@ -18777,9 +18780,9 @@ snapshots:
 
   tailwindcss-animate@1.0.7(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))):
     dependencies:
-      tailwindcss: 3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+      tailwindcss: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
 
-  tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3)):
+  tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -18798,7 +18801,7 @@ snapshots:
       postcss: 8.4.39
       postcss-import: 15.1.0(postcss@8.4.39)
       postcss-js: 4.0.1(postcss@8.4.39)
-      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@20.14.11)(typescript@5.5.3))
+      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
       postcss-nested: 6.2.0(postcss@8.4.39)
       postcss-selector-parser: 6.1.1
       resolve: 1.22.8
