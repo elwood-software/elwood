@@ -1,9 +1,0 @@
-{
-  "extends": ["//"],
-  "globalEnv": [],
-  "tasks": {
-    "build": {
-      "outputs": [".next/**", "!.next/cache/**"]
-    }
-  }
-}
