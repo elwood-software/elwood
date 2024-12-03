@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@elwood/web",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -11,14 +11,14 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
+    "@elwood/react": "workspace:*",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@elwood/eslint-config": "workspace:*",
+    "@elwood/typescript-config": "workspace:*",
     "@types/node": "^20",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",

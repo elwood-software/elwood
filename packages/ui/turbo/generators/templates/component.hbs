@@ -1,8 +1,10 @@
-export const {{ pascalCase name }} = ({ children }: { children: React.ReactNode }) => {
+import type {PropsWithChildren} from 'react'
+
+export function {{ pascalCase name }}(props: PropsWithChildren): JSX.Element {
   return (
     <div>
       <h1>{{ pascalCase name }} Component</h1>
-      {children}
+      {props.children}
     </div>
   );
 };
