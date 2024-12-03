@@ -4,7 +4,7 @@ import { fn } from "@storybook/test";
 import { Button } from "./button.js";
 
 const meta: Meta<typeof Button> = {
-  title: "Example/Button",
+  title: "UI/Button",
   component: Button,
   parameters: {
     layout: "centered",

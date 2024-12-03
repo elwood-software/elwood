@@ -41,6 +41,7 @@
     "@types/react-dom": "18.3.1",
     "autoprefixer": "^10.4.20",
     "storybook": "^8.4.6",
+    "storybook-dark-mode": "^4.0.2",
     "tailwindcss": "^3.4.15",
     "tsup": "^8.3.5",
     "typescript": "5.5.4",
@@ -48,7 +49,12 @@
     "vite-tsconfig-paths": "^5.1.3"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.1",
+    "@radix-ui/react-tooltip": "^1.1.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.462.0",

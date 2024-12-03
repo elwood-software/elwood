@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import { mergeConfig } from "vite";
-import { default as tsconfigPaths } from 'vite-tsconfig-paths';
+import { default as tsconfigPaths } from "vite-tsconfig-paths";
 
 import { join, dirname } from "path";
 
@@ -18,17 +18,16 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-essentials"),
     getAbsolutePath("@chromatic-com/storybook"),
     getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("storybook-dark-mode"),
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
   },
-viteFinal(config) {
+  viteFinal(config) {
     return mergeConfig(config, {
-      plugins: [
-        tsconfigPaths()
-      ]
-    })
-  }
+      plugins: [tsconfigPaths()],
+    });
+  },
 };
 export default config;
