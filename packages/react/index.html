@@ -11,7 +11,18 @@
       import "@elwood/ui/style.css";
       import React from "react";
       import { createRoot } from "react-dom/client";
+      import { useMedia } from "react-use";
+
       import * as Elwood from "./src/index.ts";
+
+      const mq = window.matchMedia("(prefers-color-scheme: dark)");
+
+      mq.addEventListener("change", () => {
+        document.querySelector("html").classList.remove("dark");
+        mq.matches && document.querySelector("html").classList.add("dark");
+      });
+
+      mq.matches && document.querySelector("html").classList.add("dark");
 
       createRoot(document.getElementById("root")).render(
         React.createElement(Elwood.Provider, null, [

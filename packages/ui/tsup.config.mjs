@@ -1,7 +1,9 @@
 import { defineConfig } from "tsup";
+import tailwind from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: ["./src/index.ts", "./src/index.css"],
   format: ["esm", "cjs"],
   dts: true,
   banner: {
@@ -11,4 +13,5 @@ export default defineConfig({
   splitting: true,
   sourcemap: true,
   clean: true,
+  plugins: [tailwind(), autoprefixer()],
 });

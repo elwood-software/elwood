@@ -1,7 +1,11 @@
 {
   "extends": "@elwood/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "paths": {
+      "#/*": ["./src/*"],
+      "@elwood/ui": ["../ui/src/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

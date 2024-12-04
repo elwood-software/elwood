@@ -9,11 +9,12 @@
       "require": "./dist/index.cjs"
     },
     "./index.css": "./dist/index.css",
-    "./style.css": "./style.css"
+    "./style.css": "./src/index.css"
   },
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "style.css"
+    "src/style.css"
   ],
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -22,7 +23,8 @@
     "add": "pnpm dlx shadcn@latest add",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build": "rm -rf dist && tsup && tailwindcss -i ./style.css -o ./dist/index.css"
+    "build": "rm -rf dist && tsup",
+    "dev": "tsup --watch"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
@@ -49,6 +51,7 @@
     "vite-tsconfig-paths": "^5.1.3"
   },
   "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-separator": "^1.1.0",
