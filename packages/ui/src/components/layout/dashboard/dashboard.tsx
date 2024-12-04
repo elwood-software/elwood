@@ -1,5 +1,4 @@
 import type { PropsWithChildren } from "react";
-import { Command } from "lucide-react";
 
 import { Separator } from "#/components/ui/separator.js";
 import {
@@ -20,14 +19,17 @@ import {
 export type DashboardLayoutProps = PropsWithChildren<{
   nav: React.ComponentProps<typeof SidebarMenuButton>[];
   userMenu?: React.ReactNode;
+  orgMenu?: React.ReactNode;
   sidebar?: React.ReactNode;
   header?: React.ReactNode;
+  defaultOpen?: boolean;
 }>;
 
 export function DashboardLayout(props: DashboardLayoutProps) {
   return (
     <div className="w-screen h-full min-h-screen fixed inset-0">
       <SidebarProvider
+        defaultOpen={props.defaultOpen}
         style={
           {
             "--sidebar-width": "350px",
@@ -43,27 +45,21 @@ export function DashboardLayout(props: DashboardLayoutProps) {
             collapsible="none"
             className="!w-[calc(var(--sidebar-width-icon)_+_1px)] border-r"
           >
-            <SidebarHeader>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    size="lg"
-                    asChild
-                    className="md:h-8 md:p-0"
-                  >
-                    <a href="#">
-                      <div className="flex aspect-square size-8 items-center justify-center rounded-xs bg-sidebar-primary text-sidebar-primary-foreground">
-                        x
-                      </div>
-                      <div className="grid flex-1 text-left text-sm leading-tight">
-                        <span className="truncate font-semibold">Acme Inc</span>
-                        <span className="truncate text-xs">Enterprise</span>
-                      </div>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarHeader>
+            {props.orgMenu && (
+              <SidebarHeader>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      size="lg"
+                      asChild
+                      className="md:h-8 md:p-0"
+                    >
+                      {props.orgMenu}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarHeader>
+            )}
             <SidebarContent>
               <SidebarGroup>
                 <SidebarGroupContent className="px-1.5 md:px-0">

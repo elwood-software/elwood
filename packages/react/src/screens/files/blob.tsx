@@ -1,4 +1,4 @@
-export function BlobScreen() {
+export default function BlobScreen() {
   return (
     <div>
       <h1>Home</h1>

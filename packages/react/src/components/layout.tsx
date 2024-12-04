@@ -1,14 +1,17 @@
 import { type ComponentProps } from "react";
 
-import { DashboardLayout, Icon, Loading, Skeleton } from "@elwood/ui";
+import {
+  DashboardLayout,
+  Icon,
+  Loading,
+  Skeleton,
+  type DashboardLayoutProps,
+} from "@elwood/ui";
 
 import { NavItem } from "#/constants.js";
 import { Link } from "./link.js";
 
-export type LayoutProps = Omit<
-  ComponentProps<typeof DashboardLayout>,
-  "nav"
-> & {
+export type LayoutProps = Omit<DashboardLayoutProps, "nav"> & {
   loading?: boolean;
   activeNav?: NavItem;
 };
@@ -57,16 +60,36 @@ const nav: ComponentProps<typeof DashboardLayout>["nav"] = [
 ];
 
 export function Layout(props: LayoutProps): JSX.Element {
-  const { header, sidebar, loading = false, activeNav } = props;
+  const {
+    header,
+    sidebar,
+    loading = false,
+    activeNav,
+    defaultOpen = true,
+  } = props;
   const nav_ = nav.map((item) => ({
     ...item,
     isActive: item.key === activeNav,
   }));
 
+  const orgMenu = (
+    <Link href="/">
+      <div className="flex aspect-square size-8 items-center justify-center rounded-xs bg-sidebar-primary text-sidebar-primary-foreground">
+        P
+      </div>
+      <div className="grid flex-1 text-left text-sm leading-tight">
+        <span className="truncate font-semibold">Acme Inc</span>
+        <span className="truncate text-xs">Enterprise</span>
+      </div>
+    </Link>
+  );
+
   if (loading) {
     return (
       <DashboardLayout
+        defaultOpen={defaultOpen}
         nav={nav_}
+        orgMenu={orgMenu}
         header={<Skeleton className="h-4 bg-muted w-20" />}
       >
         <Loading className="m-4" />
@@ -75,7 +98,13 @@ export function Layout(props: LayoutProps): JSX.Element {
   }
 
   return (
-    <DashboardLayout nav={nav_} header={header} sidebar={sidebar}>
+    <DashboardLayout
+      defaultOpen={defaultOpen}
+      orgMenu={orgMenu}
+      nav={nav_}
+      header={header}
+      sidebar={sidebar}
+    >
       {props.children}
     </DashboardLayout>
   );

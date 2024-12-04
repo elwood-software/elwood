@@ -1,39 +1,56 @@
-import { lazy } from "react";
+import { lazy, PropsWithChildren, Suspense } from "react";
 import * as RR from "react-router";
 
+import { Loading } from "@elwood/ui";
+
+import { Layout } from "#/components/layout.js";
+
+const HomeLayout = lazy(() => import("./screens/home/layout.js"));
 const HomeScreen = lazy(() => import("./screens/home/home.js"));
 
 const FilesLayout = lazy(() => import("./screens/files/layout.js"));
 const FilesMainScreen = lazy(() => import("./screens/files/main.js"));
 const TreeScreen = lazy(() => import("./screens/files/tree.js"));
+const BlobScreen = lazy(() => import("./screens/files/blob.js"));
 
 export function Router() {
   return (
     <RR.Routes>
       <RR.Route>
         {/** HOME */}
-        <RR.Route index path="/" element={<HomeScreen />} />
+        <RR.Route
+          path="/"
+          element={suspend(
+            <HomeLayout>
+              <RR.Outlet />
+            </HomeLayout>,
+            true,
+          )}
+        >
+          <RR.Route index path="" element={suspend(<HomeScreen />)} />
+        </RR.Route>
 
         {/** FILES */}
         <RR.Route
           path="/:bucket"
-          element={
+          element={suspend(
             <FilesLayout>
               <RR.Outlet />
-            </FilesLayout>
-          }
+            </FilesLayout>,
+            true,
+          )}
         >
           {/** MAIN */}
-          <RR.Route path="" index element={<FilesMainScreen />} />
+          <RR.Route path="" index element={suspend(<FilesMainScreen />)} />
 
           {/** TREE */}
           <RR.Route path="tree">
-            <RR.Route path="*" element={<TreeScreen />} />
+            <RR.Route path="*" element={suspend(<TreeScreen />)} />
           </RR.Route>
 
           {/** BLOB */}
           <RR.Route path="blob">
-            <RR.Route index element={<div>blob</div>} />
+            <RR.Route path="*" element={suspend(<BlobScreen />)} />
           </RR.Route>
         </RR.Route>
 
@@ -70,5 +87,20 @@ export function HashRouter() {
     <RR.HashRouter>
       <Router />
     </RR.HashRouter>
+  );
+}
+
+export function suspend(
+  children: PropsWithChildren["children"],
+  withLayout = false,
+): JSX.Element {
+  return (
+    <Suspense
+      fallback={
+        withLayout ? <Layout defaultOpen={false} loading /> : <Loading />
+      }
+    >
+      {children}
+    </Suspense>
   );
 }
