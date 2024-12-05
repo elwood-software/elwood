@@ -23,7 +23,7 @@ const nav: ComponentProps<typeof DashboardLayout>["nav"] = [
     asChild: true,
     children: (
       <Link href="/">
-        <Icon.Home />
+        <Icon.Home className="w-20" />
       </Link>
     ),
   },

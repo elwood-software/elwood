@@ -13,6 +13,8 @@ const FilesMainScreen = lazy(() => import("./screens/files/main.js"));
 const TreeScreen = lazy(() => import("./screens/files/tree.js"));
 const BlobScreen = lazy(() => import("./screens/files/blob.js"));
 
+const ActionsLayout = lazy(() => import("./screens/actions/layout.js"));
+
 export function Router() {
   return (
     <RR.Routes>
@@ -29,7 +31,6 @@ export function Router() {
         >
           <RR.Route index path="" element={suspend(<HomeScreen />)} />
         </RR.Route>
-
         {/** FILES */}
         <RR.Route
           path="/:bucket"
@@ -54,11 +55,22 @@ export function Router() {
           </RR.Route>
         </RR.Route>
 
+        {/** ACTIONS */}
+        <RR.Route
+          path="/actions"
+          element={suspend(
+            <ActionsLayout>
+              <RR.Outlet />
+            </ActionsLayout>,
+          )}
+        >
+          <RR.Route path="" index element={<div>actions</div>} />
+        </RR.Route>
+
         {/** SETTINGS */}
         <RR.Route path="/settings">
           <RR.Route path="" index element={<div>settings</div>} />
         </RR.Route>
-
         {/** 404 ERROR */}
         <RR.Route path="*" element={<div>404</div>} />
       </RR.Route>
