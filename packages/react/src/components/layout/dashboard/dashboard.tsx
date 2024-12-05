@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 
-import { Separator } from "#/components/ui/separator.js";
 import {
+  Separator,
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -14,7 +14,7 @@ import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "#/components/ui/sidebar.js";
+} from "@elwood/ui";
 
 export type DashboardLayoutProps = PropsWithChildren<{
   nav: React.ComponentProps<typeof SidebarMenuButton>[];

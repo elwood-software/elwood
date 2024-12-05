@@ -5,7 +5,7 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-} from "#/components/ui/sidebar.js";
+} from "@elwood/ui";
 
 export type DashboardLayoutSidebarProps = React.ComponentProps<
   typeof Sidebar

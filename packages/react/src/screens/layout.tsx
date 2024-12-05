@@ -1,15 +1,13 @@
 import { type ComponentProps } from "react";
 
+import { Icon, Loading, Skeleton } from "@elwood/ui";
+
 import {
   DashboardLayout,
-  Icon,
-  Loading,
-  Skeleton,
   type DashboardLayoutProps,
-} from "@elwood/ui";
-
+} from "#/components/layout/dashboard/index.js";
 import { NavItem } from "#/constants.js";
-import { Link } from "./link.js";
+import { Link } from "../components/link.js";
 
 export type LayoutProps = Omit<DashboardLayoutProps, "nav"> & {
   loading?: boolean;

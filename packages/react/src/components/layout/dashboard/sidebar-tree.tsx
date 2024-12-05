@@ -1,14 +1,14 @@
-import { ChevronRight, File, Folder } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "#/components/ui/collapsible.js";
-import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-} from "#/components/ui/sidebar.js";
+  Icons,
+} from "@elwood/ui";
+
+const { ChevronRight, File, Folder } = Icons;
 
 export function Tree({ item }: { item: string | any[] }) {
   const [name, ...items] = Array.isArray(item) ? item : [item];

@@ -1,5 +1,5 @@
 import { NavItem } from "#/constants.js";
-import { Layout } from "#/components/layout.js";
+import { Layout } from "#/screens/layout.js";
 import { Link } from "#/components/link.js";
 
 export default function HomeScreen() {

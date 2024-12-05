@@ -3,7 +3,7 @@ import * as RR from "react-router";
 
 import { Loading } from "@elwood/ui";
 
-import { Layout } from "#/components/layout.js";
+import { Layout } from "#/screens/layout.js";
 
 const HomeLayout = lazy(() => import("./screens/home/layout.js"));
 const HomeScreen = lazy(() => import("./screens/home/home.js"));

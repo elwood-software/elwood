@@ -1,6 +1,6 @@
 import { type PropsWithChildren } from "react";
 
-import { Layout } from "#/components/layout.js";
+import { Layout } from "#/screens/layout.js";
 import { NavItem } from "#/constants.js";
 
 export default function HomeLayout(props: PropsWithChildren) {

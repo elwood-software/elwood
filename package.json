@@ -9,10 +9,11 @@
     "clean": "turbo clean",
     "reset": "pnpm -s dlx rimraf -g **/.turbo **/dist **/node_modules ./node_modules **/tsconfig.tsbuildinfo **/*.zip **/*.log **/.DS_Store **/.next"
   },
-  "devDependencies": {
-    "prettier": "^3.3.3",
+  "dependencies": {
+    "@types/node": "^22.10.1",
+    "prettier": "^3.4.2",
     "turbo": "^2.3.3",
-    "typescript": "5.5.4"
+    "typescript": "5.7.2"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
