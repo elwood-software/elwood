@@ -1,0 +1,3 @@
+{
+  "extends": "@elwood/typescript-config/base.json"
+}

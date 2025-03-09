@@ -1,0 +1,43 @@
+{
+  "name": "@elwood/api",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "src/",
+    "app-router.ts"
+  ],
+  "scripts": {
+    "dev": "tsx watch ./src/serve.ts -- --env-file=.env --config-file=.env.config.js",
+    "build": "tsup",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trpc/client": "11.0.0-rc.824",
+    "@trpc/server": "11.0.0-rc.824",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "minimist": "^1.2.8",
+    "tsx": "^4.19.3",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@elwood/typescript-config": "workspace:*",
+    "@aws-sdk/client-s3": "^3.758.0",
+    "@aws-sdk/s3-request-presigner": "^3.758.0",
+    "@types/cors": "^2.8.17",
+    "@types/minimist": "^1.2.5",
+    "tsup": "^8.4.0"
+  }
+}
