@@ -8,7 +8,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean": "turbo clean",
     "reset": "pnpm -s dlx rimraf -g **/.turbo **/dist **/node_modules ./node_modules **/tsconfig.tsbuildinfo **/*.zip **/*.log **/.DS_Store **/.next",
-    "publish": "pnpm publish -r"
+    "publish:next": "pnpm publish -r --tag next"
   },
   "dependencies": {
     "@types/node": "^22.13.7",
