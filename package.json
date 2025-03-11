@@ -8,7 +8,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean": "turbo clean",
     "reset": "pnpm -s dlx rimraf -g **/.turbo **/dist **/node_modules ./node_modules **/tsconfig.tsbuildinfo **/*.zip **/*.log **/.DS_Store **/.next",
-    "publish:next": "pnpm publish -r --tag next --publish-branch next --access public"
+    "publish:next": "pnpm publish -r --tag next --publish-branch next --access public",
+    "start": "supabase start -x studio,imgproxy"
   },
   "dependencies": {
     "@types/node": "^22.13.7",

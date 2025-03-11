@@ -1,4 +1,4 @@
-# For detailed configuration reference documentation, visit:
+                                                                                                                                                                                                    # For detailed configuration reference documentation, visit:
 # https://supabase.com/docs/guides/local-development/cli/config
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
@@ -276,7 +276,7 @@ inspector_port = 8083
 # static_files = [ "./functions/MY_FUNCTION_NAME/*.html" ]
 
 [analytics]
-enabled = true
+enabled = false
 port = 54327
 # Configure one of the supported backends: `postgres`, `bigquery`.
 backend = "postgres"

@@ -1,11 +1,12 @@
 import { existsSync } from "node:fs";
 import { type CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
+import { type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { type FullConfiguration } from "./config.js";
 import { Namespace, type NamespaceMap } from "./namespace.js";
 import type { ProviderConstructor, ProviderMap } from "../types.js";
 
 export type CreateContextInput = InnerContext & {
-  options: CreateHTTPContextOptions;
+  options: CreateHTTPContextOptions | FetchCreateContextFnOptions;
 };
 
 export async function createContext(input: CreateContextInput) {
