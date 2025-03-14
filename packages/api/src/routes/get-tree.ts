@@ -24,9 +24,12 @@ const route = publicProcedure.input(schema).query(async ({ input, ctx }) => {
 
   return {
     ...result,
-    cursor: Buffer.from(JSON.stringify(result.cursor ?? {})).toString(
-      "base64url",
-    ),
+    cursor: {
+      next: Buffer.from(JSON.stringify(result.cursor ?? {})).toString(
+        "base64url",
+      ),
+      previous: input.cursor,
+    },
   };
 });
 

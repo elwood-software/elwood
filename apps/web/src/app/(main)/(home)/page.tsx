@@ -1,24 +1,30 @@
 "use client";
 
-import Link from "next/link";
-
 import { useNamespaces } from "#/hooks/use-namespaces";
+import { NodeTable } from "#/components/node-table/node-table";
+import { ErrorNotice } from "#/components/error";
 
 export default function Page() {
-  const { data } = useNamespaces();
+  const { data, error } = useNamespaces({});
 
-  console.log(data);
+  if (error) {
+    return (
+      <ErrorNotice className="m-8">Unable to load namespaces.</ErrorNotice>
+    );
+  }
 
   return (
-    <>
-      root app
-      {data?.map((item) => {
-        return (
-          <Link key={item.name} href={`/${item.name}`}>
-            {item.displayName}
-          </Link>
-        );
-      })}
-    </>
+    <NodeTable
+      className="m-8"
+      data={
+        data?.map((item) => {
+          return {
+            type: "NAMESPACE",
+            name: item.displayName,
+            href: `/${item.name}`,
+          };
+        }) ?? []
+      }
+    />
   );
 }

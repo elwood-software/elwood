@@ -13,7 +13,7 @@ export default function Page() {
 
         <h1 className="font-bold text-3xl">Coming Soon</h1>
         <p className="text-sm text-muted-foreground">
-          ...maybe. "soon" might be relative
+          {`"Soon"`} might be relative
         </p>
       </div>
     </AppLayout>

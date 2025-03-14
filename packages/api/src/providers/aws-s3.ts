@@ -49,7 +49,9 @@ export default class AwsS3Provider
     const { bucket, path, cursor } = input;
 
     if (!bucket) {
-      const buckets = await this.#client!.listBuckets();
+      const buckets = await this.#client!.listBuckets({
+        ContinuationToken: cursor?.token,
+      });
 
       return {
         nodes:
@@ -61,8 +63,15 @@ export default class AwsS3Provider
               path: this.createBucketId(item.Name!),
             };
           }) ?? [],
+        cursor: {
+          token: buckets.ContinuationToken,
+        },
       };
     }
+
+    const pathParts = path?.split("/") ?? [];
+
+    console.log(path, pathParts);
 
     const objects = await this.#client!.listObjectsV2({
       Bucket: bucket,
@@ -104,6 +113,7 @@ export default class AwsS3Provider
       cursor: {
         token: objects.ContinuationToken,
       },
+      parent: this.getTreeParentFromPath(path),
     };
   }
 

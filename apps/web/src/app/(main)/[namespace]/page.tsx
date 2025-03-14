@@ -1,11 +1,11 @@
 "use client";
 
+import { use } from "react";
+
 import { AppLayout } from "#/components/app-layout";
 import { useTree } from "#/hooks/use-tree";
 import { NodeTable } from "#/components/node-table/node-table";
-
-import Link from "next/link";
-import { use } from "react";
+import { BlobNode } from "@elwood/api";
 
 export type PageProps = {
   params: Promise<{ namespace: string }>;
@@ -21,9 +21,13 @@ export default function Page(props: PageProps) {
   return (
     <AppLayout defaultOpen={false}>
       <NodeTable
-        data={data?.nodes ?? []}
-        namespace={namespace}
-        bucket="_"
+        data={(data?.nodes ?? []).map((item) => {
+          return {
+            type: item.type,
+            name: item.name,
+            href: `/${namespace}/${(item as BlobNode).path}/tree`,
+          };
+        })}
         className="m-8"
       />
     </AppLayout>

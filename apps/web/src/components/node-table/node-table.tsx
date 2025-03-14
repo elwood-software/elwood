@@ -1,145 +1,52 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Folder, File, Archive } from "lucide-react";
-import { default as filesize } from "filesize.js";
+import type { TreeNode, Node, BlobNode } from "@elwood/api";
 
 import { Skeleton } from "#/components/ui/skeleton";
 import { cn } from "#/lib/utils";
-import type { TreeNode } from "#/hooks/use-tree";
 
-import { BlobNode } from "@elwood/api/src/types";
-import { useState } from "react";
-import { Badge } from "../ui/badge";
+import { columns } from "./columns";
+import type { NodeTableData } from "./types";
 
-interface DataTableProps<TData> {
+interface DataTableProps<NodeTableData> {
   loading?: boolean;
-  data: TData[];
-  namespace: string;
-  bucket?: string;
+  data: NodeTableData[];
   className?: string;
+  parent?: TreeNode;
 }
 
-export const columns: ColumnDef<TreeNode>[] = [
-  {
-    accessorKey: "type",
-    header() {
-      return <div className="w-4"></div>;
-    },
-    cell({ row }) {
-      const type = row.getValue("type");
-      let icon = <File className="size-4 stroke-muted-foreground" />;
-
-      switch (type) {
-        case "BUCKET": {
-          icon = <Archive className="size-4 stroke-muted-foreground" />;
-          break;
-        }
-
-        case "TREE": {
-          icon = (
-            <Folder className="size-4 fill-muted-foreground stroke-muted-foreground" />
-          );
-          break;
-        }
-      }
-
-      return <div className="w-4 pl-4 py-3">{icon}</div>;
-    },
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row, table }) => {
-      const { namespace, bucket } = table.options.meta as {
-        namespace: string;
-        bucket?: string;
-      };
-      const name = row.getValue("name") as string;
-      const path = row.getValue("path");
-      const type = String(row.getValue("type")!).toLowerCase();
-
-      const href =
-        type === "bucket"
-          ? `/${namespace}/${path}/tree`
-          : `/${namespace}/${bucket}/${type}/${path}`;
-
-      return (
-        <div className="p-3 text-sm">
-          <Link href={href}>{name}</Link>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "size",
-    header() {
-      return "Size";
-    },
-    cell({ row }) {
-      const size = row.getValue("size") as number | undefined;
-      return (
-        <div className="px-3 text-muted-foreground text-xs font-mono">
-          {size && filesize(size)}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "labels",
-    header() {
-      return <>Labels</>;
-    },
-    cell({ row }) {
-      const labels = (row.getValue("labels") ?? []) as BlobNode["labels"];
-
-      return (
-        <div className="space-0.5">
-          {labels?.map((item) => <Badge key={item.name}>{item.text}</Badge>)}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "path",
-    header() {
-      return <></>;
-    },
-    cell() {
-      return <></>;
-    },
-  },
-
-  {
-    accessorKey: "isHidden",
-    header() {
-      return <></>;
-    },
-    cell() {
-      return <></>;
-    },
-  },
-];
+export function nodeToTableData(
+  item: Node,
+  prefix: string[] = [],
+): NodeTableData {
+  return {
+    type: item.type,
+    name: item.name,
+    href: `/${[...prefix, item.type.toLocaleLowerCase(), (item as BlobNode).path!].join("/")}`,
+    labels: (item as BlobNode).labels ?? [],
+    size: (item as BlobNode).size,
+    isHidden: (item as BlobNode).isHidden,
+  };
+}
 
 export function NodeTable({
   data,
+  parent,
   className,
-  namespace,
-  bucket,
-}: DataTableProps<TreeNode>) {
+}: DataTableProps<NodeTableData>) {
   const [showHidden, setShowHidden] = useState(false);
   const table = useReactTable({
-    data,
+    data: parent ? [nodeToTableData({ ...parent, name: ".." }), ...data] : data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    meta: { namespace, bucket },
   });
+  const hasHidden = !!data.find((item) => item.isHidden);
 
   function handleChangeHidden(val?: boolean | undefined) {
     setShowHidden(val === undefined ? !showHidden : val);
@@ -222,14 +129,16 @@ export function NodeTable({
           )}
         </tbody>
       </table>
-      <footer className="px-3 py-1.5 border-t">
-        <button
-          onClick={() => handleChangeHidden()}
-          className="text-xs text-muted-foreground"
-        >
-          {showHidden ? "Hide hidden files" : "Show hidden files"}
-        </button>
-      </footer>
+      {hasHidden && (
+        <footer className="px-3 py-1.5 border-t">
+          <button
+            onClick={() => handleChangeHidden()}
+            className="text-xs text-muted-foreground"
+          >
+            {showHidden ? "Hide hidden files" : "Show hidden files"}
+          </button>
+        </footer>
+      )}
     </div>
   );
 }

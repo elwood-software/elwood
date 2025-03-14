@@ -2,8 +2,13 @@
   "version": "4",
   "specifiers": {
     "jsr:@supabase/functions-js@*": "2.4.4",
+    "npm:@elwood/api@*": "0.3.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2",
     "npm:@elwood/api@0.1": "0.1.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2",
+    "npm:@elwood/api@0.2.0": "0.2.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2",
+    "npm:@elwood/api@0.3.0": "0.3.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2",
+    "npm:@elwood/api@0.4.0": "0.4.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2",
     "npm:@trpc/server@11.0.0-rc.824": "11.0.0-rc.824_typescript@5.8.2",
+    "npm:@types/node@*": "22.12.0",
     "npm:openai@^4.52.5": "4.86.2"
   },
   "jsr": {
@@ -17,6 +22,42 @@
   "npm": {
     "@elwood/api@0.1.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2": {
       "integrity": "sha512-GSfnKFxR8BLv3pa09NsfHNu7Tnpfw+3EW04l+wagDyXiZzg2mu59Ut59KeCXo4yHv0mIpDTcE3jZThBLpXgI3A==",
+      "dependencies": [
+        "@trpc/client",
+        "@trpc/server",
+        "cors",
+        "dotenv",
+        "minimist",
+        "tsx",
+        "zod"
+      ]
+    },
+    "@elwood/api@0.2.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2": {
+      "integrity": "sha512-i9hqDCVC4eKLYfjqAG1n4aTs/BRhy6YIPXCM92OPpj606RMGuy7lshBW4oC3tV2w63G4zPUG/vNwm3KeOLPdOw==",
+      "dependencies": [
+        "@trpc/client",
+        "@trpc/server",
+        "cors",
+        "dotenv",
+        "minimist",
+        "tsx",
+        "zod"
+      ]
+    },
+    "@elwood/api@0.3.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2": {
+      "integrity": "sha512-uqOBhmdQ72xW0GHGjH45Wv/FrC16MAG3y/Y5aviJfQQ59tzq8To5zbHrOqVv9F2pK0xe4FNWkllfYGKvnRDQ3A==",
+      "dependencies": [
+        "@trpc/client",
+        "@trpc/server",
+        "cors",
+        "dotenv",
+        "minimist",
+        "tsx",
+        "zod"
+      ]
+    },
+    "@elwood/api@0.4.0_@trpc+server@11.0.0-rc.824__typescript@5.8.2": {
+      "integrity": "sha512-Uc6dFA/D9t5+2cY97h2eo0kqZGFBtCWwkQnSLN/5de8CpOQuY0Pxu2xmyjjujrdT/PzFI3rmhZzbZtkkRK+TWw==",
       "dependencies": [
         "@trpc/client",
         "@trpc/server",
@@ -401,7 +442,7 @@
   },
   "workspace": {
     "dependencies": [
-      "npm:@elwood/api@0.1",
+      "npm:@elwood/api@0.3",
       "npm:@trpc/server@11.0.0-rc.824"
     ]
   }

@@ -4,12 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Loader2, Check } from "lucide-react";
 import { cn } from "#/lib/utils";
 
-const noticeVariants = cva("px-3 py-2 rounded text-sm", {
+const noticeVariants = cva("px-3 py-2 rounded text-sm flex gap-3", {
   variants: {
     variant: {
       default: "",
       destructive: "bg-destructive text-white",
-      success: "bg-green-800 [&>p]:text-green-100",
+      success: "bg-green-800 [&_p]:text-green-100",
       info: "bg-blue-800 [&>p]:text-blue-100",
     },
   },
@@ -31,14 +31,16 @@ export function Notice(props: NoticeProps) {
 
   return (
     <section className={className_}>
-      <header className="flex items-center space-x-2">
+      <div className="mt-1">
         {props.inProgress && <Loader2 className="animate-spin size-[1rem]" />}
         {props.variant === "success" && <Check className="size-[1rem]" />}
-        <h3>{props.title}</h3>
-      </header>
-      {props.description && (
-        <p className="text-blue-200">{props.description}</p>
-      )}
+      </div>
+      <div>
+        <header className="flex items-center space-x-2">
+          <h3 className="font-medium">{props.title}</h3>
+        </header>
+        {props.description && <p>{props.description}</p>}
+      </div>
     </section>
   );
 }

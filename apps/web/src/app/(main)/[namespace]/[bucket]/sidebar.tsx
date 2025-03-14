@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Archive } from "lucide-react";
 
 import { useTree } from "#/hooks/use-tree";
+import { BlobNode } from "@elwood/api";
 
 export type SidebarProps = {
   namespace: string;
@@ -21,7 +22,7 @@ export function Sidebar(props: SidebarProps) {
           return (
             <li key={`sidebar-${props.namespace}-${item.id}`}>
               <Link
-                href={`/${props.namespace}/${item.path}`}
+                href={`/${props.namespace}/${(item as BlobNode).path}`}
                 className="flex gap-2 items-center hover:bg-muted/50 px-2 py-1 rounded-md"
               >
                 <Archive className="size-[0.75rem] text-muted-foreground" />

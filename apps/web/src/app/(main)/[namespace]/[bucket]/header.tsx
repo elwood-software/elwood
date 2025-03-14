@@ -7,7 +7,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "#/components/ui/breadcrumb";
 import {
@@ -16,9 +15,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
-import { SidebarTrigger } from "#/components/ui/sidebar";
 
 import { useTree } from "#/hooks/use-tree";
+import { BlobNode } from "@elwood/api";
 
 export type NamespaceHeaderProps = {
   namespace: string;
@@ -36,7 +35,7 @@ export function NamespaceHeader(props: NamespaceHeaderProps) {
 
   return (
     <header className="flex item-center px-8 pt-8">
-      <SidebarTrigger className="mr-4" />
+      {/* <SidebarTrigger className="mr-4" /> */}
       <Breadcrumb className="flex items-center">
         <BreadcrumbList>
           <BreadcrumbItem className="hidden md:block">
@@ -52,7 +51,9 @@ export function NamespaceHeader(props: NamespaceHeaderProps) {
                       key={`breadcrumbs-${props.namespace}-${item.id}`}
                       asChild
                     >
-                      <Link href={`/${props.namespace}/${item.path}/tree`}>
+                      <Link
+                        href={`/${props.namespace}/${(item as BlobNode).path}/tree`}
+                      >
                         {item.name}
                       </Link>
                     </DropdownMenuItem>

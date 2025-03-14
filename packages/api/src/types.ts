@@ -28,13 +28,16 @@ export type ProviderMap = Map<string, Provider>;
 export type TreeInput = {
   bucket?: string;
   path?: string;
-  cursor?: TreeResult["cursor"];
+  cursor?: TreeCursor;
 };
+
+export type TreeCursor = JsonObject;
 
 export type TreeResult = {
   bucket?: BucketNode;
   nodes: Node[];
-  cursor?: Record<string, string | undefined>;
+  cursor: TreeCursor;
+  parent?: TreeNode | undefined;
 };
 
 export type BlobInput = {
@@ -67,6 +70,7 @@ export interface TreeNode {
   id: string;
   path: string;
   name: string;
+  isHidden: boolean;
 }
 
 export interface BlobNode {

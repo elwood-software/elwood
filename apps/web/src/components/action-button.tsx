@@ -27,6 +27,7 @@ import {
 import { Input } from "#/components/ui/input";
 import { Button, ButtonProps } from "#/components/ui/button";
 import { type Action, useAction } from "#/hooks/use-action";
+import type { Json } from "#/types";
 
 export type ActionButtonProps = ButtonProps & {
   namespace: string;
@@ -39,16 +40,16 @@ export function ActionButton(props: PropsWithChildren<ActionButtonProps>) {
   const { action, namespace, bucket, path, ...buttonProps } = props;
   const [open, setOpen] = useState(false);
   const mutation = useAction();
-  const form = useForm<any>({
-    defaultValues: (action.form ?? []).reduce((acc, item) => {
+  const form = useForm<Json>({
+    defaultValues: ((action.form ?? []) as Json[]).reduce((acc, item) => {
       return {
         ...acc,
         [item.name]: item.defaultValue ?? "",
       };
-    }, {}),
+    }, {} as Json),
   });
 
-  function handleActionClick(data: Record<string, any>) {
+  function handleActionClick(data: Record<string, Json>) {
     mutation.mutate(
       {
         namespace,
@@ -64,7 +65,7 @@ export function ActionButton(props: PropsWithChildren<ActionButtonProps>) {
           if (data.downloadUrl) {
             const a = document.createElement("a");
             a.href = data.downloadUrl;
-            a.download = data.fileName ?? "";
+            a.download = data.fileName ?? "file_download";
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -99,7 +100,7 @@ export function ActionButton(props: PropsWithChildren<ActionButtonProps>) {
             onSubmit={form.handleSubmit(handleActionClick)}
             className="space-y-8"
           >
-            {action.form.map((item) => {
+            {(action.form as Json[]).map((item) => {
               return (
                 <FormField
                   key={`button-form-${path}-${item.name}`}
@@ -116,7 +117,7 @@ export function ActionButton(props: PropsWithChildren<ActionButtonProps>) {
                               <SelectValue placeholder={item.defaultValue} />
                             </SelectTrigger>
                             <SelectContent>
-                              {item.options?.map((opt) => {
+                              {(item.options as Json[])?.map((opt) => {
                                 return (
                                   <SelectItem
                                     key={`${item.name}-${opt.name}`}

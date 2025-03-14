@@ -13,22 +13,34 @@ export type CreateFetchRequestHandlerOptions = {
   endpoint: string;
 };
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+};
+
 export async function createFetchRequestHandler(
   options: CreateFetchRequestHandlerOptions,
 ) {
   const config = await loadConfig(options.config);
   const innerContext = await createInnerContext(config, defaultProviders);
 
-  return function fetch(request: Request) {
-    if (request.method === "HEAD") {
-      return new Response();
+  return async function fetch(request: Request) {
+    if (request.method === "OPTIONS") {
+      return new Response("ok", { headers: corsHeaders });
     }
 
-    return fetchRequestHandler({
+    const response = await fetchRequestHandler({
       endpoint: options.endpoint,
       req: request,
       router: appRouter,
       createContext: (options) => createContext({ ...innerContext, options }),
     });
+
+    Object.entries(corsHeaders).map(([key, value]) => {
+      response.headers.set(key, value);
+    });
+
+    return response;
   };
 }

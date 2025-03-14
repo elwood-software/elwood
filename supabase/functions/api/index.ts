@@ -1,21 +1,12 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { fetchRequestHandler } from "npm:@trpc/server@11.0.0-rc.824/adapters/fetch";
-import {
-  appRouter,
-  loadConfig,
-  createContext,
-  createInnerContext,
-} from "npm:@elwood/api";
 
-Deno.serve(function handler(request: Request) {
-  if (request.method === "HEAD") {
-    return new Response();
-  }
+import { createFetchRequestHandler } from "npm:@elwood/api@0.4.0";
 
-  return fetchRequestHandler({
+import config from "./elwood-config.ts";
+
+Deno.serve(
+  await createFetchRequestHandler({
     endpoint: "/api",
-    req: request,
-    router: appRouter,
-    createContext: () => ({}),
-  });
-});
+    config,
+  }),
+);

@@ -6,3 +6,6 @@
 .env.keys
 .env.local
 .env.*.local
+
+# config
+functions/api/elwood-config.ts
