@@ -30,6 +30,7 @@ export class Namespace {
     if (!input.bucket) {
       return {
         nodes: await this.#listAllBuckets(),
+        cursor: {},
       };
     }
 
