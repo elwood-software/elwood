@@ -26,7 +26,7 @@ type LoginPageProps = {
 };
 
 export default function LoginPage(props: LoginPageProps) {
-  const { return_uri } = use(props.searchParams);
+  const { return_uri = "/" } = use(props.searchParams);
   const [state, formAction, isPending] = useActionState(login, {
     success: false,
     return_uri,

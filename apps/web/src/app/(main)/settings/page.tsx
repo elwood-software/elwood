@@ -8,7 +8,7 @@ export default function Page() {
       {" "}
       <div className="w-full h-full flex flex-col items-center justify-center">
         <div className="bg-muted rounded-full p-8 mb-6">
-          <Construction className="size-24 text-muted-foreground" />
+          <Construction className="size-24 text-background" />
         </div>
 
         <h1 className="font-bold text-3xl">Coming Soon</h1>

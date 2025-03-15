@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronsUpDown } from "lucide-react";
 
 import {
   Breadcrumb,
@@ -37,14 +37,21 @@ export function NamespaceHeader(props: NamespaceHeaderProps) {
     <header className="flex item-center px-8 pt-8">
       {/* <SidebarTrigger className="mr-4" /> */}
       <Breadcrumb className="flex items-center">
-        <BreadcrumbList>
+        <BreadcrumbList className="gap-1 sm:gap-1">
           <BreadcrumbItem className="hidden md:block">
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer">
-                {thisBucket?.name ?? "..."}
-                <ChevronDown className="w-[.5rem]" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
+              <span className="flex items-center gap-1 cursor-pointer">
+                <Link
+                  href={`/${props.namespace}`}
+                  className="hover:text-foreground"
+                >
+                  {thisBucket?.name ?? "..."}
+                </Link>
+                <DropdownMenuTrigger className="cursor-pointer hover:bg-secondary rounded px-0.5 relative -mr-0.5">
+                  <ChevronsUpDown className="w-[.75rem]" />
+                </DropdownMenuTrigger>
+              </span>
+              <DropdownMenuContent align="center">
                 {data?.nodes.map((item) => {
                   return (
                     <DropdownMenuItem
@@ -68,7 +75,7 @@ export function NamespaceHeader(props: NamespaceHeaderProps) {
 
             return (
               <Fragment key={`breadcrumb-${part}`}>
-                <BreadcrumbSeparator className="hidden md:block text-muted">
+                <BreadcrumbSeparator className="hidden md:block text-muted-foreground/50">
                   /
                 </BreadcrumbSeparator>
                 <BreadcrumbItem className="hidden md:block">

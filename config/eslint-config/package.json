@@ -1,14 +1,16 @@
 {
   "name": "@elwood/eslint-config",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
-  "private": true,
   "exports": {
     "./base": "./base.js",
     "./next-js": "./next.js",
     "./react-internal": "./react-internal.js"
   },
-  "devDependencies": {
+  "files": [
+    "*.js"
+  ],
+  "dependencies": {
     "@next/eslint-plugin-next": "^15.2.0",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.25.0",
@@ -21,5 +23,8 @@
     "globals": "^16.0.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.25.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
