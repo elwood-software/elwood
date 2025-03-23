@@ -1,6 +1,6 @@
 import { Construction } from "lucide-react";
 
-import { AppLayout } from "#/components/app-layout";
+import { AppLayout } from "@elwood/react";
 
 export default async function Page() {
   return (

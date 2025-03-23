@@ -1,4 +1,4 @@
-import { AppLayout } from "#/components/app-layout";
+import { AppLayout } from "@elwood/react";
 import { Loader2 } from "lucide-react";
 
 export default function Loading() {

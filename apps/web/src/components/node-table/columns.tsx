@@ -6,8 +6,7 @@ import { Folder, File, Archive, BookMarked } from "lucide-react";
 import { default as filesize } from "filesize.js";
 
 import type { BlobNode } from "@elwood/api";
-
-import { Badge } from "../ui/badge";
+import { Badge } from "@elwood/react";
 
 import type { NodeTableData } from "./types";
 import { ReactNode } from "react";

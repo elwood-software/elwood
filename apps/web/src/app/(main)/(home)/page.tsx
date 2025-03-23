@@ -2,7 +2,8 @@
 
 import { useNamespaces } from "#/hooks/use-namespaces";
 import { NodeTable } from "#/components/node-table/node-table";
-import { ErrorNotice } from "#/components/error";
+
+import { ErrorNotice } from "@elwood/react";
 
 export default function Page() {
   const { data, error } = useNamespaces({});

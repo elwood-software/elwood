@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import { CircleCheck, Loader2 } from "lucide-react";
 import Link from "next/link";
 
-import { Button } from "#/components/ui/button";
-import { createClient } from "#/lib/supabase/client";
+import { Button, useSupabaseClient } from "@elwood/react";
 
 export default function Page() {
-  const [client] = useState(() => createClient());
+  const client = useSupabaseClient();
   const [done, setDone] = useState(false);
 
   useEffect(() => {

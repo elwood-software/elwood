@@ -1,0 +1,17 @@
+{
+  "name": "@elwood/types",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "typings": "index.d.ts",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@elwood/eslint-config": "workspace:*"
+  }
+}

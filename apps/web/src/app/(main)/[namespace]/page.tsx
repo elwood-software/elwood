@@ -2,7 +2,7 @@
 
 import { use } from "react";
 
-import { AppLayout } from "#/components/app-layout";
+import { AppLayout } from "@elwood/react";
 import { useTree } from "#/hooks/use-tree";
 import { NodeTable } from "#/components/node-table/node-table";
 import { BlobNode } from "@elwood/api";

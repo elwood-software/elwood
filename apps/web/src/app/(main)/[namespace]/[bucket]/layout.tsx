@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 
-import { AppLayout } from "#/components/app-layout";
+import { AppLayout } from "@elwood/react";
 
 export type LayoutProps = {
   params: Promise<{ namespace: string; bucket: string }>;

@@ -4,7 +4,7 @@ import { use } from "react";
 
 import { NamespaceHeader } from "../../header";
 import { useBlob } from "#/hooks/use-blob";
-import { ErrorNotice } from "#/components/error";
+import { ErrorNotice } from "@elwood/react";
 import { Notice, type NoticeProps } from "#/components/notice";
 import { ActionButton } from "#/components/action-button";
 import { Loader2 } from "lucide-react";

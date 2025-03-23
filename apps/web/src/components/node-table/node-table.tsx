@@ -7,9 +7,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import type { TreeNode, Node, BlobNode } from "@elwood/api";
-
-import { Skeleton } from "#/components/ui/skeleton";
-import { cn } from "#/lib/utils";
+import { Skeleton, cn } from "@elwood/react";
 
 import { columns } from "./columns";
 import type { NodeTableData } from "./types";

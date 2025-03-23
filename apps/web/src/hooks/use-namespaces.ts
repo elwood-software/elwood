@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { Inputs, useTRPC } from "./use-trpc";
 
 export function useNamespaces(input: Inputs["namespaces"]["list"]) {

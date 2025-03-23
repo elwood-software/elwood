@@ -6,7 +6,7 @@ import type { TreeNode, BlobNode } from "@elwood/api";
 
 import { useTree } from "#/hooks/use-tree";
 import { NodeTable } from "#/components/node-table/node-table";
-import { ErrorNotice } from "#/components/error";
+import { ErrorNotice } from "@elwood/react";
 import { NamespaceHeader } from "../../header";
 import { Json } from "#/types";
 

@@ -4,18 +4,18 @@ import { use, useActionState, useEffect } from "react";
 import { redirect } from "next/navigation";
 import { FolderOpen } from "lucide-react";
 
-import { cn } from "#/lib/utils";
-import { Button } from "#/components/ui/button";
 import {
+  cn,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "#/components/ui/card";
-import { Input } from "#/components/ui/input";
-import { Label } from "#/components/ui/label";
+  Input,
+  Label,
+} from "@elwood/react";
 
 import { login } from "./actions";
 

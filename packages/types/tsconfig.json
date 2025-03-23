@@ -1,0 +1,5 @@
+{
+  "extends": "@elwood/typescript-config/base.json",
+  "compilerOptions": {},
+  "include": ["index.d.ts"]
+}

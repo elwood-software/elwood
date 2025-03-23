@@ -9,12 +9,8 @@
       "import": "./dist/index.js"
     }
   },
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/",
-    "src/",
-    "app-router.ts"
-  ],
+  "typings": "./dist/index.d.ts",
+  "files": ["dist/", "src/", "app-router.ts"],
   "scripts": {
     "dev": "tsx watch ./src/serve.ts -- --env-file=.env --config-file=.env.config.js",
     "build": "tsup",

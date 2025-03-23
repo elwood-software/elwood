@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
 import { Loader2, Check } from "lucide-react";
-import { cn } from "#/lib/utils";
+import { cn } from "@elwood/react";
 
 const noticeVariants = cva("px-3 py-2 rounded text-sm flex gap-3", {
   variants: {

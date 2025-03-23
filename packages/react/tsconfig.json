@@ -1,0 +1,8 @@
+{
+  "extends": "@elwood/typescript-config/react-library.json",
+  "compilerOptions": {
+    "paths": {
+      "#/*": ["./src/*"]
+    }
+  }
+}

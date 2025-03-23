@@ -7,5 +7,11 @@
   },
   "files": [
     "*.json"
-  ]
+  ],
+  "exports": {
+    "./base": {
+      "require": "./base.js",
+      "import": "./base.js"
+    }
+  }
 }

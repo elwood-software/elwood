@@ -7,8 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "#/components/ui/dialog";
-import {
   Form,
   FormControl,
   FormDescription,
@@ -16,16 +14,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "#/components/ui/form";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "#/components/ui/select";
-import { Input } from "#/components/ui/input";
-import { Button, ButtonProps } from "#/components/ui/button";
+  Input,
+  Button,
+  ButtonProps,
+} from "@elwood/react";
+
 import { type Action, useAction } from "#/hooks/use-action";
 import type { Json } from "#/types";
 

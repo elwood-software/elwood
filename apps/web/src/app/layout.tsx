@@ -2,10 +2,10 @@ import { type PropsWithChildren } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { RootProvider } from "#/components/providers/root";
-import { cn } from "#/lib/utils";
+import { cn } from "@elwood/react/utils";
+import { Provider } from "#/components/provider";
 
-import "./globals.css";
+import "./global.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +31,7 @@ export default function RootLayout(props: PropsWithChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={bodyClassname}>
-        <RootProvider>{props.children}</RootProvider>
+        <Provider>{props.children}</Provider>
       </body>
     </html>
   );
